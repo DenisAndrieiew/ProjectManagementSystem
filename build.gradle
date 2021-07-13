@@ -16,7 +16,7 @@ repositories {
 
 
 ext {
-    javaMainClass = 'com.library.Application'
+    javaMainClass = 'com.ProjectManagmentSystem.Main'
 }
 
 jar {
