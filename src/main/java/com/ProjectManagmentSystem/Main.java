@@ -1,7 +1,6 @@
 package com.ProjectManagmentSystem;
 
 import com.ProjectManagmentSystem.dao.DeveloperRepository;
-import com.ProjectManagmentSystem.dao.Repository;
 import com.ProjectManagmentSystem.dto.DeveloperDTO;
 import com.ProjectManagmentSystem.dto.Sex;
 import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
@@ -11,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         DatabaseConnectionManager cm = new DatabaseConnectionManager("localhost", "homework_3",
                 "postgres", "1234");
-        DeveloperDTO dto = new DeveloperDTO(100L, "Illya", "Muromec", 33, Sex.male,
+        DeveloperDTO dto = new DeveloperDTO(100L, "Illya", "Muromec", 33, Sex.MALE,
                 "Fable character", 40000);
 
         DeveloperRepository devRep = new DeveloperRepository(cm);

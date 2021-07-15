@@ -1,6 +1,6 @@
 package com.ProjectManagmentSystem.dao;
 
-import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
+import com.ProjectManagmentSystem.service.converter.Converter;
 
 public interface Repository<T> {
     T findById(long id);
@@ -9,4 +9,5 @@ public interface Repository<T> {
     void update(T entity);
 
     void delete(long id);
+    Converter getConverter();
 }

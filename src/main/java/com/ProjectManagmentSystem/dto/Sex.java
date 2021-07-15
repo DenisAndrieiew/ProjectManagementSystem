@@ -1,5 +1,15 @@
 package com.ProjectManagmentSystem.dto;
 
 public enum Sex {
-male, female
+    MALE {
+        @Override
+        public String toString() {
+            return "male";
+        }
+    }, FEMALE {
+        @Override
+        public String toString() {
+            return "female";
+        }
+    }
 }

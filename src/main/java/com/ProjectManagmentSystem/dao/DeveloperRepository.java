@@ -1,8 +1,10 @@
 package com.ProjectManagmentSystem.dao;
 
 import com.ProjectManagmentSystem.dao.model.DeveloperDAO;
+import com.ProjectManagmentSystem.dto.DeveloperDTO;
 import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
-import com.ProjectManagmentSystem.service.DeveloperConverter;
+import com.ProjectManagmentSystem.service.converter.Converter;
+import com.ProjectManagmentSystem.service.converter.DeveloperConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,6 +22,7 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
     private static final String DELETE = "DELETE FROM developers WHERE id=?;";
 
     private final DatabaseConnectionManager manager;
+    private final Converter<DeveloperDAO, DeveloperDTO> converter = new DeveloperConverter();
 
     public DeveloperRepository(DatabaseConnectionManager manager) {
         this.manager = manager;
@@ -31,7 +34,7 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPER_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return DeveloperConverter.toDeveloper(resultSet).get(0);
+            return converter.fromResultSet(resultSet).get(0);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -64,7 +67,7 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
             statement.setString(1, entity.getFirstName());
             statement.setString(2, entity.getLastName());
             statement.setInt(3, entity.getAge());
-            statement.setString(4, entity.getSex().name());
+            statement.setString(4, entity.getSex().toString());
             statement.setString(5, entity.getComments());
             statement.setInt(6, entity.getSalary());
             statement.execute();
@@ -73,6 +76,9 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
         }
     }
 
+    public Converter getConverter() {
+        return converter;
+    }
 
     @Override
     public void delete(long id) {

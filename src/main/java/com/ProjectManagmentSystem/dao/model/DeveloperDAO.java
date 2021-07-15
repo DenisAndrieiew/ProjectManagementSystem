@@ -7,7 +7,7 @@ public class DeveloperDAO {
     private String firstName;
     private String lastName;
     private int age;
-    private String sex;
+    private Sex sex;
     private String comments;
     private int salary;
 
@@ -19,7 +19,7 @@ public class DeveloperDAO {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.sex = sex.toString();
+        this.sex = sex;
         this.comments = comments;
         this.salary = salary;
     }
@@ -57,11 +57,11 @@ public class DeveloperDAO {
     }
 
     public Sex getSex() {
-        return Sex.valueOf(sex);
+        return sex;
     }
 
     public void setSex(Sex sex) {
-        this.sex = sex.toString();
+        this.sex = sex;
     }
 
     public String getComments() {
