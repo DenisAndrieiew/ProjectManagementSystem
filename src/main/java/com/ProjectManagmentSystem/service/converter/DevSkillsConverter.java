@@ -1,11 +1,7 @@
 package com.ProjectManagmentSystem.service.converter;
 
 import com.ProjectManagmentSystem.dao.model.DevSkillsDAO;
-import com.ProjectManagmentSystem.dao.model.DeveloperDAO;
 import com.ProjectManagmentSystem.dto.DevSkillsDTO;
-import com.ProjectManagmentSystem.dto.DeveloperDTO;
-import com.ProjectManagmentSystem.dto.Sex;
-import com.ProjectManagmentSystem.service.converter.Converter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,32 +12,27 @@ public class DevSkillsConverter implements Converter<DevSkillsDAO, DevSkillsDTO>
 
 
     public DevSkillsDAO fromDTO(DevSkillsDTO dto) {
-        DevSkillsDAO dao = new DevSkillsDAO(dto.getId(), devDTO.getFirstName(), devDTO.getLastName(),
-                devDTO.getAge(), devDTO.getSex(), devDTO.getComments(), devDTO.getSalary());
-        return devDAO;
+        DevSkillsDAO dao = new DevSkillsDAO(dto.getDevId(), dto.getSkillId(),
+                dto.getSkillLevel());
+        return dao;
     }
 
-    public DeveloperDTO toDTO(DeveloperDAO devDAO) {
-        DeveloperDTO devDTO = new DeveloperDTO(devDAO.getId(), devDAO.getFirstName(), devDAO.getLastName(),
-                devDAO.getAge(), devDAO.getSex(), devDAO.getComments(), devDAO.getSalary());
-        return devDTO;
+    public DevSkillsDTO toDTO(DevSkillsDAO dao) {
+        DevSkillsDTO dto = new DevSkillsDTO(dao.getDevId(), dao.getSkillId(), dao.getSkillLevel());
+        return dto;
     }
 
 
-
-    public List<DeveloperDAO> fromResultSet(ResultSet resultSet) throws SQLException {
-        List<DeveloperDAO> developers = new LinkedList<>();
+    public List<DevSkillsDAO> fromResultSet(ResultSet resultSet) throws SQLException {
+        List<DevSkillsDAO> devSkillsDAOList = new LinkedList<>();
         while (resultSet.next()) {
-            DeveloperDAO dev = new DeveloperDAO();
-            dev.setId(resultSet.getLong("id"));
-            dev.setFirstName(resultSet.getString("first_name"));
-            dev.setLastName(resultSet.getString("last_name"));
-            dev.setAge(resultSet.getInt("age"));
-            dev.setSex(Sex.valueOf(resultSet.getString("dev_sex").toUpperCase()));
-            dev.setComments(resultSet.getString("comments"));
-            dev.setSalary(resultSet.getInt("salary"));
-            developers.add(dev);
+            DevSkillsDAO dao = new DevSkillsDAO();
+            dao.setId(resultSet.getLong("id"));
+            dao.setDevId(resultSet.getLong("dev_id"));
+            dao.setSkillId(resultSet.getLong("skill_id"));
+            dao.setSkillLevel(resultSet.getLong("skill_level_id"));
+            devSkillsDAOList.add(dao);
         }
-        return developers;
+        return devSkillsDAOList;
     }
 }

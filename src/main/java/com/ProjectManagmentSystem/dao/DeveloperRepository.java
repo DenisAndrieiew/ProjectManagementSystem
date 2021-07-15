@@ -95,7 +95,7 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
     }
 
 
-    public long getNextId() {
+    private long getNextId() {
         try (Connection connection = manager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(NEXT_DEVELOPER_ID)) {
             ResultSet resultSet = preparedStatement.executeQuery();

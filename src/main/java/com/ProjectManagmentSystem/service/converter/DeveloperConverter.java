@@ -2,7 +2,7 @@ package com.ProjectManagmentSystem.service.converter;
 
 import com.ProjectManagmentSystem.dao.model.DeveloperDAO;
 import com.ProjectManagmentSystem.dto.DeveloperDTO;
-import com.ProjectManagmentSystem.dto.Sex;
+import com.ProjectManagmentSystem.dto.enums.Sex;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

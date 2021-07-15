@@ -1,4 +1,4 @@
-package com.ProjectManagmentSystem.dto;
+package com.ProjectManagmentSystem.dto.enums;
 
 public enum Sex {
     MALE {

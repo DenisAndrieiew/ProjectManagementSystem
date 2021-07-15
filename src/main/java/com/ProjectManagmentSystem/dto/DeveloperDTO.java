@@ -1,5 +1,7 @@
 package com.ProjectManagmentSystem.dto;
 
+import com.ProjectManagmentSystem.dto.enums.Sex;
+
 public class DeveloperDTO implements DataTransferObject {
     private long id;
     private String firstName;

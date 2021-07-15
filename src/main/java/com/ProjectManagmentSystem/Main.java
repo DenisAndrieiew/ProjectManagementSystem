@@ -4,7 +4,7 @@ import com.ProjectManagmentSystem.dao.DeveloperRepository;
 import com.ProjectManagmentSystem.dao.Repository;
 import com.ProjectManagmentSystem.dto.DataTransferObject;
 import com.ProjectManagmentSystem.dto.DeveloperDTO;
-import com.ProjectManagmentSystem.dto.Sex;
+import com.ProjectManagmentSystem.dto.enums.Sex;
 import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagmentSystem.service.Service;
 

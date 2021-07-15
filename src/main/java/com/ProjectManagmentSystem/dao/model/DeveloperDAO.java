@@ -1,6 +1,6 @@
 package com.ProjectManagmentSystem.dao.model;
 
-import com.ProjectManagmentSystem.dto.Sex;
+import com.ProjectManagmentSystem.dto.enums.Sex;
 
 public class DeveloperDAO implements DataAccessObject{
     private long id;
