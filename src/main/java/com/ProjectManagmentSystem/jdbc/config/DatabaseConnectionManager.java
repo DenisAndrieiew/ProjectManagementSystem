@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class DatabaseConnectionManager {
     private HikariDataSource ds;
 
-    private DatabaseConnectionManager(String host, String databaseName, String username, String password) {
+    public DatabaseConnectionManager(String host, String databaseName, String username, String password) {
         initDataSource(host, databaseName, username, password);
     }
 
