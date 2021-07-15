@@ -9,11 +9,10 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>{
-
+public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO> {
 
     public DeveloperDAO fromDTO(DeveloperDTO devDTO) {
-        DeveloperDAO devDAO = new DeveloperDAO(devDTO.getId(), devDTO.getFirstName(), devDTO.getLastName(),
+        DeveloperDAO devDAO = new DeveloperDAO(devDTO.getFirstName(), devDTO.getLastName(),
                 devDTO.getAge(), devDTO.getSex(), devDTO.getComments(), devDTO.getSalary());
         return devDAO;
     }
@@ -23,7 +22,6 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
                 devDAO.getAge(), devDAO.getSex(), devDAO.getComments(), devDAO.getSalary());
         return devDTO;
     }
-
 
 
     public List<DeveloperDAO> fromResultSet(ResultSet resultSet) throws SQLException {
@@ -41,4 +39,5 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
         }
         return developers;
     }
+
 }

@@ -4,14 +4,12 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
 public class DatabaseConnectionManager {
     private HikariDataSource ds;
 
-    public DatabaseConnectionManager(String host, String databaseName, String username, String password) {
+    private DatabaseConnectionManager(String host, String databaseName, String username, String password) {
         initDataSource(host, databaseName, username, password);
     }
 

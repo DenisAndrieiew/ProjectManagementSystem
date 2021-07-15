@@ -6,6 +6,7 @@ import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagmentSystem.service.converter.Converter;
 import com.ProjectManagmentSystem.service.converter.DeveloperConverter;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +21,7 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
     private static final String UPDATE = "UPDATE developers SET first_name=?, last_name=?, " +
             "age=?, dev_sex=?, comments=?, salary=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM developers WHERE id=?;";
+    private static final String NEXT_DEVELOPER_ID = "SELECT MAX(id)+1 FROM developers;";
 
     private final DatabaseConnectionManager manager;
     private final Converter<DeveloperDAO, DeveloperDTO> converter = new DeveloperConverter();
@@ -30,6 +32,7 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
 
     @Override
     public DeveloperDAO findById(long id) {
+
         try (Connection connection = manager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPER_BY_ID)) {
             preparedStatement.setLong(1, id);
@@ -46,7 +49,7 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
     public void create(DeveloperDAO entity) {
         try (Connection connection = manager.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT)) {
-            statement.setLong(1, entity.getId());
+            statement.setLong(1, getNextId());
             statement.setString(2, entity.getFirstName());
             statement.setString(3, entity.getLastName());
             statement.setInt(4, entity.getAge());
@@ -89,5 +92,17 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public long getNextId() {
+        try (Connection connection = manager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(NEXT_DEVELOPER_ID)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.getLong(1);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return -1;
     }
 }

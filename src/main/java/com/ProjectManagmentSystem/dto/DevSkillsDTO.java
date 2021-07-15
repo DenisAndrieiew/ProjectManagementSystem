@@ -35,4 +35,8 @@ public class DevSkillsDTO implements DataTransferObject{
         this.skillLevel = skillLevel;
 
     }
+
+    public static String getObjectName() {
+        return "dev_skills";
+    }
 }

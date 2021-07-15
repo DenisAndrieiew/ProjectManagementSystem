@@ -2,7 +2,7 @@ package com.ProjectManagmentSystem.dao.model;
 
 import com.ProjectManagmentSystem.dto.Sex;
 
-public class DeveloperDAO {
+public class DeveloperDAO implements DataAccessObject{
     private long id;
     private String firstName;
     private String lastName;
@@ -12,6 +12,15 @@ public class DeveloperDAO {
     private int salary;
 
     public DeveloperDAO() {
+    }
+
+    public DeveloperDAO(String firstName, String lastName, int age, Sex sex, String comments, int salary) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.sex = sex;
+        this.comments = comments;
+        this.salary = salary;
     }
 
     public DeveloperDAO(long id, String firstName, String lastName, int age, Sex sex, String comments, int salary) {
@@ -26,6 +35,11 @@ public class DeveloperDAO {
 
     public long getId() {
         return id;
+    }
+
+
+    public static String getObjectName() {
+        return "developer";
     }
 
     public void setId(long id) {

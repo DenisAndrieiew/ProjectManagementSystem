@@ -1,20 +1,32 @@
 package com.ProjectManagmentSystem.dao.model;
 
-public class DevSkillsDAO{
-    private int devId;
-    private int skillId;
-    private int skillLevel;
+public class DevSkillsDAO implements DataAccessObject{
+    private long id;
+    private long devId;
+    private long skillId;
+    private long skillLevel;
 
     public DevSkillsDAO() {
     }
 
-    public DevSkillsDAO(int devId, int skillId, int skillLevel) {
+    public DevSkillsDAO(int id, int devId, int skillId, int skillLevel) {
+        this.id=id;
         this.devId = devId;
         this.skillId = skillId;
         this.skillLevel = skillLevel;
     }
 
-    public int getDevId() {
+    @Override
+    public long getId() {
+        return id;
+    }
+
+
+    public static String getObjectName() {
+        return "dev_skills";
+    }
+
+    public long getDevId() {
         return devId;
     }
 
@@ -22,7 +34,7 @@ public class DevSkillsDAO{
         this.devId = devId;
     }
 
-    public int getSkillId() {
+    public long getSkillId() {
         return skillId;
     }
 
@@ -30,7 +42,7 @@ public class DevSkillsDAO{
         this.skillId = skillId;
     }
 
-    public int getSkillLevel() {
+    public long getSkillLevel() {
         return skillLevel;
     }
 

@@ -1,10 +1,12 @@
 package com.ProjectManagmentSystem;
 
 import com.ProjectManagmentSystem.dao.DeveloperRepository;
+import com.ProjectManagmentSystem.dao.Repository;
+import com.ProjectManagmentSystem.dto.DataTransferObject;
 import com.ProjectManagmentSystem.dto.DeveloperDTO;
 import com.ProjectManagmentSystem.dto.Sex;
 import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
-import com.ProjectManagmentSystem.service.DeveloperService;
+import com.ProjectManagmentSystem.service.Service;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,15 +15,15 @@ public class Main {
         DeveloperDTO dto = new DeveloperDTO(100L, "Illya", "Muromec", 33, Sex.MALE,
                 "Fable character", 40000);
 
-        DeveloperRepository devRep = new DeveloperRepository(cm);
-        DeveloperService service = new DeveloperService(devRep);
+        Repository devRep = new DeveloperRepository(cm);
+        Service service = new Service(devRep);
 
-        DeveloperDTO dto1 = service.create(dto);
+        DataTransferObject dto1 = service.create(dto);
         System.out.println(dto1);
         System.out.println("------------------------------");
         System.out.println("UPDATED");
         dto.setFirstName("Mykolaj");
-        DeveloperDTO update = service.update(dto);
+        DataTransferObject update = service.update(dto);
         System.out.println(update);
 
         service.delete(100L);

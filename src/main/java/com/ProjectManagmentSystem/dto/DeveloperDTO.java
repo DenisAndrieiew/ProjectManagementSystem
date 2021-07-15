@@ -97,4 +97,8 @@ public class DeveloperDTO implements DataTransferObject {
                 ", salary=" + salary +
                 '}';
     }
+
+    public static String getObjectName() {
+        return "developer";
+    }
 }
