@@ -100,7 +100,5 @@ public class DeveloperDTO implements DataTransferObject {
                 '}';
     }
 
-    public static String getObjectName() {
-        return "developer";
-    }
+
 }

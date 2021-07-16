@@ -1,7 +1,6 @@
 package com.ProjectManagmentSystem.dao;
 
 import com.ProjectManagmentSystem.dao.model.BrunchDAO;
-import com.ProjectManagmentSystem.dao.model.DeveloperDAO;
 import com.ProjectManagmentSystem.dto.BrunchDTO;
 import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagmentSystem.service.converter.BrunchConverter;
@@ -30,25 +29,26 @@ public class BrunchRepository implements Repository<BrunchDAO> {
     @Override
     public BrunchDAO findById(long id) {
         return (BrunchDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
-           }
+    }
 
     @Override
     public List<BrunchDAO> findByString(String requestField, String requestText) {
         return RepositoryUtils.findByString(manager, converter, SELECT_BY_ID, requestField, requestText).stream()
-                .map(dao->(BrunchDAO)dao).collect(Collectors.toList());
+                .map(dao -> (BrunchDAO) dao).collect(Collectors.toList());
     }
 
     @Override
     public List<BrunchDAO> findByNumber(String requestField, long requestNumber) {
         return RepositoryUtils.findByNumber(manager, converter, SELECT_BY_ID, requestField, requestNumber).stream()
-                .map(dao->(BrunchDAO)dao).collect(Collectors.toList());
+                .map(dao -> (BrunchDAO) dao).collect(Collectors.toList());
     }
 
     @Override
     public void create(BrunchDAO entity) {
         try (Connection connection = manager.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT)) {
-            statement.setLong(1, getNextId());
+            entity.setId(getNextId());
+            statement.setLong(1, entity.getId());
             statement.setString(2, entity.getBrunch());
             statement.execute();
         } catch (SQLException ex) {
@@ -77,6 +77,7 @@ public class BrunchRepository implements Repository<BrunchDAO> {
     public Converter getConverter() {
         return null;
     }
+
     private long getNextId() {
         return RepositoryUtils.getNextId(manager, NEXT_ID);
     }

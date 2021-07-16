@@ -6,7 +6,6 @@ import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagmentSystem.service.converter.Converter;
 import com.ProjectManagmentSystem.service.converter.DeveloperConverter;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -41,16 +40,17 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
     @Override
     public List<DeveloperDAO> findByString(String requestField, String requestText) {
         return RepositoryUtils.findByString(manager, converter, SELECT_BY, requestField, requestText).stream()
-                .map(dao->(DeveloperDAO)dao).collect(Collectors.toList());
+                .map(dao -> (DeveloperDAO) dao).collect(Collectors.toList());
 
     }
 
     @Override
     public List<DeveloperDAO> findByNumber(String requestField, long requestNumber) {
         return RepositoryUtils.findByNumber(manager, converter, SELECT_BY, requestField, requestNumber).stream()
-                .map(dao->(DeveloperDAO)dao).collect(Collectors.toList());
+                .map(dao -> (DeveloperDAO) dao).collect(Collectors.toList());
 
     }
+
     @Override
     public void create(DeveloperDAO entity) {
         try (Connection connection = manager.getConnection();
@@ -91,7 +91,6 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
     }
 
 
-
     @Override
     public void delete(long id) {
         RepositoryUtils.delete(manager, DELETE, id);
@@ -99,6 +98,6 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
 
 
     private long getNextId() {
-       return RepositoryUtils.getNextId(manager, NEXT_ID);
+        return RepositoryUtils.getNextId(manager, NEXT_ID);
     }
 }

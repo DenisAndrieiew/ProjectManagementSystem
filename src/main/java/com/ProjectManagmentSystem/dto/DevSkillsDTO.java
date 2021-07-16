@@ -28,9 +28,6 @@ public class DevSkillsDTO implements DataTransferObject {
         this.id = id;
     }
 
-    public static String getObjectName() {
-        return "dev_skills";
-    }
 
     public long getDevId() {
         return devId;

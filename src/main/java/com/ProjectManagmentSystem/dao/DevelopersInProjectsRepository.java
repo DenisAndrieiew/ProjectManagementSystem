@@ -1,6 +1,7 @@
 package com.ProjectManagmentSystem.dao;
 
 import com.ProjectManagmentSystem.dao.model.DevSkillsDAO;
+import com.ProjectManagmentSystem.dao.model.DevelopersInProjectsDAO;
 import com.ProjectManagmentSystem.dto.DevSkillsDTO;
 import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagmentSystem.service.converter.Converter;
@@ -12,52 +13,49 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DevSkillsRepository implements Repository<DevSkillsDAO> {
-    public static final String NEXT_ID = "SELECT MAX(id)+1 FROM dev_skills;";
-    private static final String SELECT_BY_ID = "SELECT id, dev_id, skill_id, skill_level_id" +
-            "FROM dev_skills WHERE id = ?;";
-    private static final String SELECT_BY = "SELECT id, dev_id, skill_id, skill_level_id" +
-            "FROM dev_skills WHERE ;";
-    private static final String UPDATE = "UPDATE dev_skills SET dev_id=?, skill_id=?, " +
-            "skill_level_id=? WHERE id=?;";
-    private static final String INSERT = "INSERT INTO dev_skills (dev_id, skill_id, skill_level_id)" +
+public class DevelopersInProjectsRepository implements Repository<DevelopersInProjectsDAO> {
+    public static final String NEXT_ID = "SELECT MAX(id)+1 FROM devs_in_project;";
+    private static final String SELECT_BY_ID = "SELECT id, dev_id, project_id, " +
+            "FROM devs_in_project WHERE id = ?;";
+    private static final String SELECT_BY = "SELECT id, dev_id, project_id, " +
+            "FROM devs_in_project WHERE ;";
+    private static final String UPDATE = "UPDATE devs_in_project SET dev_id=?, project_id=?, " +
+            "WHERE id=?;";
+    private static final String INSERT = "INSERT INTO devs_in_project (dev_id, project_id)" +
             " VALUES (?, ?, ?);";
-    private static final String DELETE = "DELETE FROM dev_skills WHERE id=?;";
+    private static final String DELETE = "DELETE FROM devs_in_project WHERE id=?;";
     private final DatabaseConnectionManager manager;
     private final Converter<DevSkillsDAO, DevSkillsDTO> converter = new DevSkillsConverter();
 
-    public DevSkillsRepository(DatabaseConnectionManager manager) {
+    public DevelopersInProjectsRepository(DatabaseConnectionManager manager) {
         this.manager = manager;
     }
 
-
     @Override
-    public DevSkillsDAO findById(long id) {
-        return (DevSkillsDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
+    public DevelopersInProjectsDAO findById(long id) {
+        return (DevelopersInProjectsDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
     }
-
     @Override
-    public List<DevSkillsDAO> findByString(String requestField, String requestText) {
+    public List<DevelopersInProjectsDAO> findByString(String requestField, String requestText) {
         return RepositoryUtils.findByString(manager, converter, SELECT_BY, requestField, requestText).stream()
-                .map(dao -> (DevSkillsDAO) dao).collect(Collectors.toList());
+                .map(dao->(DevelopersInProjectsDAO)dao).collect(Collectors.toList());
     }
 
     @Override
-    public List<DevSkillsDAO> findByNumber(String requestField, long requestNumber) {
+    public List<DevelopersInProjectsDAO> findByNumber(String requestField, long requestNumber) {
         return RepositoryUtils.findByNumber(manager, converter, SELECT_BY, requestField, requestNumber).stream()
-                .map(dao -> (DevSkillsDAO) dao).collect(Collectors.toList());
+                .map(dao->(DevelopersInProjectsDAO)dao).collect(Collectors.toList());
     }
 
 
     @Override
-    public void create(DevSkillsDAO entity) {
+    public void create(DevelopersInProjectsDAO entity) {
         try (Connection connection = manager.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT)) {
             entity.setId(getNextId());
             statement.setLong(1, entity.getId());
-            statement.setLong(2, entity.getDevId());
-            statement.setLong(3, entity.getSkillId());
-            statement.setLong(4, entity.getSkillLevel());
+            statement.setLong(2, entity.getDeveloperId());
+            statement.setLong(3, entity.getProjectId());
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -65,13 +63,12 @@ public class DevSkillsRepository implements Repository<DevSkillsDAO> {
     }
 
     @Override
-    public void update(DevSkillsDAO entity) {
+    public void update(DevelopersInProjectsDAO entity) {
         try (Connection connection = manager.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE)) {
             statement.setLong(4, entity.getId());
-            statement.setLong(1, entity.getDevId());
-            statement.setLong(2, entity.getSkillId());
-            statement.setLong(3, entity.getSkillLevel());
+            statement.setLong(1, entity.getDeveloperId());
+            statement.setLong(2, entity.getProjectId());
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -3,7 +3,6 @@ package com.ProjectManagmentSystem.dao;
 import com.ProjectManagmentSystem.dao.model.BrunchDAO;
 import com.ProjectManagmentSystem.dao.model.SkillLevelDAO;
 import com.ProjectManagmentSystem.dto.BrunchDTO;
-import com.ProjectManagmentSystem.dto.enums.SkillLevel;
 import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagmentSystem.service.converter.BrunchConverter;
 import com.ProjectManagmentSystem.service.converter.Converter;
@@ -36,20 +35,21 @@ public class SkillLevelRepository implements Repository<SkillLevelDAO> {
     @Override
     public List<SkillLevelDAO> findByString(String requestField, String requestText) {
         return RepositoryUtils.findByString(manager, converter, SELECT_BY_ID, requestField, requestText).stream()
-                .map(dao->(SkillLevelDAO)dao).collect(Collectors.toList());
+                .map(dao -> (SkillLevelDAO) dao).collect(Collectors.toList());
     }
 
     @Override
     public List<SkillLevelDAO> findByNumber(String requestField, long requestNumber) {
         return RepositoryUtils.findByNumber(manager, converter, SELECT_BY_ID, requestField, requestNumber).stream()
-                .map(dao->(SkillLevelDAO)dao).collect(Collectors.toList());
+                .map(dao -> (SkillLevelDAO) dao).collect(Collectors.toList());
     }
 
     @Override
     public void create(SkillLevelDAO entity) {
         try (Connection connection = manager.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT)) {
-            statement.setLong(1, getNextId());
+            entity.setId(getNextId());
+            statement.setLong(1, entity.getId());
             statement.setString(2, entity.getName());
             statement.execute();
         } catch (SQLException ex) {
@@ -78,6 +78,7 @@ public class SkillLevelRepository implements Repository<SkillLevelDAO> {
     public Converter getConverter() {
         return null;
     }
+
     private long getNextId() {
         return RepositoryUtils.getNextId(manager, NEXT_ID);
     }

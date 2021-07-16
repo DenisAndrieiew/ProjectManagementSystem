@@ -30,7 +30,5 @@ public class SkillLevelDTO implements DataTransferObject{
     public void setLevel(SkillLevel level) {
         this.level = level;
     }
-    public static String getObjectName(){
-        return "skill_level";
-    }
+
 }
