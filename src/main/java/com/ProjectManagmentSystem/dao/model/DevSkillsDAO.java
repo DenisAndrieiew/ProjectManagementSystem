@@ -22,9 +22,6 @@ public class DevSkillsDAO implements DataAccessObject {
         this.skillLevel = skillLevel;
     }
 
-    public static String getObjectName() {
-        return "dev_skills";
-    }
 
     @Override
     public long getId() {

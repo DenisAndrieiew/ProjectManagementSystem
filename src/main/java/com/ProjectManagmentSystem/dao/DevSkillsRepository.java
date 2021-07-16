@@ -1,30 +1,30 @@
 package com.ProjectManagmentSystem.dao;
 
 import com.ProjectManagmentSystem.dao.model.DevSkillsDAO;
+import com.ProjectManagmentSystem.dto.DevSkillsDTO;
 import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagmentSystem.service.converter.Converter;
 import com.ProjectManagmentSystem.service.converter.DevSkillsConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DevSkillsRepository implements Repository<DevSkillsDAO> {
-    public static final String NEXT_DEV_SKILLS_ID = "SELECT MAX(id)+1 FROM dev_skills;";
-    private static final String SELECT_DEV_SKILLS_BY_DEV_ID = "SELECT dev_id, skill_id, skill_level_id" +
-            "FROM dev_skills WHERE dev_id = ?;";
-    private static final String SELECT_DEV_SKILLS_BY_SKILL_ID = "SELECT dev_id, skill_id, skill_level_id" +
-            "FROM dev_skills WHERE skill_id = ?;";
-    private static final String SELECT_DEV_SKILLS_BY_SKILL_LEVEL_ID = "SELECT dev_id, skill_id, skill_level_id" +
-            "FROM dev_skills WHERE skill_level_id = ?;";
+    public static final String NEXT_ID = "SELECT MAX(id)+1 FROM dev_skills;";
+    private static final String SELECT_BY_ID = "SELECT id, dev_id, skill_id, skill_level_id" +
+            "FROM dev_skills WHERE id = ?;";
+    private static final String SELECT_BY = "SELECT id, dev_id, skill_id, skill_level_id" +
+            "FROM dev_skills WHERE ;";
     private static final String UPDATE = "UPDATE dev_skills SET dev_id=?, skill_id=?, " +
             "skill_level_id=? WHERE id=?;";
     private static final String INSERT = "INSERT INTO dev_skills (dev_id, skill_id, skill_level_id)" +
             " VALUES (?, ?, ?);";
     private static final String DELETE = "DELETE FROM developers WHERE id=?;";
     private final DatabaseConnectionManager manager;
-    private final DevSkillsConverter converter = new DevSkillsConverter();
+    private final Converter<DevSkillsDAO, DevSkillsDTO> converter = new DevSkillsConverter();
 
     public DevSkillsRepository(DatabaseConnectionManager manager) {
         this.manager = manager;
@@ -33,15 +33,18 @@ public class DevSkillsRepository implements Repository<DevSkillsDAO> {
 
     @Override
     public DevSkillsDAO findById(long id) {
-        try (Connection connection = manager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEV_SKILLS_BY_DEV_ID)) {
-            preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return converter.fromResultSet(resultSet).get(0);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return null;
+        return (DevSkillsDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
+    }
+    @Override
+    public List<DevSkillsDAO> findByString(String requestField, String requestText) {
+        return RepositoryUtils.findByString(manager, converter, SELECT_BY, requestField, requestText).stream()
+                .map(dao->(DevSkillsDAO)dao).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DevSkillsDAO> findByNumber(String requestField, long requestNumber) {
+        return RepositoryUtils.findByNumber(manager, converter, SELECT_BY, requestField, requestNumber).stream()
+                .map(dao->(DevSkillsDAO)dao).collect(Collectors.toList());
     }
 
 
@@ -75,13 +78,7 @@ public class DevSkillsRepository implements Repository<DevSkillsDAO> {
 
     @Override
     public void delete(long id) {
-        try (Connection connection = manager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        RepositoryUtils.delete(manager, DELETE, id);
     }
 
     @Override
@@ -89,14 +86,8 @@ public class DevSkillsRepository implements Repository<DevSkillsDAO> {
         return this.converter;
     }
 
+
     private long getNextId() {
-        try (Connection connection = manager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(NEXT_DEV_SKILLS_ID)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet.getLong(1);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return -1;
+       return RepositoryUtils.getNextId(manager, NEXT_ID);
     }
 }

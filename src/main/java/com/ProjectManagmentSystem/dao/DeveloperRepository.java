@@ -9,19 +9,22 @@ import com.ProjectManagmentSystem.service.converter.DeveloperConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class DeveloperRepository implements Repository<DeveloperDAO> {
-    private static final String SELECT_DEVELOPER_BY_ID = "SELECT id, first_name, last_name, age," +
+    private static final String SELECT_BY_ID = "SELECT id, first_name, last_name, age," +
             " dev_sex, comments, salary FROM developers WHERE id = ?;";
+    private static final String SELECT_BY = "SELECT id, first_name, last_name, age," +
+            " dev_sex, comments, salary FROM developers WHERE ";
     private static final String INSERT = "INSERT INTO developers (id, first_name, last_name, " +
             "age, dev_sex, comments, salary) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String UPDATE = "UPDATE developers SET first_name=?, last_name=?, " +
             "age=?, dev_sex=?, comments=?, salary=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM developers WHERE id=?;";
-    private static final String NEXT_DEVELOPER_ID = "SELECT MAX(id)+1 FROM developers;";
+    private static final String NEXT_ID = "SELECT MAX(id)+1 FROM developers;";
 
     private final DatabaseConnectionManager manager;
     private final Converter<DeveloperDAO, DeveloperDTO> converter = new DeveloperConverter();
@@ -32,24 +35,28 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
 
     @Override
     public DeveloperDAO findById(long id) {
-
-        try (Connection connection = manager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEVELOPER_BY_ID)) {
-            preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return converter.fromResultSet(resultSet).get(0);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
+        return (DeveloperDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
     }
 
+    @Override
+    public List<DeveloperDAO> findByString(String requestField, String requestText) {
+        return RepositoryUtils.findByString(manager, converter, SELECT_BY, requestField, requestText).stream()
+                .map(dao->(DeveloperDAO)dao).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<DeveloperDAO> findByNumber(String requestField, long requestNumber) {
+        return RepositoryUtils.findByNumber(manager, converter, SELECT_BY, requestField, requestNumber).stream()
+                .map(dao->(DeveloperDAO)dao).collect(Collectors.toList());
+
+    }
     @Override
     public void create(DeveloperDAO entity) {
         try (Connection connection = manager.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT)) {
-            statement.setLong(1, getNextId());
+            entity.setId(getNextId());
+            statement.setLong(1, entity.getId());
             statement.setString(2, entity.getFirstName());
             statement.setString(3, entity.getLastName());
             statement.setInt(4, entity.getAge());
@@ -83,26 +90,15 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
         return converter;
     }
 
+
+
     @Override
     public void delete(long id) {
-        try (Connection connection = manager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        RepositoryUtils.delete(manager, DELETE, id);
     }
 
 
     private long getNextId() {
-        try (Connection connection = manager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(NEXT_DEVELOPER_ID)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet.getLong(1);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return -1;
+       return RepositoryUtils.getNextId(manager, NEXT_ID);
     }
 }

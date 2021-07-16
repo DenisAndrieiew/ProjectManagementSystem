@@ -1,6 +1,7 @@
 package com.ProjectManagmentSystem.dto;
 
 public class DevSkillsDTO implements DataTransferObject {
+    private long id;
     private long devId;
     private long skillId;
     private long skillLevel;
@@ -10,6 +11,21 @@ public class DevSkillsDTO implements DataTransferObject {
         this.skillId = skillId;
         this.skillLevel = skillLevel;
 
+    }
+
+    public DevSkillsDTO(long id, long devId, long skillId, long skillLevel) {
+        this.id = id;
+        this.devId = devId;
+        this.skillId = skillId;
+        this.skillLevel = skillLevel;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public static String getObjectName() {

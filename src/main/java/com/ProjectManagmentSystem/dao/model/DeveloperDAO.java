@@ -2,7 +2,7 @@ package com.ProjectManagmentSystem.dao.model;
 
 import com.ProjectManagmentSystem.dto.enums.Sex;
 
-public class DeveloperDAO implements DataAccessObject{
+public class DeveloperDAO implements DataAccessObject {
     private long id;
     private String firstName;
     private String lastName;
@@ -33,13 +33,22 @@ public class DeveloperDAO implements DataAccessObject{
         this.salary = salary;
     }
 
-    public long getId() {
-        return id;
+
+    @Override
+    public String toString() {
+        return "DeveloperDAO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", sex=" + sex +
+                ", comments='" + comments + '\'' +
+                ", salary=" + salary +
+                '}';
     }
 
-
-    public static String getObjectName() {
-        return "developer";
+    public long getId() {
+        return id;
     }
 
     public void setId(long id) {
