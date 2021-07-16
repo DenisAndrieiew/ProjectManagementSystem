@@ -6,7 +6,7 @@ todo:<br>
 - dev_skills (done)
 - company
 - customers
-- projects 
+- projects  (done)
 - devs_in_projects (done)
 
 <b>-- realise view and commander</b>

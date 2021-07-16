@@ -3,9 +3,11 @@ package com.ProjectManagmentSystem.dao;
 import com.ProjectManagmentSystem.dao.model.BrunchDAO;
 import com.ProjectManagmentSystem.dao.model.SkillLevelDAO;
 import com.ProjectManagmentSystem.dto.BrunchDTO;
+import com.ProjectManagmentSystem.dto.SkillLevelDTO;
 import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagmentSystem.service.converter.BrunchConverter;
 import com.ProjectManagmentSystem.service.converter.Converter;
+import com.ProjectManagmentSystem.service.converter.SkillLevelConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +23,7 @@ public class SkillLevelRepository implements Repository<SkillLevelDAO> {
     private static final String DELETE = "DELETE FROM skill_level WHERE id=?;";
     private static final String NEXT_ID = "SELECT MAX(id)+1 FROM skill_level;";
     private final DatabaseConnectionManager manager;
-    private final Converter<BrunchDAO, BrunchDTO> converter = new BrunchConverter();
+    private final Converter<SkillLevelDAO, SkillLevelDTO> converter = new SkillLevelConverter();
 
     public SkillLevelRepository(DatabaseConnectionManager manager) {
         this.manager = manager;

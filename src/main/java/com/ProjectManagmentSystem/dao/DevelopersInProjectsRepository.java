@@ -3,9 +3,11 @@ package com.ProjectManagmentSystem.dao;
 import com.ProjectManagmentSystem.dao.model.DevSkillsDAO;
 import com.ProjectManagmentSystem.dao.model.DevelopersInProjectsDAO;
 import com.ProjectManagmentSystem.dto.DevSkillsDTO;
+import com.ProjectManagmentSystem.dto.DevelopersInProjectsDTO;
 import com.ProjectManagmentSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagmentSystem.service.converter.Converter;
 import com.ProjectManagmentSystem.service.converter.DevSkillsConverter;
+import com.ProjectManagmentSystem.service.converter.DevelopersInProjectsConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +27,8 @@ public class DevelopersInProjectsRepository implements Repository<DevelopersInPr
             " VALUES (?, ?, ?);";
     private static final String DELETE = "DELETE FROM devs_in_project WHERE id=?;";
     private final DatabaseConnectionManager manager;
-    private final Converter<DevSkillsDAO, DevSkillsDTO> converter = new DevSkillsConverter();
+    private final Converter<DevelopersInProjectsDAO, DevelopersInProjectsDTO> converter =
+            new DevelopersInProjectsConverter();
 
     public DevelopersInProjectsRepository(DatabaseConnectionManager manager) {
         this.manager = manager;
