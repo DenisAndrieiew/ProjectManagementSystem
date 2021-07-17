@@ -15,6 +15,7 @@ public class BrunchConverter implements Converter<BrunchDAO, BrunchDTO> {
     @Override
     public BrunchDAO fromDTO(BrunchDTO dto) {
         BrunchDAO dao = new BrunchDAO(dto.getBrunch().toString());
+        if (dto.getId() != 0) dao.setId(dto.getId());
         return dao;
     }
 

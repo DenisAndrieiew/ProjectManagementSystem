@@ -14,6 +14,7 @@ public class DevSkillsConverter implements Converter<DevSkillsDAO, DevSkillsDTO>
     public DevSkillsDAO fromDTO(DevSkillsDTO dto) {
         DevSkillsDAO dao = new DevSkillsDAO(dto.getDevId(), dto.getSkillId(),
                 dto.getSkillLevel());
+        if (dto.getId() != 0) dao.setId(dto.getId());
         return dao;
     }
 

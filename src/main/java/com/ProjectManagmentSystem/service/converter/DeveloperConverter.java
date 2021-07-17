@@ -11,31 +11,32 @@ import java.util.List;
 
 public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO> {
 
-    public DeveloperDAO fromDTO(DeveloperDTO devDTO) {
-        DeveloperDAO devDAO = new DeveloperDAO(devDTO.getFirstName(), devDTO.getLastName(),
-                devDTO.getAge(), devDTO.getSex(), devDTO.getComments(), devDTO.getSalary());
-        return devDAO;
+    public DeveloperDAO fromDTO(DeveloperDTO dto) {
+        DeveloperDAO dao = new DeveloperDAO(dto.getFirstName(), dto.getLastName(),
+                dto.getAge(), dto.getSex(), dto.getComments(), dto.getSalary());
+        if (dto.getId() != 0) dao.setId(dto.getId());
+        return dao;
     }
 
-    public DeveloperDTO toDTO(DeveloperDAO devDAO) {
-        DeveloperDTO devDTO = new DeveloperDTO(devDAO.getId(), devDAO.getFirstName(), devDAO.getLastName(),
-                devDAO.getAge(), devDAO.getSex(), devDAO.getComments(), devDAO.getSalary());
-        return devDTO;
+    public DeveloperDTO toDTO(DeveloperDAO dao) {
+        DeveloperDTO dto = new DeveloperDTO(dao.getId(), dao.getFirstName(), dao.getLastName(),
+                dao.getAge(), dao.getSex(), dao.getComments(), dao.getSalary());
+        return dto;
     }
 
 
     public List<DeveloperDAO> fromResultSet(ResultSet resultSet) throws SQLException {
         List<DeveloperDAO> developers = new LinkedList<>();
         while (resultSet.next()) {
-            DeveloperDAO dev = new DeveloperDAO();
-            dev.setId(resultSet.getLong("id"));
-            dev.setFirstName(resultSet.getString("first_name"));
-            dev.setLastName(resultSet.getString("last_name"));
-            dev.setAge(resultSet.getInt("age"));
-            dev.setSex(Sex.valueOf(resultSet.getString("dev_sex").toUpperCase()));
-            dev.setComments(resultSet.getString("comments"));
-            dev.setSalary(resultSet.getInt("salary"));
-            developers.add(dev);
+            DeveloperDAO dao = new DeveloperDAO();
+            dao.setId(resultSet.getLong("id"));
+            dao.setFirstName(resultSet.getString("first_name"));
+            dao.setLastName(resultSet.getString("last_name"));
+            dao.setAge(resultSet.getInt("age"));
+            dao.setSex(Sex.valueOf(resultSet.getString("dev_sex").toUpperCase()));
+            dao.setComments(resultSet.getString("comments"));
+            dao.setSalary(resultSet.getInt("salary"));
+            developers.add(dao);
         }
         return developers;
     }

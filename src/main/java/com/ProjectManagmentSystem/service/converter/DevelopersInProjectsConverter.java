@@ -13,6 +13,7 @@ public class DevelopersInProjectsConverter implements
 
     public DevelopersInProjectsDAO fromDTO(DevelopersInProjectsDTO dto) {
         DevelopersInProjectsDAO dao = new DevelopersInProjectsDAO(dto.getDevId(), dto.getProjectId());
+        if (dto.getId() != 0) dao.setId(dto.getId());
         return dao;
     }
 

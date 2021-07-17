@@ -2,7 +2,6 @@ package com.ProjectManagmentSystem.service.converter;
 
 import com.ProjectManagmentSystem.dao.model.CustomersDAO;
 import com.ProjectManagmentSystem.dto.CustomersDTO;
-import com.ProjectManagmentSystem.service.converter.Converter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +11,9 @@ import java.util.List;
 public class CustomersConverter implements Converter<CustomersDAO, CustomersDTO> {
     @Override
     public CustomersDAO fromDTO(CustomersDTO dto) {
-        return new CustomersDAO(dto.getName());
+        CustomersDAO dao = new CustomersDAO(dto.getName());
+        if (dto.getId() != 0) dao.setId(dto.getId());
+        return dao;
     }
 
     @Override
@@ -23,7 +24,7 @@ public class CustomersConverter implements Converter<CustomersDAO, CustomersDTO>
     @Override
     public List<CustomersDAO> fromResultSet(ResultSet resultSet) throws SQLException {
         List<CustomersDAO> customers = new LinkedList<>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             CustomersDAO dao = new CustomersDAO();
             dao.setId(resultSet.getLong("id"));
             dao.setName(resultSet.getString("name"));

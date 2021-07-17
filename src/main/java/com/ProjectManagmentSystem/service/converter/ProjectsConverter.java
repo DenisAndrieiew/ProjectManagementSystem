@@ -1,10 +1,7 @@
 package com.ProjectManagmentSystem.service.converter;
 
-import com.ProjectManagmentSystem.dao.model.DeveloperDAO;
 import com.ProjectManagmentSystem.dao.model.ProjectsDAO;
-import com.ProjectManagmentSystem.dto.DeveloperDTO;
 import com.ProjectManagmentSystem.dto.ProjectsDTO;
-import com.ProjectManagmentSystem.dto.enums.Sex;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +13,7 @@ public class ProjectsConverter implements Converter<ProjectsDAO, ProjectsDTO> {
     public ProjectsDAO fromDTO(ProjectsDTO dto) {
         ProjectsDAO dao = new ProjectsDAO(dto.getName(), dto.getCustomerId(), dto.getCompanyId(),
                 dto.getDescription(), dto.getCost());
+        if (dto.getId() != 0) dao.setId(dto.getId());
         return dao;
     }
 
