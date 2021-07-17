@@ -60,7 +60,7 @@ public class BrunchRepository implements Repository<BrunchDAO> {
     public void update(BrunchDAO entity) {
         try (Connection connection = manager.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE)) {
-            statement.setLong(4, entity.getId());
+            statement.setLong(2, entity.getId());
             statement.setString(1, entity.getBrunch());
             statement.execute();
         } catch (SQLException ex) {
