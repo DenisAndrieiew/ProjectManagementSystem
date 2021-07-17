@@ -29,7 +29,7 @@ public class CompanyRepository implements Repository<CompanyDAO> {
 
     @Override
     public CompanyDAO findById(long id) {
-        return (CompanyDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id);
+        return (CompanyDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
     }
 
     @Override
