@@ -1,31 +1,37 @@
 package com.ProjectManagementSystem.dao.model;
 
-public class ProjectsDAO implements DataAccessObject{
+import java.time.Instant;
+import java.time.LocalDate;
+
+public class ProjectsDAO implements DataAccessObject {
     private long id;
     private String name;
     private long customerId;
     private long companyId;
     private String description;
     private int cost;
+    private Instant begin_date;
 
     public ProjectsDAO() {
     }
 
-    public ProjectsDAO(String name, long customerId, long companyId, String description, int cost) {
+    public ProjectsDAO(String name, long customerId, long companyId, String description, int cost, Instant begin_date) {
         this.name = name;
         this.customerId = customerId;
         this.companyId = companyId;
         this.description = description;
         this.cost = cost;
+        this.begin_date = begin_date;
     }
 
-    public ProjectsDAO(long id, String name, long customerId, long companyId, String description, int cost) {
+    public ProjectsDAO(long id, String name, long customerId, long companyId, String description, int cost, Instant begin_date) {
         this.id = id;
         this.name = name;
         this.customerId = customerId;
         this.companyId = companyId;
         this.description = description;
         this.cost = cost;
+        this.begin_date = begin_date;
     }
 
     @Override
@@ -75,5 +81,13 @@ public class ProjectsDAO implements DataAccessObject{
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    public Instant getBegin_date() {
+        return begin_date;
+    }
+
+    public void setBegin_date(Instant begin_date) {
+        this.begin_date = begin_date;
     }
 }

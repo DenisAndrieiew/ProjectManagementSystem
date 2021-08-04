@@ -12,7 +12,7 @@ public class ProjectsConverter implements Converter<ProjectsDAO, ProjectsDTO> {
     @Override
     public ProjectsDAO fromDTO(ProjectsDTO dto) {
         ProjectsDAO dao = new ProjectsDAO(dto.getName(), dto.getCustomerId(), dto.getCompanyId(),
-                dto.getDescription(), dto.getCost());
+                dto.getDescription(), dto.getCost(), dto.getBeginDate());
         if (dto.getId() != 0) dao.setId(dto.getId());
         return dao;
     }
@@ -20,7 +20,7 @@ public class ProjectsConverter implements Converter<ProjectsDAO, ProjectsDTO> {
     @Override
     public ProjectsDTO toDTO(ProjectsDAO dao) {
         ProjectsDTO dto = new ProjectsDTO(dao.getId(), dao.getName(), dao.getCustomerId(), dao.getCompanyId(),
-                dao.getDescription(), dao.getCost());
+                dao.getDescription(), dao.getCost(), dao.getBegin_date());
         return dto;
     }
 
@@ -35,6 +35,7 @@ public class ProjectsConverter implements Converter<ProjectsDAO, ProjectsDTO> {
             dao.setCompanyId(resultSet.getLong("company_id"));
             dao.setDescription(resultSet.getString("description"));
             dao.setCost(resultSet.getInt("cost"));
+            dao.setBegin_date(resultSet.getTimestamp("begin_date").toInstant());
             projectsDAOList.add(dao);
         }
         return projectsDAOList;

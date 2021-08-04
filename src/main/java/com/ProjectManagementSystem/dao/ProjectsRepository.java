@@ -9,20 +9,23 @@ import com.ProjectManagementSystem.service.converter.ProjectsConverter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProjectsRepository implements Repository<ProjectsDAO> {
     private static final String SELECT_BY_ID = "SELECT id, name, customer_id, company_id," +
-            "description, cost FROM projects WHERE id = ?;";
+            "description, cost, begin_date FROM projects WHERE id = ?;";
     private static final String SELECT_BY = "SELECT id, name, customer_id, company_id," +
-            "description, cost FROM projects WHERE ";
+            "description, cost, begin_date FROM projects WHERE ";
     private static final String INSERT = "INSERT INTO projects (id, name, customer_id, " +
-            "+ company_id, description, cost) VALUES (?, ?, ?, ?, ?, ?);";
+            "+ company_id, description, cost, begin_date) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String UPDATE = "UPDATE projects SET name=?, customer_id=?, " +
-            "company_id=?, description=?, cost=? WHERE id=?;";
+            "company_id=?, description=?, cost=?, begin_date=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM projects WHERE id=?;";
     private static final String NEXT_ID = "SELECT MAX(id)+1 FROM projects;";
+
 
     private final DatabaseConnectionManager manager;
     private final Converter<ProjectsDAO, ProjectsDTO> converter = new ProjectsConverter();
@@ -61,6 +64,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
             statement.setLong(4, entity.getCompanyId());
             statement.setString(5, entity.getDescription());
             statement.setInt(6, entity.getCost());
+            statement.setTimestamp(7, Timestamp.from(entity.getBegin_date()));
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -77,6 +81,7 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
             statement.setLong(3, entity.getCompanyId());
             statement.setString(4, entity.getDescription());
             statement.setInt(5, entity.getCost());
+            statement.setTimestamp(6, Timestamp.from(entity.getBegin_date()));
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();

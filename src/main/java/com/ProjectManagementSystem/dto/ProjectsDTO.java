@@ -1,31 +1,38 @@
 package com.ProjectManagementSystem.dto;
 
-public class ProjectsDTO implements DataTransferObject{
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
+
+public class ProjectsDTO implements DataTransferObject {
     private long id;
     private String name;
     private long customerId;
     private long companyId;
     private String description;
     private int cost;
+    private Instant beginDate;
 
     public ProjectsDTO() {
     }
 
-    public ProjectsDTO(String name, long customerId, long companyId, String description, int cost) {
+    public ProjectsDTO(String name, long customerId, long companyId, String description, int cost, Instant beginDate) {
         this.name = name;
         this.customerId = customerId;
         this.companyId = companyId;
         this.description = description;
         this.cost = cost;
+        this.beginDate = beginDate;
     }
 
-    public ProjectsDTO(long id, String name, long customerId, long companyId, String description, int cost) {
+    public ProjectsDTO(long id, String name, long customerId, long companyId, String description, int cost, Instant beginDate) {
         this.id = id;
         this.name = name;
         this.customerId = customerId;
         this.companyId = companyId;
         this.description = description;
         this.cost = cost;
+        this.beginDate = beginDate;
     }
 
     public long getId() {
@@ -75,4 +82,8 @@ public class ProjectsDTO implements DataTransferObject{
     public void setCost(int cost) {
         this.cost = cost;
     }
+
+    public Instant getBeginDate() {return beginDate;}
+
+    public void setBeginDate(Instant beginDate) {this.beginDate = beginDate;}
 }
