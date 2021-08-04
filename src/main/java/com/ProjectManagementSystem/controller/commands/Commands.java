@@ -7,7 +7,8 @@ public enum Commands {
     DEVS_BY_PROJECT(new DevsByProject(Console.getInstance())),
     SALARY_BY_PROJECT(new SalaryByProject(Console.getInstance())),
     DEVS_BY_BRUNCH(new DevsByBrunch(Console.getInstance())),
-    DEVS_BY_LEVEL(new DevsByLevel(Console.getInstance()));
+    DEVS_BY_LEVEL(new DevsByLevel(Console.getInstance())),
+    PROJECT_LIST(new ProjectList(Console.getInstance()));
 
     private Command command;
     private Commands(Command command){

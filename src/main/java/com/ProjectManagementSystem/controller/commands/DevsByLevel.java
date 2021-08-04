@@ -36,8 +36,7 @@ public class DevsByLevel implements Command{
             level = Arrays.stream(SkillLevel.values()).filter(level1 -> level1.toString().equals(levelName))
                     .findAny().orElse(null);
         }
-        DatabaseConnectionManager connectionManager = new DatabaseConnectionManager("localhost",
-                "homework_3", "postgres", "1234");
+        DatabaseConnectionManager connectionManager = DatabaseConnectionManager.getInstance();
         SkillLevelRepository levelRepository = new SkillLevelRepository(connectionManager);
         SkillLevelDAO levelDAO = levelRepository.findByString("name", level.toString()).get(0);
         SkillLevelDTO levelDTO = (SkillLevelDTO) levelRepository.getConverter().toDTO(levelDAO);

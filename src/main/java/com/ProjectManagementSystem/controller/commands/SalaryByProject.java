@@ -20,8 +20,7 @@ public class SalaryByProject implements Command {
     public void execute() {
         view.write("please input project name");
         String projectName = view.read();
-        DatabaseConnectionManager connectionManager = new DatabaseConnectionManager("localhost",
-                "homework_3", "postgres", "1234");
+        DatabaseConnectionManager connectionManager = DatabaseConnectionManager.getInstance();
         ProjectsRepository projectsRepository = new ProjectsRepository(connectionManager);
         List<ProjectsDAO> projectsDAO = projectsRepository.findByString("name", projectName);
         if (projectsDAO.size() > 0) {

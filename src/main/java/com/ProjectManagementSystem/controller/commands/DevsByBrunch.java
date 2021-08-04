@@ -33,8 +33,7 @@ public class DevsByBrunch implements Command {
             brunch = Arrays.stream(Brunch.values()).filter(brunch1 -> brunch1.toString().equals(brunchName))
                     .findAny().orElse(null);
         }
-        DatabaseConnectionManager connectionManager = new DatabaseConnectionManager("localhost",
-                "homework_3", "postgres", "1234");
+        DatabaseConnectionManager connectionManager = DatabaseConnectionManager.getInstance();
         BrunchRepository brunchRepository = new BrunchRepository(connectionManager);
         BrunchDAO brunchDAO = brunchRepository.findByString("name", brunch.toString()).get(0);
         BrunchDTO brunchDTO = (BrunchDTO) brunchRepository.getConverter().toDTO(brunchDAO);

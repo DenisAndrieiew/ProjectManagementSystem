@@ -64,6 +64,18 @@ public class RepositoryUtils {
         }
     }
 
+    protected static List<DataAccessObject> findAll(DatabaseConnectionManager manager, Converter converter, String select){
+        try (Connection connection = manager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(select)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return converter.fromResultSet(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     protected static long getNextId(DatabaseConnectionManager manager, String next_id) {
         try (Connection connection = manager.getConnection();

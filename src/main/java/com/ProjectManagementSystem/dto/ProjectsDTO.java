@@ -1,8 +1,6 @@
 package com.ProjectManagementSystem.dto;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Date;
 
 public class ProjectsDTO implements DataTransferObject {
     private long id;
@@ -83,7 +81,11 @@ public class ProjectsDTO implements DataTransferObject {
         this.cost = cost;
     }
 
-    public Instant getBeginDate() {return beginDate;}
+    public Instant getBeginDate() {
+        return beginDate;
+    }
 
-    public void setBeginDate(Instant beginDate) {this.beginDate = beginDate;}
+    public void setBeginDate(Instant beginDate) {
+        this.beginDate = beginDate;
+    }
 }

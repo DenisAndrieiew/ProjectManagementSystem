@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +24,8 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
             "company_id=?, description=?, cost=?, begin_date=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM projects WHERE id=?;";
     private static final String NEXT_ID = "SELECT MAX(id)+1 FROM projects;";
+    private static final String SELECT_ALL = "SELECT id, name, customer_id, company_id, "+
+            "description, cost, begin_date FROM projects;";
 
 
     private final DatabaseConnectionManager manager;
@@ -101,6 +102,11 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
 
     private long getNextId() {
         return RepositoryUtils.getNextId(manager, NEXT_ID);
+    }
+
+    public List<ProjectsDAO> findAll(){
+        return RepositoryUtils.findAll(manager, getConverter(), SELECT_ALL).stream().map(entity->(ProjectsDAO) entity)
+                .collect(Collectors.toList());
     }
 
 }
