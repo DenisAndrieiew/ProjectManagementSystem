@@ -12,11 +12,11 @@ import com.ProjectManagementSystem.view.View;
 
 import java.util.List;
 
-public class DevsInProject implements Command {
+public class DevsByProject implements Command {
 
     private final View view;
 
-    public DevsInProject(View view) {
+    public DevsByProject(View view) {
         this.view = view;
     }
 

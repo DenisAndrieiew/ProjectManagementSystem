@@ -1,5 +1,6 @@
 package com.ProjectManagementSystem;
 
+import com.ProjectManagementSystem.dao.BrunchRepository;
 import com.ProjectManagementSystem.dao.CustomersRepository;
 import com.ProjectManagementSystem.dao.DeveloperRepository;
 import com.ProjectManagementSystem.dao.Repository;
@@ -39,6 +40,9 @@ Converter<DeveloperDAO, DeveloperDTO> converter = new DeveloperConverter();
         Service service1 = new Service(cusRep);
         System.out.println(cusRep.findById(1));
         System.out.println("END");
+//
+//        Repository brunches = new BrunchRepository(cm);
+//        brunches.findByString("name", "Java").stream().forEach(brunches-> System.out.println(b));
 
     }
 }

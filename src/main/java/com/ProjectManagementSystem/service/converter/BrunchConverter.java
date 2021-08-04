@@ -22,8 +22,9 @@ public class BrunchConverter implements Converter<BrunchDAO, BrunchDTO> {
     @Override
     public BrunchDTO toDTO(BrunchDAO dao) {
         BrunchDTO dto = new BrunchDTO();
-        dto.setBrunch(Brunch.toBrunch(dao.getBrunch()).orElseThrow());
-        return dto;
+        dto.setBrunch(Brunch.toBrunch(dao.getBrunch()).orElse(null));
+        dto.setId(dao.getId());
+        return (BrunchDTO) dto;
     }
 
     @Override
@@ -38,16 +39,5 @@ public class BrunchConverter implements Converter<BrunchDAO, BrunchDTO> {
         return brunches;
     }
 
-    public DeveloperDAO fromDTO(DeveloperDTO devDTO) {
-        DeveloperDAO devDAO = new DeveloperDAO(devDTO.getFirstName(), devDTO.getLastName(),
-                devDTO.getAge(), devDTO.getSex(), devDTO.getComments(), devDTO.getSalary());
-        return devDAO;
-    }
-
-    public DeveloperDTO toDTO(DeveloperDAO devDAO) {
-        DeveloperDTO devDTO = new DeveloperDTO(devDAO.getId(), devDAO.getFirstName(), devDAO.getLastName(),
-                devDAO.getAge(), devDAO.getSex(), devDAO.getComments(), devDAO.getSalary());
-        return devDTO;
-    }
 
 }

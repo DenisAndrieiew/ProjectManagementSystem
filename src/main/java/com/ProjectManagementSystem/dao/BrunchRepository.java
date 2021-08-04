@@ -33,13 +33,14 @@ public class BrunchRepository implements Repository<BrunchDAO> {
 
     @Override
     public List<BrunchDAO> findByString(String requestField, String requestText) {
-        return RepositoryUtils.findByString(manager, converter, SELECT_BY_ID, requestField, requestText).stream()
+        return RepositoryUtils.findByString(manager, converter, SELECT_BY, requestField,
+                requestText).stream()
                 .map(dao -> (BrunchDAO) dao).collect(Collectors.toList());
     }
 
     @Override
     public List<BrunchDAO> findByNumber(String requestField, long requestNumber) {
-        return RepositoryUtils.findByNumber(manager, converter, SELECT_BY_ID, requestField, requestNumber).stream()
+        return RepositoryUtils.findByNumber(manager, converter, SELECT_BY, requestField, requestNumber).stream()
                 .map(dao -> (BrunchDAO) dao).collect(Collectors.toList());
     }
 
@@ -75,7 +76,7 @@ public class BrunchRepository implements Repository<BrunchDAO> {
 
     @Override
     public Converter getConverter() {
-        return null;
+        return converter;
     }
 
     private long getNextId() {

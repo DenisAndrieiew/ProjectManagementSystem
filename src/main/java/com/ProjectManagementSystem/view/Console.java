@@ -2,14 +2,26 @@ package com.ProjectManagementSystem.view;
 
 import java.util.Scanner;
 
-public class Console implements View{
-    private Scanner scanner;
+public class Console implements View {
     private static volatile View instance = new Console();
+    private Scanner scanner;
 
     private Console() {
         scanner = new Scanner(System.in);
     }
 
+    public static View getInstance() {
+        View result = instance;
+        if (result != null) {
+            return result;
+        }
+        synchronized (View.class) {
+            if (instance == null) {
+                instance = new Console();
+            }
+            return instance;
+        }
+    }
 
     @Override
     public String read() {
@@ -21,17 +33,8 @@ public class Console implements View{
         System.out.println(message);
     }
 
-
-    public static View getInstance(){
-        View result = instance;
-        if (result != null) {
-            return result;
-        }
-        synchronized(View.class) {
-            if (instance == null) {
-                instance = new Console();
-            }
-            return instance;
-        }
+    @Override
+    public void writeL(String message) {
+        System.out.print(message + "\t");
     }
 }

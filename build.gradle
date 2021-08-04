@@ -4,7 +4,7 @@ plugins {
 
 apply plugin: 'java'
 
-group 'com.library'
+group 'com.goit.projectMaNagmentSystem'
 version '1.0'
 
 sourceCompatibility = 1.8
@@ -16,7 +16,7 @@ repositories {
 
 
 ext {
-    javaMainClass = 'com.ProjectManagmentSystem.Main'
+    javaMainClass = 'com.ProjectManagmentSystem.Application'
 }
 
 jar {

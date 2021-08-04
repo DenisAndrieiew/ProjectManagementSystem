@@ -31,7 +31,7 @@ public class DevSkillsConverter implements Converter<DevSkillsDAO, DevSkillsDTO>
             dao.setId(resultSet.getLong("id"));
             dao.setDevId(resultSet.getLong("dev_id"));
             dao.setSkillId(resultSet.getLong("skill_id"));
-            dao.setSkillLevel(resultSet.getLong("skill_level_id"));
+            dao.setSkillLevel(resultSet.getLong("skill_level"));
             devSkillsDAOList.add(dao);
         }
         return devSkillsDAOList;

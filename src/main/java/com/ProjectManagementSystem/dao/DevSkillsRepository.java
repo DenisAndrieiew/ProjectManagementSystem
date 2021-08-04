@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 
 public class DevSkillsRepository implements Repository<DevSkillsDAO> {
     public static final String NEXT_ID = "SELECT MAX(id)+1 FROM dev_skills;";
-    private static final String SELECT_BY_ID = "SELECT id, dev_id, skill_id, skill_level_id" +
+    private static final String SELECT_BY_ID = "SELECT id, dev_id, skill_id, skill_level" +
             "FROM dev_skills WHERE id = ?;";
-    private static final String SELECT_BY = "SELECT id, dev_id, skill_id, skill_level_id" +
-            "FROM dev_skills WHERE ;";
+    private static final String SELECT_BY = "SELECT id, dev_id, skill_id, skill_level " +
+            "FROM dev_skills WHERE ";
     private static final String UPDATE = "UPDATE dev_skills SET dev_id=?, skill_id=?, " +
-            "skill_level_id=? WHERE id=?;";
-    private static final String INSERT = "INSERT INTO dev_skills (dev_id, skill_id, skill_level_id)" +
+            "skill_level=? WHERE id=?;";
+    private static final String INSERT = "INSERT INTO dev_skills (dev_id, skill_id, skill_level)" +
             " VALUES (?, ?, ?);";
     private static final String DELETE = "DELETE FROM dev_skills WHERE id=?;";
     private final DatabaseConnectionManager manager;
