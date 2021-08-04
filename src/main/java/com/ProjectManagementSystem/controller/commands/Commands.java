@@ -4,7 +4,7 @@ import com.ProjectManagementSystem.view.Console;
 
 public enum Commands {
     HELP(new Help(Console.getInstance())),
-    SHOW(new Show(Console.getInstance()));
+    SHOW(new DevsInProject(Console.getInstance()));
 
     private Command command;
     private Commands(Command command){

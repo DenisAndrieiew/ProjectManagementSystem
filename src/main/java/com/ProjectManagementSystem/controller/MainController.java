@@ -27,22 +27,16 @@ public class MainController {
         boolean isNotExit = true;
         while (isNotExit) {
             view.write("Please enter a command or help to retrieve command list");
-            String[] inputCommand = view.read().toLowerCase().split("\\s");
-
+            String inputCommand = view.read().toLowerCase();
+            if (inputCommand.equals("exit")) {
+                break;
+            }
             for (Command command : commandList) {
-                if (command.canProcess(inputCommand[0])) {
-                    if (inputCommand.length > 1) {
-                        command.execute(Arrays.copyOfRange(inputCommand, 1, inputCommand.length));
-                    }
-                    else {
-                        command.execute(null);
-                    }
-                    break;
-                } else if (inputCommand[0].equalsIgnoreCase("exit")) {
-                    view.write("Good Bye!");
-                    isNotExit = false;
+                if (command.canProcess(inputCommand)) {
+                    command.execute();
                     break;
                 }
+
             }
         }
     }

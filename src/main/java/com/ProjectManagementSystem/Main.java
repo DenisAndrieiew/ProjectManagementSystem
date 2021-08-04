@@ -33,8 +33,7 @@ public class Main {
 //
 //        service.delete(100L);
 Converter<DeveloperDAO, DeveloperDTO> converter = new DeveloperConverter();
-        devRep.findByString("first_name", "Anton").stream().forEach(System.out::println);
-        devRep.findByNumber("salary", 40000).stream().forEach(System.out::println);
+
 
         Repository cusRep = new CustomersRepository(cm);
         Service service1 = new Service(cusRep);

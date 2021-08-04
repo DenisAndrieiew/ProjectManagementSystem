@@ -12,7 +12,7 @@ public class Help implements Command{
     }
 
     @Override
-    public void execute(String[] args) {
+    public void execute() {
         Arrays.stream(Commands.values()).forEach(command -> {
             view.write(command.getCommand().commandName() +" - "+ command.getCommand().commandDescription() );
         });
