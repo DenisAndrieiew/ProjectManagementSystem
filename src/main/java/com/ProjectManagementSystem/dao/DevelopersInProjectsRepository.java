@@ -16,8 +16,8 @@ public class DevelopersInProjectsRepository implements Repository<DevelopersInPr
     public static final String NEXT_ID = "SELECT MAX(id)+1 FROM devs_in_project;";
     private static final String SELECT_BY_ID = "SELECT id, dev_id, project_id, " +
             "FROM devs_in_project WHERE id = ?;";
-    private static final String SELECT_BY = "SELECT id, dev_id, project_id, " +
-            "FROM devs_in_project WHERE ;";
+    private static final String SELECT_BY = "SELECT id, dev_id, project_id " +
+            "FROM devs_in_project WHERE ";
     private static final String UPDATE = "UPDATE devs_in_project SET dev_id=?, project_id=?, " +
             "WHERE id=?;";
     private static final String INSERT = "INSERT INTO devs_in_project (dev_id, project_id)" +

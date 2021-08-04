@@ -20,6 +20,5 @@ public interface Repository<T extends DataAccessObject> {
 
     Converter getConverter();
 
-    long getNextId()
 
 }

@@ -69,9 +69,7 @@ public class SkillLevelRepository implements Repository<SkillLevelDAO> {
     }
 
     @Override
-    public void delete(long id) {
-
-    }
+    public void delete(long id) {RepositoryUtils.delete(manager, DELETE, id);}
 
     @Override
     public Converter getConverter() {

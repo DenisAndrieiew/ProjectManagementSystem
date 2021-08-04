@@ -70,7 +70,7 @@ public class BrunchRepository implements Repository<BrunchDAO> {
 
     @Override
     public void delete(long id) {
-
+        RepositoryUtils.delete(manager, DELETE, id);
     }
 
     @Override
