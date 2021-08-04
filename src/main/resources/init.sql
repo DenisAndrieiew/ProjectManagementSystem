@@ -53,3 +53,7 @@ id serial primary key,
 dev_id int not null references developers(id),
 skill_id int not null references brunch(id),
 skill_level int not null references skill_level(id));
+
+alter table developers add column salary int;
+
+alter table projects add column cost int;

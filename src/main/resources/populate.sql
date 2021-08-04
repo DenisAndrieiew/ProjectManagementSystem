@@ -69,3 +69,16 @@ update projects set begin_date='07.07.2001' where id =3;
 update projects set begin_date='08.12.2015' where id =4;
 update projects set begin_date='31.12.2019' where id =5;
 update projects set begin_date='03.05.2021' where id =6;
+
+update developers set salary = 800 where id = 1;
+update developers set salary = 1200 where id = 2;
+update developers set salary = 3000 where id = 3;
+update developers set salary = 1500 where id = 4;
+
+
+update projects set cost = 800 where id = 1;
+update projects set cost = 800 where id = 2;
+update projects set cost = 0 where id = 3;
+update projects set cost = 1200 where id = 4;
+update projects set cost = 3000 where id = 5;
+update projects set cost = 2700 where id = 6;
