@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 public class ProjectsRepository implements Repository<ProjectsDAO> {
     private static final String SELECT_BY_ID = "SELECT id, name, customer_id, company_id," +
             "description, cost FROM projects WHERE id = ?;";
+    private static final String SELECT_BY = "SELECT id, name, customer_id, company_id," +
+            "description, cost FROM projects WHERE ";
     private static final String INSERT = "INSERT INTO projects (id, name, customer_id, " +
             "+ company_id, description, cost) VALUES (?, ?, ?, ?, ?, ?);";
     private static final String UPDATE = "UPDATE projects SET name=?, customer_id=?, " +
@@ -34,6 +36,19 @@ public class ProjectsRepository implements Repository<ProjectsDAO> {
         return (ProjectsDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
     }
 
+    @Override
+    public List<ProjectsDAO> findByString(String requestField, String requestText) {
+        return RepositoryUtils.findByString(manager, converter, SELECT_BY, requestField, requestText).stream()
+                .map(dao -> (ProjectsDAO) dao).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<ProjectsDAO> findByNumber(String requestField, long requestNumber) {
+        return RepositoryUtils.findByNumber(manager, converter, SELECT_BY, requestField, requestNumber).stream()
+                .map(dao -> (ProjectsDAO) dao).collect(Collectors.toList());
+
+    }
 
     @Override
     public void create(ProjectsDAO entity) {

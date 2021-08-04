@@ -26,7 +26,33 @@ public class RepositoryUtils {
         return null;
     }
 
+    public static List<DataAccessObject> findByNumber(DatabaseConnectionManager manager, Converter converter,
+                                                      String select, String requestField, long requestNumber) {
+        try (Connection connection = manager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(select + requestField + "=?;")) {
+            preparedStatement.setLong(1, requestNumber);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return converter.fromResultSet(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
 
+        return null;
+    }
+
+    public static List<DataAccessObject> findByString(DatabaseConnectionManager manager, Converter converter,
+                                                      String select, String requestField, String requestText) {
+        try (Connection connection = manager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(select + requestField + "=?;")) {
+            preparedStatement.setString(1, requestText);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return converter.fromResultSet(resultSet);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
 
     public static void delete(DatabaseConnectionManager manager, String delete, long id) {
         try (Connection connection = manager.getConnection();

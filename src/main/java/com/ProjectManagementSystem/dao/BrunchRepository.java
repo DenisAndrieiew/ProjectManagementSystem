@@ -9,9 +9,12 @@ import com.ProjectManagementSystem.service.converter.Converter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BrunchRepository implements Repository<BrunchDAO> {
     private static final String SELECT_BY_ID = "SELECT id, name FROM brunch WHERE id = ?;";
+    private static final String SELECT_BY = "SELECT id, name FROM brunch WHERE ";
     private static final String INSERT = "INSERT INTO brunch (id, name) VALUES (?, ?);";
     private static final String UPDATE = "UPDATE brunch SET name=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM brunch WHERE id=?;";
@@ -28,6 +31,17 @@ public class BrunchRepository implements Repository<BrunchDAO> {
         return (BrunchDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
     }
 
+    @Override
+    public List<BrunchDAO> findByString(String requestField, String requestText) {
+        return RepositoryUtils.findByString(manager, converter, SELECT_BY_ID, requestField, requestText).stream()
+                .map(dao -> (BrunchDAO) dao).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BrunchDAO> findByNumber(String requestField, long requestNumber) {
+        return RepositoryUtils.findByNumber(manager, converter, SELECT_BY_ID, requestField, requestNumber).stream()
+                .map(dao -> (BrunchDAO) dao).collect(Collectors.toList());
+    }
 
     @Override
     public void create(BrunchDAO entity) {
@@ -56,12 +70,12 @@ public class BrunchRepository implements Repository<BrunchDAO> {
 
     @Override
     public void delete(long id) {
-        RepositoryUtils.delete(manager, DELETE, id);
+
     }
 
     @Override
     public Converter getConverter() {
-        return converter;
+        return null;
     }
 
     private long getNextId() {

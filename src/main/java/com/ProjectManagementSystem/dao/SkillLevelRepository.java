@@ -9,6 +9,8 @@ import com.ProjectManagementSystem.service.converter.SkillLevelConverter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SkillLevelRepository implements Repository<SkillLevelDAO> {
     private static final String SELECT_BY_ID = "SELECT id, name FROM skill_level WHERE id = ?;";
@@ -29,6 +31,17 @@ public class SkillLevelRepository implements Repository<SkillLevelDAO> {
         return (SkillLevelDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
     }
 
+    @Override
+    public List<SkillLevelDAO> findByString(String requestField, String requestText) {
+        return RepositoryUtils.findByString(manager, converter, SELECT_BY_ID, requestField, requestText).stream()
+                .map(dao -> (SkillLevelDAO) dao).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SkillLevelDAO> findByNumber(String requestField, long requestNumber) {
+        return RepositoryUtils.findByNumber(manager, converter, SELECT_BY_ID, requestField, requestNumber).stream()
+                .map(dao -> (SkillLevelDAO) dao).collect(Collectors.toList());
+    }
 
     @Override
     public void create(SkillLevelDAO entity) {
@@ -56,11 +69,13 @@ public class SkillLevelRepository implements Repository<SkillLevelDAO> {
     }
 
     @Override
-    public void delete(long id) {RepositoryUtils.delete(manager, DELETE, id);}
+    public void delete(long id) {
+
+    }
 
     @Override
     public Converter getConverter() {
-        return converter;
+        return null;
     }
 
     private long getNextId() {
