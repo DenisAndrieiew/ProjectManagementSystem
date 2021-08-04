@@ -16,8 +16,6 @@ public class DevelopersInProjectsRepository implements Repository<DevelopersInPr
     public static final String NEXT_ID = "SELECT MAX(id)+1 FROM devs_in_project;";
     private static final String SELECT_BY_ID = "SELECT id, dev_id, project_id, " +
             "FROM devs_in_project WHERE id = ?;";
-    private static final String SELECT_BY = "SELECT id, dev_id, project_id, " +
-            "FROM devs_in_project WHERE ;";
     private static final String UPDATE = "UPDATE devs_in_project SET dev_id=?, project_id=?, " +
             "WHERE id=?;";
     private static final String INSERT = "INSERT INTO devs_in_project (dev_id, project_id)" +
@@ -35,17 +33,7 @@ public class DevelopersInProjectsRepository implements Repository<DevelopersInPr
     public DevelopersInProjectsDAO findById(long id) {
         return (DevelopersInProjectsDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
     }
-    @Override
-    public List<DevelopersInProjectsDAO> findByString(String requestField, String requestText) {
-        return RepositoryUtils.findByString(manager, converter, SELECT_BY, requestField, requestText).stream()
-                .map(dao->(DevelopersInProjectsDAO)dao).collect(Collectors.toList());
-    }
 
-    @Override
-    public List<DevelopersInProjectsDAO> findByNumber(String requestField, long requestNumber) {
-        return RepositoryUtils.findByNumber(manager, converter, SELECT_BY, requestField, requestNumber).stream()
-                .map(dao->(DevelopersInProjectsDAO)dao).collect(Collectors.toList());
-    }
 
 
     @Override

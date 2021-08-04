@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 public class CustomersRepository implements Repository<CustomersDAO> {
 
     private static final String SELECT_BY_ID = "SELECT id, name FROM customers WHERE id = ?;";
-    private static final String SELECT_BY = "SELECT id, name FROM customers WHERE ";
     private static final String INSERT = "INSERT INTO customers (id, name) VALUES (?, ?);";
     private static final String UPDATE = "UPDATE customers SET name=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM customers WHERE id=?;";
@@ -32,18 +31,6 @@ public class CustomersRepository implements Repository<CustomersDAO> {
         return (CustomersDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
     }
 
-    @Override
-    public List<CustomersDAO> findByString(String requestField, String requestText) {
-        return RepositoryUtils.findByString(manager, converter, SELECT_BY, requestField, requestText)
-                .stream().map(dao -> (CustomersDAO) dao).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<CustomersDAO> findByNumber(String requestField, long requestNumber) {
-        return RepositoryUtils.findByNumber(manager, converter, SELECT_BY, requestField, requestNumber)
-                .stream().map(dao -> (CustomersDAO) dao).collect(Collectors.toList());
-
-    }
 
     @Override
     public void create(CustomersDAO entity) {
@@ -77,7 +64,7 @@ public class CustomersRepository implements Repository<CustomersDAO> {
 
     @Override
     public Converter getConverter() {
-        return null;
+        return converter;
     }
 
     private long getNextId() {
