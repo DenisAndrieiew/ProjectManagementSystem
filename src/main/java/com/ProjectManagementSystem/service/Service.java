@@ -6,10 +6,10 @@ import com.ProjectManagementSystem.dto.DataTransferObject;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 public class Service {
-    private final Repository<DataAccessObject> repository;
+    private final Repository repository;
     private final Converter<DataAccessObject, DataTransferObject> converter;
 
-    public Service(Repository<DataAccessObject> repository) {
+    public Service(Repository repository) {
         this.repository = repository;
         this.converter = repository.getConverter();
     }

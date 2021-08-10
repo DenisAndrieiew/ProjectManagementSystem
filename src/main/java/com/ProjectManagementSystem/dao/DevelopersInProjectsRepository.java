@@ -1,5 +1,6 @@
 package com.ProjectManagementSystem.dao;
 
+import com.ProjectManagementSystem.dao.model.DeveloperDAO;
 import com.ProjectManagementSystem.dao.model.DevelopersInProjectsDAO;
 import com.ProjectManagementSystem.dto.DevelopersInProjectsDTO;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;

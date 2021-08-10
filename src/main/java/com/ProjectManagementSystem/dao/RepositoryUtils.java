@@ -54,6 +54,7 @@ public class RepositoryUtils {
         return null;
     }
 
+
     public static void delete(DatabaseConnectionManager manager, String delete, long id) {
         try (Connection connection = manager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(delete)) {

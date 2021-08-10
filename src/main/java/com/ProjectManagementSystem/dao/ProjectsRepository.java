@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ProjectsRepository implements Repository<ProjectsDAO> {
+public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
     private static final String SELECT_BY_ID = "SELECT id, name, customer_id, company_id," +
             "description, cost, begin_date FROM projects WHERE id = ?;";
     private static final String SELECT_BY = "SELECT id, name, customer_id, company_id," +

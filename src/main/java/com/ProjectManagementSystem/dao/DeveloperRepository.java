@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class DeveloperRepository implements Repository<DeveloperDAO> {
+public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
     private static final String SELECT_BY_ID = "SELECT id, first_name, last_name, age," +
             " dev_sex, comments, salary FROM developers WHERE id = ?;";
     private static final String SELECT_BY = "SELECT id, first_name, last_name, age," +
@@ -24,6 +24,8 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
             "age=?, dev_sex=?, comments=?, salary=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM developers WHERE id=?;";
     private static final String NEXT_ID = "SELECT MAX(id)+1 FROM developers;";
+    private static final String SELECT_ALL = "SELECT id, first_name, last_name, age," +
+            " dev_sex, comments, salary FROM developers";
 
     private final DatabaseConnectionManager manager;
     private final Converter<DeveloperDAO, DeveloperDTO> converter = new DeveloperConverter();
@@ -49,6 +51,12 @@ public class DeveloperRepository implements Repository<DeveloperDAO> {
         return RepositoryUtils.findByNumber(manager, converter, SELECT_BY, requestField, requestNumber).stream()
                 .map(dao -> (DeveloperDAO) dao).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<DeveloperDAO> findAll() {
+        return RepositoryUtils.findAll(manager, converter, SELECT_ALL).stream()
+                .map(dao -> (DeveloperDAO) dao).collect(Collectors.toList());
     }
 
     @Override
