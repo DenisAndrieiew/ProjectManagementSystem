@@ -1,8 +1,6 @@
 package com.ProjectManagementSystem.jdbc.config;
 
 import com.ProjectManagementSystem.service.PropertiesConfig;
-import com.ProjectManagementSystem.view.Console;
-import com.ProjectManagementSystem.view.View;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -13,6 +11,8 @@ import java.util.Objects;
 public class DatabaseConnectionManager {
     private static HikariDataSource ds;
 
+    private DatabaseConnectionManager() {
+    }
 
     public static void init() {
         PropertiesConfig propertiesLoader = new PropertiesConfig();
@@ -26,15 +26,6 @@ public class DatabaseConnectionManager {
             return ds;
         }
         return ds;
-    }
-    public Connection getConnection() {
-        init();
-        try {
-            return ds.getConnection();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-            throw new RuntimeException(throwable);
-        }
     }
 
     private static void initDataSource(PropertiesConfig propertiesLoader) {
@@ -51,6 +42,16 @@ public class DatabaseConnectionManager {
             ds = new HikariDataSource(config);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public Connection getConnection() {
+        init();
+        try {
+            return ds.getConnection();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+            throw new RuntimeException(throwable);
         }
     }
 }
