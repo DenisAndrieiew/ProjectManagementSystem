@@ -3,12 +3,11 @@ package com.ProjectManagementSystem.controller.commands;
 import com.ProjectManagementSystem.dao.DevelopersInProjectsRepository;
 import com.ProjectManagementSystem.dao.ProjectsRepository;
 import com.ProjectManagementSystem.dto.ProjectsDTO;
-import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.view.View;
 
 import java.util.Comparator;
 
-public class ProjectList implements Command{
+public class ProjectList implements Command {
     private View view;
 
     public ProjectList(View view) {
@@ -19,12 +18,12 @@ public class ProjectList implements Command{
 
     @Override
     public void execute() {
-        DatabaseConnectionManager connectionManager = DatabaseConnectionManager.getInstance();
-        ProjectsRepository projectsRepository = new ProjectsRepository(connectionManager);
-        DevelopersInProjectsRepository developers = new DevelopersInProjectsRepository(connectionManager);
-        projectsRepository.findAll().stream().map(project->(ProjectsDTO) projectsRepository.getConverter().toDTO(project))
+        ProjectsRepository projectsRepository = new ProjectsRepository();
+        DevelopersInProjectsRepository developers = new DevelopersInProjectsRepository();
+        projectsRepository.findAll().stream().
+                map(project -> (ProjectsDTO) projectsRepository.getConverter().toDTO(project))
                 .sorted(Comparator.comparing(ProjectsDTO::getBeginDate))
-                .forEach(project->{
+                .forEach(project -> {
                     view.writeL(project.getBeginDate().toString());
                     view.writeL(project.getName());
                     view.write(String.valueOf(developers.findByNumber("project_id", project.getId()).size()));

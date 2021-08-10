@@ -1,24 +1,19 @@
 package com.ProjectManagementSystem.controller.commands;
 
-import com.ProjectManagementSystem.dao.BrunchRepository;
 import com.ProjectManagementSystem.dao.DevSkillsRepository;
 import com.ProjectManagementSystem.dao.DeveloperRepository;
 import com.ProjectManagementSystem.dao.SkillLevelRepository;
-import com.ProjectManagementSystem.dao.model.BrunchDAO;
 import com.ProjectManagementSystem.dao.model.SkillLevelDAO;
-import com.ProjectManagementSystem.dto.BrunchDTO;
 import com.ProjectManagementSystem.dto.DevSkillsDTO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.SkillLevelDTO;
-import com.ProjectManagementSystem.dto.enums.Brunch;
 import com.ProjectManagementSystem.dto.enums.SkillLevel;
-import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.view.View;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-public class DevsByLevel implements Command{
+public class DevsByLevel implements Command {
     private View view;
 
     public DevsByLevel(View view) {
@@ -36,15 +31,14 @@ public class DevsByLevel implements Command{
             level = Arrays.stream(SkillLevel.values()).filter(level1 -> level1.toString().equals(levelName))
                     .findAny().orElse(null);
         }
-        DatabaseConnectionManager connectionManager = DatabaseConnectionManager.getInstance();
-        SkillLevelRepository levelRepository = new SkillLevelRepository(connectionManager);
+        SkillLevelRepository levelRepository = new SkillLevelRepository();
         SkillLevelDAO levelDAO = levelRepository.findByString("name", level.toString()).get(0);
         SkillLevelDTO levelDTO = (SkillLevelDTO) levelRepository.getConverter().toDTO(levelDAO);
-        DeveloperRepository developerRepository = new DeveloperRepository(connectionManager);
-        DevSkillsRepository devSkillsRepository = new DevSkillsRepository(connectionManager);
+        DeveloperRepository developerRepository = new DeveloperRepository();
+        DevSkillsRepository devSkillsRepository = new DevSkillsRepository();
 
         devSkillsRepository.findByNumber("skill_level", levelDTO.getId()).stream()
-                .map(devSkillsDAO ->  (DevSkillsDTO) devSkillsRepository.getConverter().toDTO(devSkillsDAO))
+                .map(devSkillsDAO -> (DevSkillsDTO) devSkillsRepository.getConverter().toDTO(devSkillsDAO))
                 .map(devSkillsDTO -> (DeveloperDTO) developerRepository.getConverter().toDTO(
                         developerRepository.findById(devSkillsDTO.getDevId())))
                 .forEach(developer -> view.write(developer.getFirstName() + " " + developer.getLastName()));

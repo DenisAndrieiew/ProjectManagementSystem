@@ -4,6 +4,7 @@ import com.ProjectManagementSystem.dao.model.DataAccessObject;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.service.converter.Converter;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,9 +13,9 @@ import java.util.List;
 
 public class RepositoryUtils {
 
-    public static List<DataAccessObject> findById(DatabaseConnectionManager manager, Converter converter,
+    public static List<DataAccessObject> findById(DataSource dataSource, Converter converter,
                                                   String select, long id) {
-        try (Connection connection = manager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -26,9 +27,9 @@ public class RepositoryUtils {
         return null;
     }
 
-    public static List<DataAccessObject> findByNumber(DatabaseConnectionManager manager, Converter converter,
+    public static List<DataAccessObject> findByNumber(DataSource dataSource, Converter converter,
                                                       String select, String requestField, long requestNumber) {
-        try (Connection connection = manager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(select + requestField + "=?;")) {
             preparedStatement.setLong(1, requestNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -40,9 +41,9 @@ public class RepositoryUtils {
         return null;
     }
 
-    public static List<DataAccessObject> findByString(DatabaseConnectionManager manager, Converter converter,
+    public static List<DataAccessObject> findByString(DataSource dataSource, Converter converter,
                                                       String select, String requestField, String requestText) {
-        try (Connection connection = manager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(select + requestField + "=?;")) {
             preparedStatement.setString(1, requestText);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -55,8 +56,8 @@ public class RepositoryUtils {
     }
 
 
-    public static void delete(DatabaseConnectionManager manager, String delete, long id) {
-        try (Connection connection = manager.getConnection();
+    public static void delete(DataSource dataSource, String delete, long id) {
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(delete)) {
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
@@ -65,8 +66,8 @@ public class RepositoryUtils {
         }
     }
 
-    protected static List<DataAccessObject> findAll(DatabaseConnectionManager manager, Converter converter, String select){
-        try (Connection connection = manager.getConnection();
+    protected static List<DataAccessObject> findAll(DataSource dataSource, Converter converter, String select){
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             return converter.fromResultSet(resultSet);
@@ -78,8 +79,8 @@ public class RepositoryUtils {
     }
 
 
-    protected static long getNextId(DatabaseConnectionManager manager, String next_id) {
-        try (Connection connection = manager.getConnection();
+    protected static long getNextId(DataSource dataSource, String next_id) {
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(next_id)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();

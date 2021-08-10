@@ -6,6 +6,7 @@ import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.service.converter.Converter;
 import com.ProjectManagementSystem.service.converter.DevSkillsConverter;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,35 +24,35 @@ public class DevSkillsRepository implements Repository<DevSkillsDAO> {
     private static final String INSERT = "INSERT INTO dev_skills (dev_id, skill_id, skill_level)" +
             " VALUES (?, ?, ?);";
     private static final String DELETE = "DELETE FROM dev_skills WHERE id=?;";
-    private final DatabaseConnectionManager manager;
+    private final DataSource dataSource;
     private final Converter<DevSkillsDAO, DevSkillsDTO> converter = new DevSkillsConverter();
 
-    public DevSkillsRepository(DatabaseConnectionManager manager) {
-        this.manager = manager;
+    public DevSkillsRepository() {
+        this.dataSource = DatabaseConnectionManager.getDataSource();
     }
 
 
     @Override
     public DevSkillsDAO findById(long id) {
-        return (DevSkillsDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
+        return (DevSkillsDAO) RepositoryUtils.findById(dataSource, converter, SELECT_BY_ID, id).get(0);
     }
 
     @Override
     public List<DevSkillsDAO> findByString(String requestField, String requestText) {
-        return RepositoryUtils.findByString(manager, converter, SELECT_BY, requestField, requestText).stream()
+        return RepositoryUtils.findByString(dataSource, converter, SELECT_BY, requestField, requestText).stream()
                 .map(dao -> (DevSkillsDAO) dao).collect(Collectors.toList());
     }
 
     @Override
     public List<DevSkillsDAO> findByNumber(String requestField, long requestNumber) {
-        return RepositoryUtils.findByNumber(manager, converter, SELECT_BY, requestField, requestNumber).stream()
+        return RepositoryUtils.findByNumber(dataSource, converter, SELECT_BY, requestField, requestNumber).stream()
                 .map(dao -> (DevSkillsDAO) dao).collect(Collectors.toList());
     }
 
 
     @Override
     public void create(DevSkillsDAO entity) {
-        try (Connection connection = manager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT)) {
             entity.setId(getNextId());
             statement.setLong(1, entity.getId());
@@ -66,7 +67,7 @@ public class DevSkillsRepository implements Repository<DevSkillsDAO> {
 
     @Override
     public void update(DevSkillsDAO entity) {
-        try (Connection connection = manager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE)) {
             statement.setLong(4, entity.getId());
             statement.setLong(1, entity.getDevId());
@@ -80,7 +81,7 @@ public class DevSkillsRepository implements Repository<DevSkillsDAO> {
 
     @Override
     public void delete(long id) {
-        RepositoryUtils.delete(manager, DELETE, id);
+        RepositoryUtils.delete(dataSource, DELETE, id);
     }
 
     @Override
@@ -90,6 +91,6 @@ public class DevSkillsRepository implements Repository<DevSkillsDAO> {
 
 
     private long getNextId() {
-        return RepositoryUtils.getNextId(manager, NEXT_ID);
+        return RepositoryUtils.getNextId(dataSource, NEXT_ID);
     }
 }

@@ -12,10 +12,7 @@ import java.util.Objects;
 
 public class DatabaseConnectionManager {
     private static HikariDataSource ds;
-    private static DatabaseConnectionManager connectionManager;
 
-    public DatabaseConnectionManager() {this.connectionManager=this;
-    }
 
     public static void init() {
         PropertiesConfig propertiesLoader = new PropertiesConfig();
@@ -55,9 +52,6 @@ public class DatabaseConnectionManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    public static DatabaseConnectionManager getInstance(){
-        return connectionManager;
     }
 }
 

@@ -8,7 +8,6 @@ import com.ProjectManagementSystem.dto.BrunchDTO;
 import com.ProjectManagementSystem.dto.DevSkillsDTO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.enums.Brunch;
-import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.view.View;
 
 import java.util.Arrays;
@@ -33,12 +32,11 @@ public class DevsByBrunch implements Command {
             brunch = Arrays.stream(Brunch.values()).filter(brunch1 -> brunch1.toString().equals(brunchName))
                     .findAny().orElse(null);
         }
-        DatabaseConnectionManager connectionManager = DatabaseConnectionManager.getInstance();
-        BrunchRepository brunchRepository = new BrunchRepository(connectionManager);
+        BrunchRepository brunchRepository = new BrunchRepository();
         BrunchDAO brunchDAO = brunchRepository.findByString("name", brunch.toString()).get(0);
         BrunchDTO brunchDTO = (BrunchDTO) brunchRepository.getConverter().toDTO(brunchDAO);
-        DeveloperRepository developerRepository = new DeveloperRepository(connectionManager);
-        DevSkillsRepository devSkillsRepository = new DevSkillsRepository(connectionManager);
+        DeveloperRepository developerRepository = new DeveloperRepository();
+        DevSkillsRepository devSkillsRepository = new DevSkillsRepository();
         devSkillsRepository.findByNumber("skill_id", brunchDTO.getId()).stream()
                 .map(devSkillsDAO -> (DevSkillsDTO) devSkillsRepository.getConverter().toDTO(devSkillsDAO))
                 .map(devSkillsDTO -> (DeveloperDTO) developerRepository.getConverter().toDTO(

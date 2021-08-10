@@ -6,6 +6,7 @@ import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.service.converter.Converter;
 import com.ProjectManagementSystem.service.converter.DeveloperConverter;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -27,41 +28,41 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
     private static final String SELECT_ALL = "SELECT id, first_name, last_name, age," +
             " dev_sex, comments, salary FROM developers";
 
-    private final DatabaseConnectionManager manager;
+    private final DataSource dataSource;
     private final Converter<DeveloperDAO, DeveloperDTO> converter = new DeveloperConverter();
 
-    public DeveloperRepository(DatabaseConnectionManager manager) {
-        this.manager = manager;
+    public DeveloperRepository() {
+        this.dataSource=DatabaseConnectionManager.getDataSource();
     }
 
     @Override
     public DeveloperDAO findById(long id) {
-        return (DeveloperDAO) RepositoryUtils.findById(manager, converter, SELECT_BY_ID, id).get(0);
+        return (DeveloperDAO) RepositoryUtils.findById(dataSource, converter, SELECT_BY_ID, id).get(0);
     }
 
     @Override
     public List<DeveloperDAO> findByString(String requestField, String requestText) {
-        return RepositoryUtils.findByString(manager, converter, SELECT_BY, requestField, requestText).stream()
+        return RepositoryUtils.findByString(dataSource, converter, SELECT_BY, requestField, requestText).stream()
                 .map(dao -> (DeveloperDAO) dao).collect(Collectors.toList());
 
     }
 
     @Override
     public List<DeveloperDAO> findByNumber(String requestField, long requestNumber) {
-        return RepositoryUtils.findByNumber(manager, converter, SELECT_BY, requestField, requestNumber).stream()
+        return RepositoryUtils.findByNumber(dataSource, converter, SELECT_BY, requestField, requestNumber).stream()
                 .map(dao -> (DeveloperDAO) dao).collect(Collectors.toList());
 
     }
 
     @Override
     public List<DeveloperDAO> findAll() {
-        return RepositoryUtils.findAll(manager, converter, SELECT_ALL).stream()
+        return RepositoryUtils.findAll(dataSource, converter, SELECT_ALL).stream()
                 .map(dao -> (DeveloperDAO) dao).collect(Collectors.toList());
     }
 
     @Override
     public void create(DeveloperDAO entity) {
-        try (Connection connection = manager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT)) {
             entity.setId(getNextId());
             statement.setLong(1, entity.getId());
@@ -79,7 +80,7 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
 
     @Override
     public void update(DeveloperDAO entity) {
-        try (Connection connection = manager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE)) {
             statement.setLong(7, entity.getId());
             statement.setString(1, entity.getFirstName());
@@ -101,11 +102,11 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
 
     @Override
     public void delete(long id) {
-        RepositoryUtils.delete(manager, DELETE, id);
+        RepositoryUtils.delete(dataSource, DELETE, id);
     }
 
 
     private long getNextId() {
-        return RepositoryUtils.getNextId(manager, NEXT_ID);
+        return RepositoryUtils.getNextId(dataSource, NEXT_ID);
     }
 }

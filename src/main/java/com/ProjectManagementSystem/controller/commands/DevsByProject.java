@@ -7,7 +7,6 @@ import com.ProjectManagementSystem.dao.model.ProjectsDAO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.DevelopersInProjectsDTO;
 import com.ProjectManagementSystem.dto.ProjectsDTO;
-import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.view.View;
 
 import java.util.List;
@@ -24,13 +23,12 @@ public class DevsByProject implements Command {
     public void execute() {
         view.write("please input project name");
         String projectName = view.read();
-        DatabaseConnectionManager connectionManager = DatabaseConnectionManager.getInstance();
-        ProjectsRepository projectsRepository = new ProjectsRepository(connectionManager);
+        ProjectsRepository projectsRepository = new ProjectsRepository();
         List<ProjectsDAO> projectsDAO = projectsRepository.findByString("name", projectName);
         if (projectsDAO.size() > 0) {
             ProjectsDTO project = (ProjectsDTO) projectsRepository.getConverter().toDTO(projectsDAO.get(0));
-            DevelopersInProjectsRepository devsInProjectsRepository = new DevelopersInProjectsRepository(connectionManager);
-            DeveloperRepository developerRepository = new DeveloperRepository(connectionManager);
+            DevelopersInProjectsRepository devsInProjectsRepository = new DevelopersInProjectsRepository();
+            DeveloperRepository developerRepository = new DeveloperRepository();
             devsInProjectsRepository.findByNumber("project_id", project.getId()).stream()
                     .map(entity -> devsInProjectsRepository.getConverter().toDTO(entity))
                     .map(entity -> (DevelopersInProjectsDTO) entity)
