@@ -4,8 +4,6 @@ import com.ProjectManagementSystem.dao.DeveloperRepository;
 import com.ProjectManagementSystem.dao.EntityRepository;
 import com.ProjectManagementSystem.dao.model.DeveloperDAO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
-import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
-import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 import javax.servlet.ServletException;
@@ -18,14 +16,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet("/developers")
-public class DeveloperServlet extends HttpServlet {
+public class DevelopersServlet extends HttpServlet {
     private EntityRepository<DeveloperDAO> repository;
-private Converter converter;
+    private Converter converter;
 
     @Override
     public void init() throws ServletException {
         this.repository = new DeveloperRepository();
-        this.converter=repository.getConverter();
+        this.converter = repository.getConverter();
     }
 
     @Override

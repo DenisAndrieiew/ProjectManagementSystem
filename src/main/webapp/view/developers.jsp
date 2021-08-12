@@ -42,9 +42,10 @@
                            </ol>
                      </td>
                      <td border="0" cellpadding="0">
-                     <p><button type = "update-button" style="background-color:#1E90FF">
+                     <p><a href="/developers/update">
+                            <button type = "update-button" style="background-color:#1E90FF">
                              update
-                     </button></p>
+                     </button></a></p>
                      <p><button type = "delete-button" style="background-color:#DC143C">
                                                   delete
                                           </button></p>
@@ -53,8 +54,10 @@
              </c:forEach>
         </tbody>
      </table>
-    <div align="center"> <button type = "button" style="background-color:#50ff50">
-                                  Create new developer
-                          </button></div>
+    <div align="center"> <a href="/developers/new">
+    <button type = "button" style="background-color:#50ff50">
+        Create new developer
+    </button></a></div>
     </body>
 </html>
+

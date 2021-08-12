@@ -14,13 +14,15 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BrunchRepository implements Repository<BrunchDAO> {
+public class BrunchRepository implements EntityRepository<BrunchDAO> {
     private static final String SELECT_BY_ID = "SELECT id, name FROM brunch WHERE id = ?;";
     private static final String SELECT_BY = "SELECT id, name FROM brunch WHERE ";
     private static final String INSERT = "INSERT INTO brunch (id, name) VALUES (?, ?);";
     private static final String UPDATE = "UPDATE brunch SET name=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM brunch WHERE id=?;";
     private static final String NEXT_ID = "SELECT MAX(id)+1 FROM developers;";
+    private static final String SELECT_ALL="SELECT id, name FROM brunch";
+
     private final DataSource dataSource;
     private final Converter<BrunchDAO, BrunchDTO> converter = new BrunchConverter();
 
@@ -83,5 +85,11 @@ public class BrunchRepository implements Repository<BrunchDAO> {
 
     private long getNextId() {
         return RepositoryUtils.getNextId(dataSource, NEXT_ID);
+    }
+
+    @Override
+    public List<BrunchDAO> findAll() {
+            return RepositoryUtils.findAll(dataSource, converter, SELECT_ALL).stream()
+                    .map(dao -> (BrunchDAO) dao).collect(Collectors.toList());
     }
 }
