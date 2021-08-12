@@ -1,4 +1,4 @@
-package com.ProjectManagementSystem;
+package com.ProjectManagementSystem.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
