@@ -18,7 +18,8 @@
               Sex: <select id="sex" name="sex">
                          <option value="MALE">Male</option>
                          <option value="FEMALE">Female</option>
-                       </select>
+                   </select>
+              Salary:   <input type="number" name="salary"/> <br/>
               </fieldset>
                  <fieldset>
                              <legend>Projects</legend>

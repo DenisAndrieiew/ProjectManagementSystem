@@ -2,6 +2,7 @@ package com.ProjectManagementSystem.dao;
 
 import com.ProjectManagementSystem.dao.model.DeveloperDAO;
 import com.ProjectManagementSystem.dao.model.DevelopersInProjectsDAO;
+import com.ProjectManagementSystem.dao.model.ProjectsDAO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.service.converter.Converter;
@@ -11,7 +12,6 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -80,8 +80,11 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
             ex.printStackTrace();
         }
         DevelopersInProjectsRepository developersInProjectsRepository = new DevelopersInProjectsRepository();
-        entity.getProjects().forEach(p -> developersInProjectsRepository
+        List<ProjectsDAO> projects = entity.getProjects();
+        projects.forEach(p -> developersInProjectsRepository
                 .create(new DevelopersInProjectsDAO(entity.getId(), p.getId())));
+        ProjectsRepository projectsRepository = new ProjectsRepository();
+        projects.forEach(p -> projectsRepository.updateCost(p.getId(), entity.getSalary()));
     }
 
     @Override

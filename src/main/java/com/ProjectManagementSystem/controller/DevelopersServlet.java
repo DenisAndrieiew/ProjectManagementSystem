@@ -51,6 +51,7 @@ public class DevelopersServlet extends HttpServlet {
         developerDTO.setAge(Integer.parseInt(req.getParameter("age")));
         developerDTO.setSex(Sex.valueOf(req.getParameter("sex")));
         String[] projectsFromForm = req.getParameterValues("in_project");
+        developerDTO.setSalary(Integer.parseInt(req.getParameter("salary")));
         if (Objects.nonNull(projectsFromForm)) {
             List<String> projects = Arrays.asList(projectsFromForm);
             developerDTO.setProjects(projects);

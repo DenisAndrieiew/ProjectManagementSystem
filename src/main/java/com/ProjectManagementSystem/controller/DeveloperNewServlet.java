@@ -1,17 +1,13 @@
 package com.ProjectManagementSystem.controller;
 
 import com.ProjectManagementSystem.dao.BrunchRepository;
-import com.ProjectManagementSystem.dao.DeveloperRepository;
 import com.ProjectManagementSystem.dao.EntityRepository;
 import com.ProjectManagementSystem.dao.ProjectsRepository;
 import com.ProjectManagementSystem.dao.model.BrunchDAO;
-import com.ProjectManagementSystem.dao.model.DeveloperDAO;
 import com.ProjectManagementSystem.dao.model.ProjectsDAO;
 import com.ProjectManagementSystem.dto.BrunchDTO;
-import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.ProjectsDTO;
 import com.ProjectManagementSystem.service.converter.Converter;
-import com.ProjectManagementSystem.service.converter.ProjectsConverter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,9 +28,9 @@ public class DeveloperNewServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         this.projectRepository = new ProjectsRepository();
-        this.projectConverter= projectRepository.getConverter();
-        this.brunchRepository=new BrunchRepository();
-        this.brunchConverter=brunchRepository.getConverter();
+        this.projectConverter = projectRepository.getConverter();
+        this.brunchRepository = new BrunchRepository();
+        this.brunchConverter = brunchRepository.getConverter();
     }
 
     @Override

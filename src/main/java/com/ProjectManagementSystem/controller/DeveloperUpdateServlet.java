@@ -28,9 +28,9 @@ public class DeveloperUpdateServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         this.projectRepository = new ProjectsRepository();
-        this.projectConverter= projectRepository.getConverter();
-        this.brunchRepository=new BrunchRepository();
-        this.brunchConverter=brunchRepository.getConverter();
+        this.projectConverter = projectRepository.getConverter();
+        this.brunchRepository = new BrunchRepository();
+        this.brunchConverter = brunchRepository.getConverter();
     }
 
     @Override
