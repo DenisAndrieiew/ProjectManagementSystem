@@ -1,36 +1,48 @@
 package com.ProjectManagementSystem.dto;
 
 import java.time.Instant;
+import java.util.List;
 
 public class ProjectsDTO implements DataTransferObject {
     private long id;
     private String name;
-    private long customerId;
-    private long companyId;
+    private String customer;
+    private String company;
     private String description;
     private int cost;
     private Instant beginDate;
+    private List<String> developers;
 
     public ProjectsDTO() {
     }
 
-    public ProjectsDTO(String name, long customerId, long companyId, String description, int cost, Instant beginDate) {
+    public ProjectsDTO(String name, String customer, String company,
+                       String description, int cost, Instant beginDate) {
         this.name = name;
-        this.customerId = customerId;
-        this.companyId = companyId;
+        this.customer = customer;
+        this.company = company;
         this.description = description;
         this.cost = cost;
         this.beginDate = beginDate;
     }
 
-    public ProjectsDTO(long id, String name, long customerId, long companyId, String description, int cost, Instant beginDate) {
+    public ProjectsDTO(long id, String name, String customer, String company,
+                       String description, int cost, Instant beginDate) {
         this.id = id;
         this.name = name;
-        this.customerId = customerId;
-        this.companyId = companyId;
+        this.customer = customer;
+        this.company = company;
         this.description = description;
         this.cost = cost;
         this.beginDate = beginDate;
+    }
+
+    public List<String> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(List<String> developers) {
+        this.developers = developers;
     }
 
     public long getId() {
@@ -49,20 +61,20 @@ public class ProjectsDTO implements DataTransferObject {
         this.name = name;
     }
 
-    public long getCustomerId() {
-        return customerId;
+    public String getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
+    public void setCustomer(String customerId) {
+        this.customer = customerId;
     }
 
-    public long getCompanyId() {
-        return companyId;
+    public String getCompany() {
+        return company;
     }
 
-    public void setCompanyId(long companyId) {
-        this.companyId = companyId;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public String getDescription() {

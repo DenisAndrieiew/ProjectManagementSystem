@@ -30,7 +30,7 @@ public class DevelopersServlet extends HttpServlet {
     public void init() throws ServletException {
         this.repository = new DeveloperRepository();
         this.converter = repository.getConverter();
-        this.developerService=new Service(repository);
+        this.developerService = new Service(repository);
     }
 
     @Override
@@ -51,9 +51,10 @@ public class DevelopersServlet extends HttpServlet {
         developerDTO.setAge(Integer.parseInt(req.getParameter("age")));
         developerDTO.setSex(Sex.valueOf(req.getParameter("sex")));
         String[] projectsFromForm = req.getParameterValues("in_project");
-        if (Objects.nonNull(projectsFromForm)){
-        List<String> projects = Arrays.asList(projectsFromForm);
-        developerDTO.setProjects(projects);}
+        if (Objects.nonNull(projectsFromForm)) {
+            List<String> projects = Arrays.asList(projectsFromForm);
+            developerDTO.setProjects(projects);
+        }
         developerService.create(developerDTO);
         req.setAttribute("developer", developerDTO.toString());
         resp.sendRedirect(req.getContextPath() + "/developers");

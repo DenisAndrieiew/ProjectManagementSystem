@@ -14,7 +14,7 @@
             <i></i>
         </button>
         <div class="dropdown-content">
-            <a href="#">Show Projects</a>
+            <a href="${pageContext.request.contextPath}/projects">Show Projects</a>
             <a href="#">Add Project</a>
         </div>
     </div>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn">Projects
+            <button class="dropbtn">Customers
                 <i></i>
             </button>
             <div class="dropdown-content">

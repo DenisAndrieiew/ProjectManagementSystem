@@ -1,7 +1,7 @@
 package com.ProjectManagementSystem.dao.model;
 
 import java.time.Instant;
-import java.time.LocalDate;
+import java.util.List;
 
 public class ProjectsDAO implements DataAccessObject {
     private long id;
@@ -11,6 +11,7 @@ public class ProjectsDAO implements DataAccessObject {
     private String description;
     private int cost;
     private Instant begin_date;
+    private List<Long> developers;
 
     public ProjectsDAO() {
     }
@@ -32,6 +33,14 @@ public class ProjectsDAO implements DataAccessObject {
         this.description = description;
         this.cost = cost;
         this.begin_date = begin_date;
+    }
+
+    public List<Long> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(List<Long> developers) {
+        this.developers = developers;
     }
 
     @Override

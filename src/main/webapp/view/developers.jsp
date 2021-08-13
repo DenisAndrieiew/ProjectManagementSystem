@@ -8,6 +8,7 @@
     <body>
     <c:import url="/view/navigate.jsp"/>
     <p>Project Management System</p>
+    <p>DEVELOPERS</p>
     <table border="1" cellpadding="2%" width="100%" >
         <thead>
             <tr align="center">
