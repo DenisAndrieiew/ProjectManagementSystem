@@ -6,7 +6,10 @@
     </head>
     <body>
     <p>Project Management System</p>
+
+<c:out value="${num % 2 eq 0 ? 'even': 'odd'}"/>
      <form name="developerForm" method=${method} action="/developers">
+<c:set var="button_text" value="${method eq 'post' ? 'add': 'update'}"/>
           <fieldset>
               <legend>Personal data</legend>
               FirstName: <input type="text" name="firstName"/> <br/>
@@ -35,7 +38,7 @@
                                </select></div>
                     </c:forEach>
                  </fieldset>
-                <input type="submit" value="add developer" />
+                <input type="submit" value="${button_text} user" />
             </form>
 
         </body>
