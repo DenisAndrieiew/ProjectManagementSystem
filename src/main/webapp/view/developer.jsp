@@ -4,10 +4,8 @@
     <head>
         <title>Project Management System</title>
     </head>
-    <body>
-    <p>Project Management System</p>
 
-
+<body>
      <form name="developerForm" method=${method} action="/developers">
 <c:set var="button_text" value="${method eq 'post' ? 'add': 'update'}"/>
           <fieldset>
@@ -23,7 +21,7 @@
                  <fieldset>
                              <legend>Projects</legend>
                              <c:forEach var="project" items="${projects}">
-                             <input type="checkbox" name="in_project" value=${project.name}>${project.name}<br>
+                             <input type="checkbox" name="in_project" value='${project.name}'>${project.name}<br>
                                                            </c:forEach>
                  </fieldset>
                  <fieldset>

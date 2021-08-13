@@ -2,6 +2,8 @@ package com.ProjectManagementSystem.dao.model;
 
 import com.ProjectManagementSystem.dto.enums.Sex;
 
+import java.util.List;
+
 public class DeveloperDAO implements DataAccessObject {
     private long id;
     private String firstName;
@@ -10,6 +12,7 @@ public class DeveloperDAO implements DataAccessObject {
     private Sex sex;
     private String comments;
     private int salary;
+    private List<ProjectsDAO> projects;
 
     public DeveloperDAO() {
     }
@@ -103,4 +106,11 @@ public class DeveloperDAO implements DataAccessObject {
         this.salary = salary;
     }
 
+    public List<ProjectsDAO> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<ProjectsDAO> projects) {
+        this.projects = projects;
+    }
 }

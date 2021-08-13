@@ -22,7 +22,7 @@ public class DevelopersInProjectsRepository implements Repository<DevelopersInPr
             "FROM devs_in_project WHERE ";
     private static final String UPDATE = "UPDATE devs_in_project SET dev_id=?, project_id=?, " +
             "WHERE id=?;";
-    private static final String INSERT = "INSERT INTO devs_in_project (dev_id, project_id)" +
+    private static final String INSERT = "INSERT INTO devs_in_project (id, dev_id, project_id)" +
             " VALUES (?, ?, ?);";
     private static final String DELETE = "DELETE FROM devs_in_project WHERE id=?;";
     private final DataSource dataSource;
@@ -52,6 +52,7 @@ public class DevelopersInProjectsRepository implements Repository<DevelopersInPr
 
     @Override
     public void create(DevelopersInProjectsDAO entity) {
+        if (entity.getId()==0){entity.setId(this.getNextId());}
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT)) {
             entity.setId(getNextId());

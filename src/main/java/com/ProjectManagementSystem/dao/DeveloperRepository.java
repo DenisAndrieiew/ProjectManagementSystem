@@ -1,6 +1,7 @@
 package com.ProjectManagementSystem.dao;
 
 import com.ProjectManagementSystem.dao.model.DeveloperDAO;
+import com.ProjectManagementSystem.dao.model.DevelopersInProjectsDAO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.service.Service;
@@ -77,10 +78,13 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
             statement.setString(6, entity.getComments());
             statement.setInt(7, entity.getSalary());
             statement.execute();
-        } catch (SQLException ex) {
+            } catch (SQLException ex) {
             ex.printStackTrace();
         }
-    }
+        DevelopersInProjectsRepository developersInProjectsRepository = new DevelopersInProjectsRepository();
+            entity.getProjects().forEach(p->developersInProjectsRepository
+                    .create(new DevelopersInProjectsDAO(entity.getId(), p.getId())));
+        }
 
     @Override
     public void update(DeveloperDAO entity) {

@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +36,7 @@ public class DevelopersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<DeveloperDTO> developers = repository.findAll().stream()
                 .map(developerDAO -> (DeveloperDTO) converter.toDTO(developerDAO))
+                .sorted(Comparator.comparing(DeveloperDTO::getId))
                 .collect(Collectors.toList());
         req.setAttribute("developers", developers);
         req.getRequestDispatcher("/view/developers.jsp").forward(req, resp);
@@ -46,7 +49,10 @@ public class DevelopersServlet extends HttpServlet {
         developerDTO.setLastName(req.getParameter("lastName"));
         developerDTO.setAge(Integer.parseInt(req.getParameter("age")));
         developerDTO.setSex(Sex.valueOf(req.getParameter("sex")));
+        List<String> projects = Arrays.asList(req.getParameterValues("in_project"));
+        developerDTO.setProjects(projects);
         developerService.create(developerDTO);
+        req.setAttribute("developer", developerDTO.toString());
         resp.sendRedirect(req.getContextPath() + "/developers");
     }
 
