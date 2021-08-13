@@ -9,6 +9,7 @@
     <table border="1" cellpadding="2%" width="100%" >
         <thead>
             <tr align="center">
+            <td>Id</td>
                 <td>First Name</td>
                 <td>Last Name</td>
                 <td>age</td>
@@ -22,6 +23,7 @@
         <tbody align="center">
              <c:forEach var="developer" items="${developers}">
                  <tr>
+                 <td>${developer.id}</td>
                      <td>${developer.firstName}</td>
                      <td>${developer.lastName}</td>
                      <td>${developer.age}</td>
@@ -46,7 +48,8 @@
                             <button type = "update-button" style="background-color:#1E90FF">
                              update
                      </button></a></p>
-                     <p><button type = "delete-button" style="background-color:#DC143C">
+                     <p><a href="/developers/delete?id=${developer.id}">
+                     <button type = "delete-button" style="background-color:#DC143C">
                                                   delete
                                           </button></p>
                      </td>

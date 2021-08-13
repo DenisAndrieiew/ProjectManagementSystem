@@ -7,7 +7,7 @@
     <body>
     <p>Project Management System</p>
 
-<c:out value="${num % 2 eq 0 ? 'even': 'odd'}"/>
+
      <form name="developerForm" method=${method} action="/developers">
 <c:set var="button_text" value="${method eq 'post' ? 'add': 'update'}"/>
           <fieldset>

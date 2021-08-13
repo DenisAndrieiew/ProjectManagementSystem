@@ -1,7 +1,6 @@
 package com.ProjectManagementSystem.dao;
 
 import com.ProjectManagementSystem.dao.model.DataAccessObject;
-import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 import javax.sql.DataSource;
@@ -66,7 +65,7 @@ public class RepositoryUtils {
         }
     }
 
-    protected static List<DataAccessObject> findAll(DataSource dataSource, Converter converter, String select){
+    protected static List<DataAccessObject> findAll(DataSource dataSource, Converter converter, String select) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             ResultSet resultSet = preparedStatement.executeQuery();

@@ -3,6 +3,7 @@ package com.ProjectManagementSystem.dao;
 import com.ProjectManagementSystem.dao.model.DeveloperDAO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
+import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 import com.ProjectManagementSystem.service.converter.DeveloperConverter;
 
@@ -23,7 +24,10 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
             "age, dev_sex, comments, salary) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String UPDATE = "UPDATE developers SET first_name=?, last_name=?, " +
             "age=?, dev_sex=?, comments=?, salary=? WHERE id=?;";
-    private static final String DELETE = "DELETE FROM developers WHERE id=?;";
+    private static final String DELETE ="DELETE FROM developers WHERE id=?";
+//                                        "DELETE FROM dev_skills as ds"+
+//                                        "USING devs_in_project as dp, developers as d"+
+//                                        "WHERE ds.dev_id = d.id AND dp.dev_id=d.id AND d.id=48;";
     private static final String NEXT_ID = "SELECT MAX(id)+1 FROM developers;";
     private static final String SELECT_ALL = "SELECT id, first_name, last_name, age," +
             " dev_sex, comments, salary FROM developers";

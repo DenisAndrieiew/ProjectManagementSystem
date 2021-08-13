@@ -3,8 +3,6 @@ package com.ProjectManagementSystem.controller;
 import com.ProjectManagementSystem.dao.DeveloperRepository;
 import com.ProjectManagementSystem.dao.EntityRepository;
 import com.ProjectManagementSystem.dao.model.DeveloperDAO;
-import com.ProjectManagementSystem.dto.DeveloperDTO;
-import com.ProjectManagementSystem.dto.enums.Sex;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
@@ -14,11 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
-@WebServlet("/developers")
-public class DevelopersServlet extends HttpServlet {
+@WebServlet("/developers/delete")
+public class DeveloperDeleteServlet extends HttpServlet {
     private EntityRepository<DeveloperDAO> repository;
     private Converter converter;
     private Service developerService;
@@ -29,26 +25,9 @@ public class DevelopersServlet extends HttpServlet {
         this.converter = repository.getConverter();
         this.developerService=new Service(repository);
     }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<DeveloperDTO> developers = repository.findAll().stream()
-                .map(developerDAO -> (DeveloperDTO) converter.toDTO(developerDAO))
-                .collect(Collectors.toList());
-        req.setAttribute("developers", developers);
-        req.getRequestDispatcher("/view/developers.jsp").forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        DeveloperDTO developerDTO = new DeveloperDTO();
-        developerDTO.setFirstName(req.getParameter("firstName"));
-        developerDTO.setLastName(req.getParameter("lastName"));
-        developerDTO.setAge(Integer.parseInt(req.getParameter("age")));
-        developerDTO.setSex(Sex.valueOf(req.getParameter("sex")));
-        developerService.create(developerDTO);
+        developerService.delete(Long.parseLong(req.getParameter("id")));
         resp.sendRedirect(req.getContextPath() + "/developers");
     }
-
-
 }
