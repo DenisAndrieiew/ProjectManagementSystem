@@ -27,6 +27,7 @@ public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
     private static final String NEXT_ID = "SELECT MAX(id)+1 FROM projects;";
     private static final String SELECT_ALL = "SELECT id, name, customer_id, company_id, "+
             "description, cost, begin_date FROM projects;";
+    private static final String UPDATE_COST = "UPDATE projects SET cost=cost+? WHERE id=?";
 
 
     private final DataSource dataSource;
@@ -109,5 +110,14 @@ public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
         return RepositoryUtils.findAll(dataSource, getConverter(), SELECT_ALL).stream().map(entity->(ProjectsDAO) entity)
                 .collect(Collectors.toList());
     }
-
+    public void updateCost(long id, int salary) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COST)) {
+            preparedStatement.setLong(2, id);
+            preparedStatement.setInt(1, salary);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

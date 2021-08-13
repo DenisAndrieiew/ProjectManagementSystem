@@ -25,6 +25,7 @@ public class DevelopersInProjectsRepository implements Repository<DevelopersInPr
     private static final String INSERT = "INSERT INTO devs_in_project (id, dev_id, project_id)" +
             " VALUES (?, ?, ?);";
     private static final String DELETE = "DELETE FROM devs_in_project WHERE id=?;";
+    private static final String DELETE_BY_USER = "DELETE FROM devs_in_project WHERE dev_id = ?;";
     private final DataSource dataSource;
     private final Converter<DevelopersInProjectsDAO, DevelopersInProjectsDTO> converter =
             new DevelopersInProjectsConverter();
@@ -81,6 +82,9 @@ public class DevelopersInProjectsRepository implements Repository<DevelopersInPr
     @Override
     public void delete(long id) {
         RepositoryUtils.delete(dataSource, DELETE, id);
+    }
+    public void deleteByUser(long id){
+        RepositoryUtils.delete(dataSource, DELETE_BY_USER, id);
     }
 
     @Override

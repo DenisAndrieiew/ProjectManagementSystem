@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @WebServlet("/developers")
@@ -49,8 +50,10 @@ public class DevelopersServlet extends HttpServlet {
         developerDTO.setLastName(req.getParameter("lastName"));
         developerDTO.setAge(Integer.parseInt(req.getParameter("age")));
         developerDTO.setSex(Sex.valueOf(req.getParameter("sex")));
-        List<String> projects = Arrays.asList(req.getParameterValues("in_project"));
-        developerDTO.setProjects(projects);
+        String[] projectsFromForm = req.getParameterValues("in_project");
+        if (Objects.nonNull(projectsFromForm)){
+        List<String> projects = Arrays.asList(projectsFromForm);
+        developerDTO.setProjects(projects);}
         developerService.create(developerDTO);
         req.setAttribute("developer", developerDTO.toString());
         resp.sendRedirect(req.getContextPath() + "/developers");

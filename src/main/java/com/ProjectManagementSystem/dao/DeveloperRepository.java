@@ -4,7 +4,6 @@ import com.ProjectManagementSystem.dao.model.DeveloperDAO;
 import com.ProjectManagementSystem.dao.model.DevelopersInProjectsDAO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
-import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 import com.ProjectManagementSystem.service.converter.DeveloperConverter;
 
@@ -12,7 +11,9 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -25,10 +26,7 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
             "age, dev_sex, comments, salary) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String UPDATE = "UPDATE developers SET first_name=?, last_name=?, " +
             "age=?, dev_sex=?, comments=?, salary=? WHERE id=?;";
-    private static final String DELETE ="DELETE FROM developers WHERE id=?";
-//                                        "DELETE FROM dev_skills as ds"+
-//                                        "USING devs_in_project as dp, developers as d"+
-//                                        "WHERE ds.dev_id = d.id AND dp.dev_id=d.id AND d.id=48;";
+    private static final String DELETE = "DELETE FROM developers WHERE id = ?; ";
     private static final String NEXT_ID = "SELECT MAX(id)+1 FROM developers;";
     private static final String SELECT_ALL = "SELECT id, first_name, last_name, age," +
             " dev_sex, comments, salary FROM developers";
@@ -37,7 +35,7 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
     private final Converter<DeveloperDAO, DeveloperDTO> converter = new DeveloperConverter();
 
     public DeveloperRepository() {
-        this.dataSource=DatabaseConnectionManager.getDataSource();
+        this.dataSource = DatabaseConnectionManager.getDataSource();
     }
 
     @Override
@@ -78,13 +76,13 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
             statement.setString(6, entity.getComments());
             statement.setInt(7, entity.getSalary());
             statement.execute();
-            } catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
         DevelopersInProjectsRepository developersInProjectsRepository = new DevelopersInProjectsRepository();
-            entity.getProjects().forEach(p->developersInProjectsRepository
-                    .create(new DevelopersInProjectsDAO(entity.getId(), p.getId())));
-        }
+        entity.getProjects().forEach(p -> developersInProjectsRepository
+                .create(new DevelopersInProjectsDAO(entity.getId(), p.getId())));
+    }
 
     @Override
     public void update(DeveloperDAO entity) {
@@ -110,7 +108,17 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
 
     @Override
     public void delete(long id) {
-        RepositoryUtils.delete(dataSource, DELETE, id);
+        DeveloperDAO developerDAO = new DeveloperRepository().findById(id);
+        List<DevelopersInProjectsDAO> dip;
+        DevelopersInProjectsRepository dipRepository = new DevelopersInProjectsRepository();
+        ProjectsRepository projectsRepository = new ProjectsRepository();
+        dip = dipRepository.findByNumber("dev_id", id);
+        if (Objects.nonNull(dip)) {
+            dip.forEach(dip1 -> projectsRepository.updateCost(dip1.getProjectId(), -developerDAO.getSalary()));
+            RepositoryUtils.delete(dataSource, DELETE, id);
+            dipRepository.deleteByUser(id);
+            RepositoryUtils.delete(dataSource, DELETE, id);
+        }
     }
 
 

@@ -3,8 +3,10 @@
 <html>
     <head>
         <title>Project Management System</title>
+        <style><%@include file="/view/css/style.css"%></style>
     </head>
     <body>
+    <c:import url="/view/navigate.jsp"/>
     <p>Project Management System</p>
     <table border="1" cellpadding="2%" width="100%" >
         <thead>

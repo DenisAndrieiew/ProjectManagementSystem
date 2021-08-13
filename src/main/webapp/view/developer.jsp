@@ -3,9 +3,11 @@
 <html>
     <head>
         <title>Project Management System</title>
+        <style><%@include file="/view/css/style.css"%></style>
     </head>
 
 <body>
+<c:import url="/view/navigate.jsp"/>
      <form name="developerForm" method=${method} action="/developers">
 <c:set var="button_text" value="${method eq 'post' ? 'add': 'update'}"/>
           <fieldset>
