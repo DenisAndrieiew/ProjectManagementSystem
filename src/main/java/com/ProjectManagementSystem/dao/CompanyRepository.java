@@ -83,7 +83,7 @@ public class CompanyRepository implements EntityRepository<CompanyDAO> {
 
     @Override
     public Converter getConverter() {
-        return null;
+        return converter;
     }
 
     private long getNextId() {

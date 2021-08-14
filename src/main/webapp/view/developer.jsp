@@ -39,7 +39,7 @@
                                </select></div>
                     </c:forEach>
                  </fieldset>
-                <input type="submit" value="${button_text} user" />
+                <input type="submit" value="${button_text} developer" />
             </form>
 
         </body>

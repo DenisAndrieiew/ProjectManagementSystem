@@ -17,13 +17,14 @@
                 <td>Description</td>
                 <td>Customer</td>
                 <td>Start date</td>
-                <td>Companie</td>
+                <td>Companies</td>
                 <td>Cost</td>
                 <td>Developers list</td>
+                <td/>
             </tr>
         </thead>
         <tbody align="center">
-             <c:forEach var="project" items="${projects}">
+             <c:forEach var="project" items="${pj}">
                  <tr>
                      <td>${project.id}</td>
                      <td>${project.name}</td>
@@ -33,17 +34,17 @@
                      <td>${project.company}</td>
                      <td>${project.cost}</td>
                      <td><ol>
-                             <c:forEach var="developer" items="${project.developers}">
+                            <c:forEach var="developer" items="${project.developers}">
                                 <li>${developer}</li>
                              </c:forEach>
                          </ol>
                      </td>
                      <td border="0" cellpadding="0">
-                     <p><a href="#">
+                     <p><a href="/projects/update">
                             <button type = "update-button" style="background-color:#1E90FF">
                                 update
                      </button></a></p>
-                     <p><a href="#">
+                     <p><a href="/projects/delete?id=${projects.id}">
                             <button type = "delete-button" style="background-color:#DC143C">
                                 delete
                             </button>
@@ -53,7 +54,7 @@
              </c:forEach>
         </tbody>
      </table>
-    <div align="center"> <a href="#">
+    <div align="center"> <a href="/projects/new">
     <button type = "button" style="background-color:#50ff50">
         Create new project
     </button></a></div>

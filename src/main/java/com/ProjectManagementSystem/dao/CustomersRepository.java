@@ -85,7 +85,7 @@ public class CustomersRepository implements EntityRepository<CustomersDAO> {
 
     @Override
     public Converter getConverter() {
-        return null;
+        return converter;
     }
 
     private long getNextId() {

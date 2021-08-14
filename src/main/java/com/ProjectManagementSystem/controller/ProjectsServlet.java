@@ -1,11 +1,8 @@
 package com.ProjectManagementSystem.controller;
 
-import com.ProjectManagementSystem.dao.DeveloperRepository;
 import com.ProjectManagementSystem.dao.EntityRepository;
 import com.ProjectManagementSystem.dao.ProjectsRepository;
-import com.ProjectManagementSystem.dao.model.DeveloperDAO;
 import com.ProjectManagementSystem.dao.model.ProjectsDAO;
-import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.ProjectsDTO;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
@@ -24,13 +21,13 @@ import java.util.stream.Collectors;
 public class ProjectsServlet extends HttpServlet {
     private EntityRepository<ProjectsDAO> repository;
     private Converter converter;
-    private Service developerService;
+    private Service projectService;
 
     @Override
     public void init() throws ServletException {
         this.repository = new ProjectsRepository();
         this.converter = repository.getConverter();
-        this.developerService = new Service(repository);
+        this.projectService = new Service(repository);
     }
 
     @Override
@@ -39,8 +36,23 @@ public class ProjectsServlet extends HttpServlet {
                 .map(projectsDAO -> (ProjectsDTO) converter.toDTO(projectsDAO))
                 .sorted(Comparator.comparing(ProjectsDTO::getId))
                 .collect(Collectors.toList());
-        req.setAttribute("projects", projects);
+        req.setAttribute("pj", projects);
         req.getRequestDispatcher("/view/projects.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ProjectsDTO project = new ProjectsDTO();
+        project.setName(req.getParameter("name"));
+        project.setDescription(req.getParameter("description"));
+        String time = req.getParameter("beginDate");
+
+//        project.setBeginDate(Instant.parse(req.getParameter("beginDate")));
+        project.setCustomer(req.getParameter("customer"));
+        project.setCompany(req.getParameter("company"));
+        projectService.create(project);
+        resp.sendRedirect(req.getContextPath() + "/developers");
+
     }
 }
 

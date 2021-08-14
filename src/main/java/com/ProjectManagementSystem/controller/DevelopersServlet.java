@@ -57,7 +57,6 @@ public class DevelopersServlet extends HttpServlet {
             developerDTO.setProjects(projects);
         }
         developerService.create(developerDTO);
-        req.setAttribute("developer", developerDTO.toString());
         resp.sendRedirect(req.getContextPath() + "/developers");
     }
 
