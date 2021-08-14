@@ -1,16 +1,18 @@
 package com.ProjectManagementSystem.service.converter;
 
 import com.ProjectManagementSystem.dto.DeveloperDTO;
+import com.ProjectManagementSystem.dto.enums.Brunch;
 import com.ProjectManagementSystem.dto.enums.Sex;
+import com.ProjectManagementSystem.dto.enums.SkillLevel;
 import com.ProjectManagementSystem.repository.*;
-import com.ProjectManagementSystem.repository.model.*;
+import com.ProjectManagementSystem.repository.model.BrunchDAO;
+import com.ProjectManagementSystem.repository.model.DeveloperDAO;
+import com.ProjectManagementSystem.repository.model.ProjectsDAO;
+import com.ProjectManagementSystem.repository.model.SkillLevelDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO> {
@@ -24,7 +26,24 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
         for (String project : dto.getProjects()) {
             projectsDAO.add(projectsRepository.findByString("name", project).get(0));
         }
-        dao.setSkillLevels(dto.getSkillLevels());
+        if (!dto.getSkillLevels().isEmpty()) {
+            Map<Long, Long> skillLevelsMap = new HashMap<>();
+            List<BrunchDAO> brunches = new BrunchRepository().findAll();
+            List<SkillLevelDAO> skillLevels = new SkillLevelRepository().findAll();
+            dto.getSkillLevels().forEach((skill, level) -> {
+                Iterator<BrunchDAO> brIterator = brunches.iterator();
+                long skill_id = brunches.stream()
+                        .filter(brunch -> brunch.getBrunch()
+                                .equalsIgnoreCase(Brunch.valueOf(skill).toString()))
+                        .findFirst().get().getId();
+                long level_id = skillLevels.stream()
+                        .filter(skillLevel -> skillLevel.getName()
+                                .equalsIgnoreCase(SkillLevel.valueOf(level.toUpperCase(Locale.ROOT))
+                                        .toString())).findFirst().get().getId();
+                skillLevelsMap.put(skill_id, level_id);
+            });
+            dao.setSkillLevels(skillLevelsMap);
+        }
 
         dao.setProjects(projectsDAO);
         return dao;
@@ -38,13 +57,9 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
         dto.setProjects(projects);
         Repository<BrunchDAO> brunches = new BrunchRepository();
         Repository<SkillLevelDAO> skills = new SkillLevelRepository();
-        Repository<DevSkillsDAO> devSkills = new DevSkillsRepository();
-        Map<String, String> skillLevels = new HashMap<String, String>();
-        List<DevSkillsDAO> devSkill = devSkills.findByNumber("dev_id", dto.getId());
-        for (DevSkillsDAO skill : devSkill) {
-            skillLevels.put(brunches.findById(skill.getSkillId()).getBrunch(),
-                    skills.findById(skill.getSkillLevel()).getName());
-        }
+        Map<String, String> skillLevels = new HashMap<>();
+        dao.getSkillLevels().forEach((skill, level) ->
+                skillLevels.put(brunches.findById(skill).getBrunch(), skills.findById(level).getName()));
         dto.setSkillLevels(skillLevels);
         return dto;
     }
@@ -67,6 +82,11 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
             List<ProjectsDAO> projectsDAOS = dipRepository.findByNumber("dev_id", dao.getId()).stream()
                     .map(dip -> projectsRepository.findById(dip.getProjectId())).collect(Collectors.toList());
             dao.setProjects(projectsDAOS);
+            DevSkillsRepository skillLevelRepository = new DevSkillsRepository();
+            Map<Long, Long> skillLevels = new HashMap<>();
+            skillLevelRepository.findByNumber("dev_id", dao.getId())
+                    .stream().forEach(entity -> skillLevels.put(entity.getSkillId(), entity.getSkillLevel()));
+            dao.setSkillLevels(skillLevels);
             developers.add(dao);
         }
         return developers;

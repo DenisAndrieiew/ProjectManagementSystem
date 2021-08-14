@@ -14,7 +14,7 @@ public class DeveloperDAO implements DataAccessObject {
     private String comments;
     private int salary;
     private List<ProjectsDAO> projects;
-    private Map<String, String> skillLevels;
+    private Map<Long, Long> skillLevels;
 
     public DeveloperDAO() {
     }
@@ -38,11 +38,11 @@ public class DeveloperDAO implements DataAccessObject {
         this.salary = salary;
     }
 
-    public Map<String, String> getSkillLevels() {
+    public Map<Long, Long> getSkillLevels() {
         return skillLevels;
     }
 
-    public void setSkillLevels(Map<String, String> skillLevels) {
+    public void setSkillLevels(Map<Long, Long> skillLevels) {
         this.skillLevels = skillLevels;
     }
 

@@ -1,10 +1,11 @@
 package com.ProjectManagementSystem.repository;
 
 import com.ProjectManagementSystem.dto.DeveloperDTO;
-import com.ProjectManagementSystem.dto.enums.Brunch;
-import com.ProjectManagementSystem.dto.enums.SkillLevel;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
-import com.ProjectManagementSystem.repository.model.*;
+import com.ProjectManagementSystem.repository.model.DevSkillsDAO;
+import com.ProjectManagementSystem.repository.model.DeveloperDAO;
+import com.ProjectManagementSystem.repository.model.DevelopersInProjectsDAO;
+import com.ProjectManagementSystem.repository.model.ProjectsDAO;
 import com.ProjectManagementSystem.service.converter.Converter;
 import com.ProjectManagementSystem.service.converter.DeveloperConverter;
 
@@ -12,9 +13,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -87,25 +86,11 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
                 .create(new DevelopersInProjectsDAO(entity.getId(), p.getId())));
         ProjectsRepository projectsRepository = new ProjectsRepository();
         projects.forEach(p -> projectsRepository.updateCost(p.getId(), entity.getSalary()));
-        if (!entity.getSkillLevels().isEmpty()) {
-            List<BrunchDAO> brunches = new BrunchRepository().findAll();
-            List<SkillLevelDAO> skillLevels = new SkillLevelRepository().findAll();
+        if (Objects.nonNull(entity.getSkillLevels())) {
             DevSkillsRepository devSkillsRepository = new DevSkillsRepository();
-            entity.getSkillLevels().forEach((skill, level) -> {
-                Iterator<BrunchDAO> brIterator = brunches.iterator();
-                long skill_id = brunches.stream()
-                        .filter(brunch -> brunch.getBrunch()
-                                .equalsIgnoreCase(Brunch.valueOf(skill).toString()))
-                        .findFirst().get().getId();
-                long level_id = skillLevels.stream()
-                        .filter(skillLevel -> skillLevel.getName()
-                                .equalsIgnoreCase(SkillLevel.valueOf(level.toUpperCase(Locale.ROOT))
-                                        .toString())).findFirst().get().getId();
-                DevSkillsDAO devSkill = new DevSkillsDAO(entity.getId(), skill_id, level_id);
-                devSkillsRepository.create(devSkill);
-            });
+            entity.getSkillLevels().forEach((skill, level) -> devSkillsRepository
+                    .create(new DevSkillsDAO(entity.getId(), skill, level)));
         }
-
     }
 
     @Override
