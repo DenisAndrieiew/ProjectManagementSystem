@@ -20,10 +20,12 @@ public class ProjectsConverter implements Converter<ProjectsDAO, ProjectsDTO> {
     @Override
     public ProjectsDAO fromDTO(ProjectsDTO dto) {
         ProjectsDAO dao = new ProjectsDAO();
+        if(Objects.nonNull(dto.getCompany())){
         dao.setCompanyId(new CompanyRepository().findByString("name", dto.getCompany())
-                .get(0).getId());
+                .get(0).getId());}
+        if (Objects.nonNull(dto.getCustomer())){
         dao.setCustomerId(new CustomersRepository().findByString("name", dto.getCustomer())
-                .get(0).getId());
+                .get(0).getId());}
         dao.setName(dto.getName());
         dao.setBegin_date(dto.getBeginDate());
         dao.setCost(dto.getCost());

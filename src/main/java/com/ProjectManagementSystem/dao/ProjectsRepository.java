@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
-    private static final String SELECT_BY_ID = "SELECT id, name, customer_id, company_id," +
+    private static final String SELECT_BY_ID = "SELECT id, name, customer_id, company_id, " +
             "description, cost, begin_date FROM projects WHERE id = ?;";
     private static final String SELECT_BY = "SELECT id, name, customer_id, company_id," +
             "description, cost, begin_date FROM projects WHERE ";
     private static final String INSERT = "INSERT INTO projects (id, name, customer_id, " +
-            "+ company_id, description, cost, begin_date) VALUES (?, ?, ?, ?, ?, ?, ?);";
+            "company_id, description, cost, begin_date) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String UPDATE = "UPDATE projects SET name=?, customer_id=?, " +
             "company_id=?, description=?, cost=?, begin_date=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM projects WHERE id=?;";
@@ -39,7 +39,10 @@ public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
 
     @Override
     public ProjectsDAO findById(long id) {
-        return (ProjectsDAO) RepositoryUtils.findById(dataSource, converter, SELECT_BY_ID, id).get(0);
+        List<ProjectsDAO> list = RepositoryUtils.findById(dataSource, converter, SELECT_BY_ID, id)
+                .stream().map((entity)->(ProjectsDAO) entity).collect(Collectors.toList());
+
+        return list.get(0);
     }
 
     @Override

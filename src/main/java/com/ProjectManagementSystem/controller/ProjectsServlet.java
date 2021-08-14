@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,12 +47,11 @@ public class ProjectsServlet extends HttpServlet {
         project.setName(req.getParameter("name"));
         project.setDescription(req.getParameter("description"));
         String time = req.getParameter("beginDate");
-
-//        project.setBeginDate(Instant.parse(req.getParameter("beginDate")));
+        project.setBeginDate(Instant.parse(req.getParameter("beginDate")));
         project.setCustomer(req.getParameter("customer"));
         project.setCompany(req.getParameter("company"));
         projectService.create(project);
-        resp.sendRedirect(req.getContextPath() + "/developers");
+        resp.sendRedirect(req.getContextPath() + "/projects");
 
     }
 }
