@@ -3,6 +3,7 @@ package com.ProjectManagementSystem.repository.model;
 import com.ProjectManagementSystem.dto.enums.Sex;
 
 import java.util.List;
+import java.util.Map;
 
 public class DeveloperDAO implements DataAccessObject {
     private long id;
@@ -13,6 +14,7 @@ public class DeveloperDAO implements DataAccessObject {
     private String comments;
     private int salary;
     private List<ProjectsDAO> projects;
+    private Map<String, String> skillLevels;
 
     public DeveloperDAO() {
     }
@@ -36,6 +38,13 @@ public class DeveloperDAO implements DataAccessObject {
         this.salary = salary;
     }
 
+    public Map<String, String> getSkillLevels() {
+        return skillLevels;
+    }
+
+    public void setSkillLevels(Map<String, String> skillLevels) {
+        this.skillLevels = skillLevels;
+    }
 
     @Override
     public String toString() {

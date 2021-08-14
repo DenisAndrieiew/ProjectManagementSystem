@@ -1,7 +1,12 @@
 package com.ProjectManagementSystem.controller;
 
+import com.ProjectManagementSystem.dto.BrunchDTO;
+import com.ProjectManagementSystem.dto.enums.Brunch;
+import com.ProjectManagementSystem.repository.BrunchRepository;
 import com.ProjectManagementSystem.repository.DeveloperRepository;
 import com.ProjectManagementSystem.repository.EntityRepository;
+import com.ProjectManagementSystem.repository.Repository;
+import com.ProjectManagementSystem.repository.model.BrunchDAO;
 import com.ProjectManagementSystem.repository.model.DeveloperDAO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.enums.Sex;
@@ -14,10 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @WebServlet("/developers")
@@ -25,12 +27,16 @@ public class DevelopersServlet extends HttpServlet {
     private EntityRepository<DeveloperDAO> repository;
     private Converter converter;
     private Service developerService;
+    private EntityRepository<BrunchDAO> brunchRepository;
+    private Converter brunchConverter;
 
     @Override
     public void init() throws ServletException {
         this.repository = new DeveloperRepository();
         this.converter = repository.getConverter();
         this.developerService = new Service(repository);
+        this.brunchRepository=new BrunchRepository();
+        this.brunchConverter = brunchRepository.getConverter();
     }
 
     @Override
@@ -56,6 +62,19 @@ public class DevelopersServlet extends HttpServlet {
             List<String> projects = Arrays.asList(projectsFromForm);
             developerDTO.setProjects(projects);
         }
+        List<BrunchDTO> brunches = brunchRepository.findAll().stream()
+                .map(dao -> (BrunchDTO) brunchConverter.toDTO(dao))
+                .collect(Collectors.toList());
+        List<String> levels = Arrays.asList(req.getParameterValues("skill_level").clone());
+        Iterator<BrunchDTO> brIterator = brunches.iterator();
+        Iterator<String> lvlIterator = levels.iterator();
+        Map<String, String> skillLevels = new HashMap<>();
+        while (brIterator.hasNext() && lvlIterator.hasNext()){
+            skillLevels.put(brIterator.next().getBrunch().name(), lvlIterator.next());
+        }
+        skillLevels.values().removeIf(value->value.equalsIgnoreCase("none"));
+        developerDTO.setSkillLevels(skillLevels);
+
         developerService.create(developerDTO);
         resp.sendRedirect(req.getContextPath() + "/developers");
     }

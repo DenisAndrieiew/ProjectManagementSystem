@@ -55,10 +55,9 @@ public class DevSkillsRepository implements Repository<DevSkillsDAO> {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT)) {
             entity.setId(getNextId());
-            statement.setLong(1, entity.getId());
-            statement.setLong(2, entity.getDevId());
-            statement.setLong(3, entity.getSkillId());
-            statement.setLong(4, entity.getSkillLevel());
+            statement.setLong(1, entity.getDevId());
+            statement.setLong(2, entity.getSkillId());
+            statement.setLong(3, entity.getSkillLevel());
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -1,5 +1,6 @@
 package com.ProjectManagementSystem.repository;
 
+import com.ProjectManagementSystem.repository.model.BrunchDAO;
 import com.ProjectManagementSystem.repository.model.SkillLevelDAO;
 import com.ProjectManagementSystem.dto.SkillLevelDTO;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
@@ -13,13 +14,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SkillLevelRepository implements Repository<SkillLevelDAO> {
+public class SkillLevelRepository implements EntityRepository<SkillLevelDAO> {
     private static final String SELECT_BY_ID = "SELECT id, name FROM skill_level WHERE id = ?;";
     private static final String SELECT_BY = "SELECT id, name FROM skill_level WHERE ";
     private static final String INSERT = "INSERT INTO skill_level (id, name) VALUES (?, ?);";
     private static final String UPDATE = "UPDATE skill_level SET name=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM skill_level WHERE id=?;";
     private static final String NEXT_ID = "SELECT MAX(id)+1 FROM skill_level;";
+    private static final String SELECT_ALL = "SELECT id, name FROM skill_level";
     private final DataSource dataSource;
     private final Converter<SkillLevelDAO, SkillLevelDTO> converter = new SkillLevelConverter();
 
@@ -79,5 +81,10 @@ public class SkillLevelRepository implements Repository<SkillLevelDAO> {
 
     private long getNextId() {
         return RepositoryUtils.getNextId(dataSource, NEXT_ID);
+    }
+    @Override
+    public List<SkillLevelDAO> findAll() {
+        return RepositoryUtils.findAll(dataSource, converter, SELECT_ALL).stream()
+                .map(dao -> (SkillLevelDAO) dao).collect(Collectors.toList());
     }
 }

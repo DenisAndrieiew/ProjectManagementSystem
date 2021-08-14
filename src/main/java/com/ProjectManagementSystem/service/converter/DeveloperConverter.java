@@ -1,9 +1,9 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.repository.*;
-import com.ProjectManagementSystem.repository.model.*;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.enums.Sex;
+import com.ProjectManagementSystem.repository.*;
+import com.ProjectManagementSystem.repository.model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +24,8 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
         for (String project : dto.getProjects()) {
             projectsDAO.add(projectsRepository.findByString("name", project).get(0));
         }
+        dao.setSkillLevels(dto.getSkillLevels());
+
         dao.setProjects(projectsDAO);
         return dao;
     }

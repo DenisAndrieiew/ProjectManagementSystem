@@ -29,13 +29,13 @@
                  </fieldset>
                  <fieldset>
                     <legend>Skills</legend>
-                    <c:forEach var="brunch" items="${brunches}">
+                    <c:forEach var="brunch"  items="${brunches}">
                     <div value=${brunch.brunch}>${brunch.brunch}
                     <select id="skill_level" name="skill_level">
-                                 <option value="NONE">None</option>
-                                 <option value="JUNIOR">Junior</option>
-                                 <option value="MIDDLE">Middle</option>
-                                 <option value="SENIOR">Senior</option>
+                                 <option value="None">None</option>
+                                 <option value="Junior">Junior</option>
+                                 <option value="Middle">Middle</option>
+                                 <option value="Senior">Senior</option>
                                </select></div>
                     </c:forEach>
                  </fieldset>
