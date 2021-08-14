@@ -24,6 +24,7 @@ public class DevSkillsRepository implements Repository<DevSkillsDAO> {
     private static final String INSERT = "INSERT INTO dev_skills (dev_id, skill_id, skill_level)" +
             " VALUES (?, ?, ?);";
     private static final String DELETE = "DELETE FROM dev_skills WHERE id=?;";
+    private static final String DELETE_BY_USER = "DELETE FROM dev_skills WHERE dev_id =?;";
     private final DataSource dataSource;
     private final Converter<DevSkillsDAO, DevSkillsDTO> converter = new DevSkillsConverter();
 
@@ -82,6 +83,7 @@ public class DevSkillsRepository implements Repository<DevSkillsDAO> {
     public void delete(long id) {
         RepositoryUtils.delete(dataSource, DELETE, id);
     }
+    public void deleteByUser(long id){RepositoryUtils.delete(dataSource, DELETE_BY_USER, id);}
 
     @Override
     public Converter getConverter() {

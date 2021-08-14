@@ -126,8 +126,12 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
             dip.forEach(dip1 -> projectsRepository.updateCost(dip1.getProjectId(), -developerDAO.getSalary()));
             RepositoryUtils.delete(dataSource, DELETE, id);
             dipRepository.deleteByUser(id);
-            RepositoryUtils.delete(dataSource, DELETE, id);
+
         }
+        if (!developerDAO.getSkillLevels().isEmpty()){
+            new DevSkillsRepository().deleteByUser(id);
+        }
+        RepositoryUtils.delete(dataSource, DELETE, id);
     }
 
 
