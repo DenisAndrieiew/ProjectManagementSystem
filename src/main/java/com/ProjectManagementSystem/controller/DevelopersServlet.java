@@ -1,15 +1,13 @@
 package com.ProjectManagementSystem.controller;
 
 import com.ProjectManagementSystem.dto.BrunchDTO;
-import com.ProjectManagementSystem.dto.enums.Brunch;
+import com.ProjectManagementSystem.dto.DeveloperDTO;
+import com.ProjectManagementSystem.dto.enums.Sex;
 import com.ProjectManagementSystem.repository.BrunchRepository;
 import com.ProjectManagementSystem.repository.DeveloperRepository;
 import com.ProjectManagementSystem.repository.EntityRepository;
-import com.ProjectManagementSystem.repository.Repository;
 import com.ProjectManagementSystem.repository.model.BrunchDAO;
 import com.ProjectManagementSystem.repository.model.DeveloperDAO;
-import com.ProjectManagementSystem.dto.DeveloperDTO;
-import com.ProjectManagementSystem.dto.enums.Sex;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
@@ -35,7 +33,7 @@ public class DevelopersServlet extends HttpServlet {
         this.repository = new DeveloperRepository();
         this.converter = repository.getConverter();
         this.developerService = new Service(repository);
-        this.brunchRepository=new BrunchRepository();
+        this.brunchRepository = new BrunchRepository();
         this.brunchConverter = brunchRepository.getConverter();
     }
 
@@ -58,6 +56,7 @@ public class DevelopersServlet extends HttpServlet {
         developerDTO.setSex(Sex.valueOf(req.getParameter("sex")));
         String[] projectsFromForm = req.getParameterValues("in_project");
         developerDTO.setSalary(Integer.parseInt(req.getParameter("salary")));
+        developerDTO.setComments(req.getParameter("comments"));
         if (Objects.nonNull(projectsFromForm)) {
             List<String> projects = Arrays.asList(projectsFromForm);
             developerDTO.setProjects(projects);
@@ -69,10 +68,10 @@ public class DevelopersServlet extends HttpServlet {
         Iterator<BrunchDTO> brIterator = brunches.iterator();
         Iterator<String> lvlIterator = levels.iterator();
         Map<String, String> skillLevels = new HashMap<>();
-        while (brIterator.hasNext() && lvlIterator.hasNext()){
+        while (brIterator.hasNext() && lvlIterator.hasNext()) {
             skillLevels.put(brIterator.next().getBrunch().name(), lvlIterator.next());
         }
-        skillLevels.values().removeIf(value->value.equalsIgnoreCase("none"));
+        skillLevels.values().removeIf(value -> value.equalsIgnoreCase("none"));
         developerDTO.setSkillLevels(skillLevels);
 
         developerService.create(developerDTO);

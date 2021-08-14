@@ -20,6 +20,7 @@
                 <td>Sex</td>
                 <td>Salary</td>
                 <td>Projects</td>
+                <td>Comments</td>
                 <td/>
             </tr>
         </thead>
@@ -46,8 +47,9 @@
                            </c:forEach>
                            </ol>
                      </td>
+                     <td>${developer.comments}</td>
                      <td border="0" cellpadding="0">
-                     <p><a href="/developers/update">
+                     <p><a href="/developers/update?id=${developer.id}">
                             <button type = "update-button" style="background-color:#1E90FF">
                              update
                      </button></a></p>

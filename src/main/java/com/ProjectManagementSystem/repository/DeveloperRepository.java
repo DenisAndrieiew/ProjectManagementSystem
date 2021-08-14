@@ -77,19 +77,9 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
             statement.setString(6, entity.getComments());
             statement.setInt(7, entity.getSalary());
             statement.execute();
+            createLinks(entity);
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        DevelopersInProjectsRepository developersInProjectsRepository = new DevelopersInProjectsRepository();
-        List<ProjectsDAO> projects = entity.getProjects();
-        projects.forEach(p -> developersInProjectsRepository
-                .create(new DevelopersInProjectsDAO(entity.getId(), p.getId())));
-        ProjectsRepository projectsRepository = new ProjectsRepository();
-        projects.forEach(p -> projectsRepository.updateCost(p.getId(), entity.getSalary()));
-        if (Objects.nonNull(entity.getSkillLevels())) {
-            DevSkillsRepository devSkillsRepository = new DevSkillsRepository();
-            entity.getSkillLevels().forEach((skill, level) -> devSkillsRepository
-                    .create(new DevSkillsDAO(entity.getId(), skill, level)));
         }
     }
 
@@ -105,6 +95,8 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
             statement.setString(5, entity.getComments());
             statement.setInt(6, entity.getSalary());
             statement.execute();
+            cleanLinks(entity);
+            createLinks(entity);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -118,22 +110,35 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
     @Override
     public void delete(long id) {
         DeveloperDAO developerDAO = new DeveloperRepository().findById(id);
-        List<DevelopersInProjectsDAO> dip;
-        DevelopersInProjectsRepository dipRepository = new DevelopersInProjectsRepository();
-        ProjectsRepository projectsRepository = new ProjectsRepository();
-        dip = dipRepository.findByNumber("dev_id", id);
-        if (Objects.nonNull(dip)) {
-            dip.forEach(dip1 -> projectsRepository.updateCost(dip1.getProjectId(), -developerDAO.getSalary()));
-            RepositoryUtils.delete(dataSource, DELETE, id);
-            dipRepository.deleteByUser(id);
-
-        }
-        if (!developerDAO.getSkillLevels().isEmpty()){
-            new DevSkillsRepository().deleteByUser(id);
-        }
+        cleanLinks(developerDAO);
         RepositoryUtils.delete(dataSource, DELETE, id);
     }
 
+    private void cleanLinks(DeveloperDAO developerDAO) {
+        List<DevelopersInProjectsDAO> dip;
+        DevelopersInProjectsRepository dipRepository = new DevelopersInProjectsRepository();
+        ProjectsRepository projectsRepository = new ProjectsRepository();
+        dip = dipRepository.findByNumber("dev_id", developerDAO.getId());
+        if (Objects.nonNull(dip)) {
+            dip.forEach(dip1 -> projectsRepository.updateCost(dip1.getProjectId(), -developerDAO.getSalary()));
+        }
+        new DevSkillsRepository().deleteByUser(developerDAO.getId());
+        dipRepository.deleteByUser(developerDAO.getId());
+    }
+
+    private void createLinks(DeveloperDAO developerDAO) {
+        DevelopersInProjectsRepository developersInProjectsRepository = new DevelopersInProjectsRepository();
+        List<ProjectsDAO> projects = developerDAO.getProjects();
+        projects.forEach(p -> developersInProjectsRepository
+                .create(new DevelopersInProjectsDAO(developerDAO.getId(), p.getId())));
+        ProjectsRepository projectsRepository = new ProjectsRepository();
+        projects.forEach(p -> projectsRepository.updateCost(p.getId(), developerDAO.getSalary()));
+        if (Objects.nonNull(developerDAO.getSkillLevels())) {
+            DevSkillsRepository devSkillsRepository = new DevSkillsRepository();
+            developerDAO.getSkillLevels().forEach((skill, level) -> devSkillsRepository
+                    .create(new DevSkillsDAO(developerDAO.getId(), skill, level)));
+        }
+    }
 
     private long getNextId() {
         return RepositoryUtils.getNextId(dataSource, NEXT_ID);

@@ -8,18 +8,20 @@
 
 <body>
 <c:import url="/view/navigate.jsp"/>
-     <form name="developerForm" method="post" action="/developers">
+     <form name="developerForm" method=post action="/developers/update">
+
           <fieldset>
               <legend>Personal data</legend>
-              FirstName: <input type="text" name="firstName">
-              LastName: <input type="text" name="lastName"/> <br/>
-              Age: <input type="number" name="age"/>
-              Salary:   <input type="number" name="salary"/>
+              <input type="hidden" name="id" value='${developer.id}' />
+              FirstName: <input type="text" name="firstName" value="<c:out value='${developer.firstName}'/>">
+              LastName: <input type="text" name="lastName" value="<c:out value='${developer.lastName}'/>"/> <br/>
+              Age: <input type="number" name="age" value="<c:out value='${developer.age}'/>"/>
+              Salary:   <input type="number" name="salary" value="<c:out value='${developer.salary}'/>"/>
               Sex: <select id="sex" name="sex">
                          <option value="MALE">Male</option>
                          <option value="FEMALE">Female</option>
                    </select><br/>
-              Comments: <input type="text" name = "comments">
+              Comments: <input type="text" name = "comments" value="<c:out value='${developer.comments}'/>">
               </fieldset>
                  <fieldset>
                              <legend>Projects</legend>
@@ -39,7 +41,7 @@
                                </select></div>
                     </c:forEach>
                  </fieldset>
-                <input type="submit" value="add developer" />
+                <input type="submit" value="update developer" />
             </form>
 
         </body>

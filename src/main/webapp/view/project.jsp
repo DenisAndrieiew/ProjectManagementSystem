@@ -4,6 +4,7 @@
     <head>
         <title>Project Management System</title>
         <style><%@include file="/view/css/style.css"%></style>
+        <meta http-equiv="Content-Type" content = "text/html; charset=utf-8">
     </head>
 
 <body>
