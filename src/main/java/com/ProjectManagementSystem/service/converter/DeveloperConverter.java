@@ -1,7 +1,7 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.dao.*;
-import com.ProjectManagementSystem.dao.model.*;
+import com.ProjectManagementSystem.repository.*;
+import com.ProjectManagementSystem.repository.model.*;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.enums.Sex;
 

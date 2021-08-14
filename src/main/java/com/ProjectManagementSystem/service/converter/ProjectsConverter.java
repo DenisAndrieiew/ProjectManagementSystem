@@ -1,12 +1,12 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.dao.CompanyRepository;
-import com.ProjectManagementSystem.dao.CustomersRepository;
-import com.ProjectManagementSystem.dao.DeveloperRepository;
-import com.ProjectManagementSystem.dao.DevelopersInProjectsRepository;
-import com.ProjectManagementSystem.dao.model.DeveloperDAO;
-import com.ProjectManagementSystem.dao.model.DevelopersInProjectsDAO;
-import com.ProjectManagementSystem.dao.model.ProjectsDAO;
+import com.ProjectManagementSystem.repository.CompanyRepository;
+import com.ProjectManagementSystem.repository.CustomersRepository;
+import com.ProjectManagementSystem.repository.DeveloperRepository;
+import com.ProjectManagementSystem.repository.DevelopersInProjectsRepository;
+import com.ProjectManagementSystem.repository.model.DeveloperDAO;
+import com.ProjectManagementSystem.repository.model.DevelopersInProjectsDAO;
+import com.ProjectManagementSystem.repository.model.ProjectsDAO;
 import com.ProjectManagementSystem.dto.ProjectsDTO;
 
 import java.sql.ResultSet;
@@ -29,6 +29,7 @@ public class ProjectsConverter implements Converter<ProjectsDAO, ProjectsDTO> {
         dao.setName(dto.getName());
         dao.setBegin_date(dto.getBeginDate());
         dao.setCost(dto.getCost());
+        dao.setDescription(dto.getDescription());
         if (dto.getId() != 0) dao.setId(dto.getId());
         return dao;
     }

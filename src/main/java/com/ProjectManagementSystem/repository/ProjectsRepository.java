@@ -1,6 +1,6 @@
-package com.ProjectManagementSystem.dao;
+package com.ProjectManagementSystem.repository;
 
-import com.ProjectManagementSystem.dao.model.ProjectsDAO;
+import com.ProjectManagementSystem.repository.model.ProjectsDAO;
 import com.ProjectManagementSystem.dto.ProjectsDTO;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.service.converter.Converter;
@@ -101,6 +101,10 @@ public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
 
     @Override
     public void delete(long id) {
+        ProjectsDAO entity = new ProjectsRepository().findById(id);
+        if (entity.getDevelopers().size()>0){
+            new DevelopersInProjectsRepository().deleteByProject(id);
+        }
         RepositoryUtils.delete(dataSource, DELETE, id);
     }
 

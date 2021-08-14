@@ -1,14 +1,12 @@
 package com.ProjectManagementSystem.controller;
 
-import com.ProjectManagementSystem.dao.CompanyRepository;
-import com.ProjectManagementSystem.dao.CustomersRepository;
-import com.ProjectManagementSystem.dao.EntityRepository;
-import com.ProjectManagementSystem.dao.model.CompanyDAO;
-import com.ProjectManagementSystem.dao.model.CustomersDAO;
-import com.ProjectManagementSystem.dto.BrunchDTO;
+import com.ProjectManagementSystem.repository.CompanyRepository;
+import com.ProjectManagementSystem.repository.CustomersRepository;
+import com.ProjectManagementSystem.repository.EntityRepository;
+import com.ProjectManagementSystem.repository.model.CompanyDAO;
+import com.ProjectManagementSystem.repository.model.CustomersDAO;
 import com.ProjectManagementSystem.dto.CompanyDTO;
 import com.ProjectManagementSystem.dto.CustomersDTO;
-import com.ProjectManagementSystem.dto.ProjectsDTO;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 import javax.servlet.ServletException;

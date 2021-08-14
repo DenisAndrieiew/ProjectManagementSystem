@@ -44,7 +44,7 @@
                             <button type = "update-button" style="background-color:#1E90FF">
                                 update
                      </button></a></p>
-                     <p><a href="/projects/delete?id=${projects.id}">
+                     <p><a href="/projects/delete?id=${project.id}">
                             <button type = "delete-button" style="background-color:#DC143C">
                                 delete
                             </button>

@@ -1,6 +1,6 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.dao.model.SkillLevelDAO;
+import com.ProjectManagementSystem.repository.model.SkillLevelDAO;
 import com.ProjectManagementSystem.dto.SkillLevelDTO;
 import com.ProjectManagementSystem.dto.enums.SkillLevel;
 
@@ -17,7 +17,7 @@ public class SkillLevelConverter implements Converter<SkillLevelDAO, SkillLevelD
     }
 
     public SkillLevelDTO toDTO(SkillLevelDAO dao) {
-        SkillLevelDTO dto = new SkillLevelDTO(dao.getId(), SkillLevel.toSkillLevel(dao.getName()).orElseThrow());
+        SkillLevelDTO dto = new SkillLevelDTO(dao.getId(), SkillLevel.toSkillLevel(dao.getName()).orElse(null));
         return dto;
     }
 

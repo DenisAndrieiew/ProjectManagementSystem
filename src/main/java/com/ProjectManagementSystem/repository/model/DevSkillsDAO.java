@@ -1,4 +1,4 @@
-package com.ProjectManagementSystem.dao.model;
+package com.ProjectManagementSystem.repository.model;
 
 public class DevSkillsDAO implements DataAccessObject {
     private long id;

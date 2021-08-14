@@ -1,8 +1,8 @@
 package com.ProjectManagementSystem.controller;
 
-import com.ProjectManagementSystem.dao.EntityRepository;
-import com.ProjectManagementSystem.dao.ProjectsRepository;
-import com.ProjectManagementSystem.dao.model.ProjectsDAO;
+import com.ProjectManagementSystem.repository.EntityRepository;
+import com.ProjectManagementSystem.repository.ProjectsRepository;
+import com.ProjectManagementSystem.repository.model.ProjectsDAO;
 import com.ProjectManagementSystem.dto.ProjectsDTO;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
@@ -46,7 +46,6 @@ public class ProjectsServlet extends HttpServlet {
         ProjectsDTO project = new ProjectsDTO();
         project.setName(req.getParameter("name"));
         project.setDescription(req.getParameter("description"));
-        String time = req.getParameter("beginDate");
         project.setBeginDate(Instant.parse(req.getParameter("beginDate")));
         project.setCustomer(req.getParameter("customer"));
         project.setCompany(req.getParameter("company"));

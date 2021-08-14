@@ -1,9 +1,7 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.dao.model.BrunchDAO;
-import com.ProjectManagementSystem.dao.model.DeveloperDAO;
+import com.ProjectManagementSystem.repository.model.BrunchDAO;
 import com.ProjectManagementSystem.dto.BrunchDTO;
-import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.enums.Brunch;
 
 import java.sql.ResultSet;

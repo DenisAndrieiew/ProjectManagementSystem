@@ -1,7 +1,7 @@
 package com.ProjectManagementSystem.service;
 
-import com.ProjectManagementSystem.dao.Repository;
-import com.ProjectManagementSystem.dao.model.DataAccessObject;
+import com.ProjectManagementSystem.repository.Repository;
+import com.ProjectManagementSystem.repository.model.DataAccessObject;
 import com.ProjectManagementSystem.dto.DataTransferObject;
 import com.ProjectManagementSystem.service.converter.Converter;
 

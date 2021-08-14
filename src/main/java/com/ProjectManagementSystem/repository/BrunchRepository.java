@@ -1,7 +1,6 @@
-package com.ProjectManagementSystem.dao;
+package com.ProjectManagementSystem.repository;
 
-import com.ProjectManagementSystem.dao.model.BrunchDAO;
-import com.ProjectManagementSystem.dao.model.DeveloperDAO;
+import com.ProjectManagementSystem.repository.model.BrunchDAO;
 import com.ProjectManagementSystem.dto.BrunchDTO;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.service.converter.BrunchConverter;

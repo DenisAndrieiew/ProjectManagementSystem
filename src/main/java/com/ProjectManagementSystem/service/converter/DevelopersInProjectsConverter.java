@@ -1,6 +1,6 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.dao.model.DevelopersInProjectsDAO;
+import com.ProjectManagementSystem.repository.model.DevelopersInProjectsDAO;
 import com.ProjectManagementSystem.dto.DevelopersInProjectsDTO;
 
 import java.sql.ResultSet;

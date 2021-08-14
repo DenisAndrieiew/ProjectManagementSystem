@@ -1,9 +1,9 @@
 package com.ProjectManagementSystem.controller.commands;
 
-import com.ProjectManagementSystem.dao.BrunchRepository;
-import com.ProjectManagementSystem.dao.DevSkillsRepository;
-import com.ProjectManagementSystem.dao.DeveloperRepository;
-import com.ProjectManagementSystem.dao.model.BrunchDAO;
+import com.ProjectManagementSystem.repository.BrunchRepository;
+import com.ProjectManagementSystem.repository.DevSkillsRepository;
+import com.ProjectManagementSystem.repository.DeveloperRepository;
+import com.ProjectManagementSystem.repository.model.BrunchDAO;
 import com.ProjectManagementSystem.dto.BrunchDTO;
 import com.ProjectManagementSystem.dto.DevSkillsDTO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;

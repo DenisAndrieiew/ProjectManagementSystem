@@ -1,17 +1,17 @@
-package com.ProjectManagementSystem.dao.model;
+package com.ProjectManagementSystem.repository.model;
 
-public class CompanyDAO implements DataAccessObject{
+public class CustomersDAO implements DataAccessObject{
     private long id;
     private String name;
 
-    public CompanyDAO() {
+    public CustomersDAO() {
     }
 
-    public CompanyDAO(String name) {
+    public CustomersDAO(String name) {
         this.name = name;
     }
 
-    public CompanyDAO(long id, String name) {
+    public CustomersDAO(long id, String name) {
         this.id = id;
         this.name = name;
     }

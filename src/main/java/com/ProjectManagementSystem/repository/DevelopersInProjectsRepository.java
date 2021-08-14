@@ -1,7 +1,6 @@
-package com.ProjectManagementSystem.dao;
+package com.ProjectManagementSystem.repository;
 
-import com.ProjectManagementSystem.dao.model.DeveloperDAO;
-import com.ProjectManagementSystem.dao.model.DevelopersInProjectsDAO;
+import com.ProjectManagementSystem.repository.model.DevelopersInProjectsDAO;
 import com.ProjectManagementSystem.dto.DevelopersInProjectsDTO;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.service.converter.Converter;
@@ -26,6 +25,8 @@ public class DevelopersInProjectsRepository implements Repository<DevelopersInPr
             " VALUES (?, ?, ?);";
     private static final String DELETE = "DELETE FROM devs_in_project WHERE id=?;";
     private static final String DELETE_BY_USER = "DELETE FROM devs_in_project WHERE dev_id = ?;";
+    private static final String DELETE_BY_PROJECT = "DELETE FROM devs_in_project WHERE project_id = ?;";
+
     private final DataSource dataSource;
     private final Converter<DevelopersInProjectsDAO, DevelopersInProjectsDTO> converter =
             new DevelopersInProjectsConverter();
@@ -85,6 +86,9 @@ public class DevelopersInProjectsRepository implements Repository<DevelopersInPr
     }
     public void deleteByUser(long id){
         RepositoryUtils.delete(dataSource, DELETE_BY_USER, id);
+    }
+    public void deleteByProject(long id){
+        RepositoryUtils.delete(dataSource, DELETE_BY_PROJECT, id);
     }
 
     @Override
