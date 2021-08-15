@@ -1,9 +1,6 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.repository.CompanyRepository;
-import com.ProjectManagementSystem.repository.CustomersRepository;
-import com.ProjectManagementSystem.repository.DeveloperRepository;
-import com.ProjectManagementSystem.repository.DevelopersInProjectsRepository;
+import com.ProjectManagementSystem.repository.*;
 import com.ProjectManagementSystem.repository.model.DeveloperDAO;
 import com.ProjectManagementSystem.repository.model.DevelopersInProjectsDAO;
 import com.ProjectManagementSystem.repository.model.ProjectsDAO;
@@ -63,7 +60,6 @@ public class ProjectsConverter implements Converter<ProjectsDAO, ProjectsDTO> {
             dao.setCustomerId(resultSet.getLong("customer_id"));
             dao.setCompanyId(resultSet.getLong("company_id"));
             dao.setDescription(resultSet.getString("description"));
-            dao.setCost(resultSet.getInt("cost"));
             dao.setBegin_date(resultSet.getTimestamp("begin_date").toInstant());
             projectsDAOList.add(dao);
             List<DevelopersInProjectsDAO> dip = new DevelopersInProjectsRepository()
@@ -71,6 +67,7 @@ public class ProjectsConverter implements Converter<ProjectsDAO, ProjectsDTO> {
             if (Objects.nonNull(dip)) {
                 dao.setDevelopers(dip.stream().map(d -> d.getDeveloperId()).collect(Collectors.toList()));
             }
+            dao.setCost(new ProjectsRepository().getCost(dao.getId()));
         }
         return projectsDAOList;
     }

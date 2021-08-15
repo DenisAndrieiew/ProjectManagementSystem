@@ -24,7 +24,8 @@
                  <fieldset>
                              <legend>Projects</legend>
                              <c:forEach var="project" items="${projects}">
-                             <input type="checkbox" name="in_project" value='${project.name}'>${project.name}<br>
+                             <input type="checkbox" name="in_project" value='${project.id}'>${project.name}<br>
+                             <input type="hidden" name="project_id" value='${project.id}' />
                                                            </c:forEach>
                  </fieldset>
                  <fieldset>

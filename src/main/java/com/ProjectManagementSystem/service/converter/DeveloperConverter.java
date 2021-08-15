@@ -23,8 +23,8 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
                 dto.getAge(), dto.getSex(), dto.getComments(), dto.getSalary());
         if (dto.getId() != 0) dao.setId(dto.getId());
         List<ProjectsDAO> projectsDAO = new LinkedList<>();
-        for (String project : dto.getProjects()) {
-            projectsDAO.add(projectsRepository.findByString("name", project).get(0));
+        for (Long project : dto.getProjectsIds()) {
+            projectsDAO.add(projectsRepository.findById(project));
         }
         if (!dto.getSkillLevels().isEmpty()) {
             Map<Long, Long> skillLevelsMap = new HashMap<>();
@@ -53,8 +53,10 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
         DeveloperDTO dto = new DeveloperDTO(dao.getId(), dao.getFirstName(), dao.getLastName(),
                 dao.getAge(), dao.getSex(), dao.getComments(), dao.getSalary());
         List<String> projects = new LinkedList<>();
+        List<Long> projectsIds = new LinkedList<>();
         dao.getProjects().forEach(p -> projects.add(p.getName()));
         dto.setProjects(projects);
+        dao.getProjects().forEach(p -> projectsIds.add(p.getId()));
         Repository<BrunchDAO> brunches = new BrunchRepository();
         Repository<SkillLevelDAO> skills = new SkillLevelRepository();
         Map<String, String> skillLevels = new HashMap<>();

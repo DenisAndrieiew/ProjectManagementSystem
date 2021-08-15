@@ -7,27 +7,26 @@ import com.ProjectManagementSystem.service.converter.Converter;
 import com.ProjectManagementSystem.service.converter.ProjectsConverter;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
     private static final String SELECT_BY_ID = "SELECT id, name, customer_id, company_id, " +
-            "description, cost, begin_date FROM projects WHERE id = ?;";
+            "description, begin_date FROM projects WHERE id = ?;";
     private static final String SELECT_BY = "SELECT id, name, customer_id, company_id," +
-            "description, cost, begin_date FROM projects WHERE ";
+            "description, begin_date FROM projects WHERE ";
     private static final String INSERT = "INSERT INTO projects (id, name, customer_id, " +
-            "company_id, description, cost, begin_date) VALUES (?, ?, ?, ?, ?, ?, ?);";
+            "company_id, description, begin_date) VALUES (?, ?, ?, ?, ?, ?);";
     private static final String UPDATE = "UPDATE projects SET name=?, customer_id=?, " +
-            "company_id=?, description=?, cost=?, begin_date=? WHERE id=?;";
+            "company_id=?, description=?, begin_date=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM projects WHERE id=?;";
     private static final String NEXT_ID = "SELECT MAX(id)+1 FROM projects;";
     private static final String SELECT_ALL = "SELECT id, name, customer_id, company_id, "+
-            "description, cost, begin_date FROM projects;";
+            "description, begin_date FROM projects;";
     private static final String UPDATE_COST = "UPDATE projects SET cost=cost+? WHERE id=?";
+    private static final String GET_COST="SELECT SUM(d.salary) as cost from developers as d "+
+            "INNER JOIN devs_in_project as dp on d.id=dp.dev_id WHERE dp.project_id=?";
 
 
     private final DataSource dataSource;
@@ -69,8 +68,7 @@ public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
             statement.setLong(3, entity.getCustomerId());
             statement.setLong(4, entity.getCompanyId());
             statement.setString(5, entity.getDescription());
-            statement.setInt(6, entity.getCost());
-            statement.setTimestamp(7, Timestamp.from(entity.getBegin_date()));
+            statement.setTimestamp(6, Timestamp.from(entity.getBegin_date()));
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -81,13 +79,12 @@ public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
     public void update(ProjectsDAO entity) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE)) {
-            statement.setLong(7, entity.getId());
+            statement.setLong(6, entity.getId());
             statement.setString(1, entity.getName());
             statement.setLong(2, entity.getCustomerId());
             statement.setLong(3, entity.getCompanyId());
             statement.setString(4, entity.getDescription());
-            statement.setInt(5, entity.getCost());
-            statement.setTimestamp(6, Timestamp.from(entity.getBegin_date()));
+            statement.setTimestamp(5, Timestamp.from(entity.getBegin_date()));
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -117,14 +114,17 @@ public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
         return RepositoryUtils.findAll(dataSource, getConverter(), SELECT_ALL).stream().map(entity->(ProjectsDAO) entity)
                 .collect(Collectors.toList());
     }
-    public void updateCost(long id, int salary) {
+    public int getCost(long id){
+        int cost = 0;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COST)) {
-            preparedStatement.setLong(2, id);
-            preparedStatement.setInt(1, salary);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_COST)) {
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) cost = resultSet.getInt("cost");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+        return cost;
     }
+
 }

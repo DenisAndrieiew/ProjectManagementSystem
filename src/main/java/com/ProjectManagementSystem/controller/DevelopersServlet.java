@@ -57,9 +57,11 @@ public class DevelopersServlet extends HttpServlet {
         String[] projectsFromForm = req.getParameterValues("in_project");
         developerDTO.setSalary(Integer.parseInt(req.getParameter("salary")));
         developerDTO.setComments(req.getParameter("comments"));
+
         if (Objects.nonNull(projectsFromForm)) {
-            List<String> projects = Arrays.asList(projectsFromForm);
-            developerDTO.setProjects(projects);
+            List<Long> projects = Arrays.asList(projectsFromForm).stream()
+                    .map(Long::parseLong).collect(Collectors.toList());
+            developerDTO.setProjectsIds(projects);
         }
         List<BrunchDTO> brunches = brunchRepository.findAll().stream()
                 .map(dao -> (BrunchDTO) brunchConverter.toDTO(dao))

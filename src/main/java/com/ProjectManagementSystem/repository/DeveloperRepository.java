@@ -115,13 +115,7 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
     }
 
     private void cleanLinks(DeveloperDAO developerDAO) {
-        List<DevelopersInProjectsDAO> dip;
         DevelopersInProjectsRepository dipRepository = new DevelopersInProjectsRepository();
-        ProjectsRepository projectsRepository = new ProjectsRepository();
-        dip = dipRepository.findByNumber("dev_id", developerDAO.getId());
-        if (Objects.nonNull(dip)) {
-            dip.forEach(dip1 -> projectsRepository.updateCost(dip1.getProjectId(), -developerDAO.getSalary()));
-        }
         new DevSkillsRepository().deleteByUser(developerDAO.getId());
         dipRepository.deleteByUser(developerDAO.getId());
     }
@@ -131,8 +125,6 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
         List<ProjectsDAO> projects = developerDAO.getProjects();
         projects.forEach(p -> developersInProjectsRepository
                 .create(new DevelopersInProjectsDAO(developerDAO.getId(), p.getId())));
-        ProjectsRepository projectsRepository = new ProjectsRepository();
-        projects.forEach(p -> projectsRepository.updateCost(p.getId(), developerDAO.getSalary()));
         if (Objects.nonNull(developerDAO.getSkillLevels())) {
             DevSkillsRepository devSkillsRepository = new DevSkillsRepository();
             developerDAO.getSkillLevels().forEach((skill, level) -> devSkillsRepository

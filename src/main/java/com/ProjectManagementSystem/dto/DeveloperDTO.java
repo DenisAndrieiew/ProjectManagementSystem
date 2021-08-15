@@ -16,7 +16,16 @@ public class DeveloperDTO implements DataTransferObject {
     private String comments;
     private int salary;
     private Map<String, String> skillLevels = new HashMap<String, String>();
-    private List<String> projects = new LinkedList<String>();
+    private List<String> projects = new LinkedList<>();
+    private List<Long> projectsIds = new LinkedList<>();
+
+    public List<Long> getProjectsIds() {
+        return projectsIds;
+    }
+
+    public void setProjectsIds(List<Long> projectsIds) {
+        this.projectsIds = projectsIds;
+    }
 
     public DeveloperDTO() {
     }
