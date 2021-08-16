@@ -40,7 +40,7 @@
                          </ol>
                      </td>
                      <td border="0" cellpadding="0">
-                     <p><a href="/projects/update">
+                     <p><a href="/projects/update?id=${project.id}">
                             <button type = "update-button" style="background-color:#1E90FF">
                                 update
                      </button></a></p>

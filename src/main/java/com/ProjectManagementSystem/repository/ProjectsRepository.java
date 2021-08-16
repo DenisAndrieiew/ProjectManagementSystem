@@ -1,8 +1,8 @@
 package com.ProjectManagementSystem.repository;
 
-import com.ProjectManagementSystem.repository.model.ProjectsDAO;
 import com.ProjectManagementSystem.dto.ProjectsDTO;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
+import com.ProjectManagementSystem.repository.model.ProjectsDAO;
 import com.ProjectManagementSystem.service.converter.Converter;
 import com.ProjectManagementSystem.service.converter.ProjectsConverter;
 
@@ -22,10 +22,9 @@ public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
             "company_id=?, description=?, begin_date=? WHERE id=?;";
     private static final String DELETE = "DELETE FROM projects WHERE id=?;";
     private static final String NEXT_ID = "SELECT MAX(id)+1 FROM projects;";
-    private static final String SELECT_ALL = "SELECT id, name, customer_id, company_id, "+
+    private static final String SELECT_ALL = "SELECT id, name, customer_id, company_id, " +
             "description, begin_date FROM projects;";
-    private static final String UPDATE_COST = "UPDATE projects SET cost=cost+? WHERE id=?";
-    private static final String GET_COST="SELECT SUM(d.salary) as cost from developers as d "+
+    private static final String GET_COST = "SELECT SUM(d.salary) as cost from developers as d " +
             "INNER JOIN devs_in_project as dp on d.id=dp.dev_id WHERE dp.project_id=?";
 
 
@@ -39,7 +38,7 @@ public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
     @Override
     public ProjectsDAO findById(long id) {
         List<ProjectsDAO> list = RepositoryUtils.findById(dataSource, converter, SELECT_BY_ID, id)
-                .stream().map((entity)->(ProjectsDAO) entity).collect(Collectors.toList());
+                .stream().map((entity) -> (ProjectsDAO) entity).collect(Collectors.toList());
 
         return list.get(0);
     }
@@ -99,7 +98,7 @@ public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
     @Override
     public void delete(long id) {
         ProjectsDAO entity = new ProjectsRepository().findById(id);
-        if (entity.getDevelopers().size()>0){
+        if (entity.getDevelopers().size() > 0) {
             new DevelopersInProjectsRepository().deleteByProject(id);
         }
         RepositoryUtils.delete(dataSource, DELETE, id);
@@ -110,11 +109,12 @@ public class ProjectsRepository implements EntityRepository<ProjectsDAO> {
         return RepositoryUtils.getNextId(dataSource, NEXT_ID);
     }
 
-    public List<ProjectsDAO> findAll(){
-        return RepositoryUtils.findAll(dataSource, getConverter(), SELECT_ALL).stream().map(entity->(ProjectsDAO) entity)
+    public List<ProjectsDAO> findAll() {
+        return RepositoryUtils.findAll(dataSource, getConverter(), SELECT_ALL).stream().map(entity -> (ProjectsDAO) entity)
                 .collect(Collectors.toList());
     }
-    public int getCost(long id){
+
+    public int getCost(long id) {
         int cost = 0;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_COST)) {
