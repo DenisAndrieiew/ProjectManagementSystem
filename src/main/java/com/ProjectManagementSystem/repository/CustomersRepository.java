@@ -3,6 +3,7 @@ package com.ProjectManagementSystem.repository;
 import com.ProjectManagementSystem.repository.model.CustomersDAO;
 import com.ProjectManagementSystem.dto.CustomersDTO;
 import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
+import com.ProjectManagementSystem.repository.model.ProjectsDAO;
 import com.ProjectManagementSystem.service.converter.Converter;
 import com.ProjectManagementSystem.service.converter.CustomersConverter;
 
@@ -11,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CustomersRepository implements EntityRepository<CustomersDAO> {
@@ -80,6 +82,11 @@ public class CustomersRepository implements EntityRepository<CustomersDAO> {
 
     @Override
     public void delete(long id) {
+        ProjectsRepository projectsRepository = new ProjectsRepository();
+        List<ProjectsDAO> projects = projectsRepository.findByNumber("customer_id", id);
+        if (Objects.nonNull(projects)){
+            projects.forEach(dao->projectsRepository.delete(dao.getId()));
+        }
         RepositoryUtils.delete(dataSource, DELETE, id);
     }
 

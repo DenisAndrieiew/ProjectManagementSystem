@@ -1,8 +1,11 @@
 package com.ProjectManagementSystem.repository.model;
 
-public class CustomersDAO implements DataAccessObject{
+import java.util.Map;
+
+public class CustomersDAO implements DataAccessObject {
     private long id;
     private String name;
+    private Map<Long, String> projects;
 
     public CustomersDAO() {
     }
@@ -14,6 +17,14 @@ public class CustomersDAO implements DataAccessObject{
     public CustomersDAO(long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Map<Long, String> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Map<Long, String> projects) {
+        this.projects = projects;
     }
 
     @Override

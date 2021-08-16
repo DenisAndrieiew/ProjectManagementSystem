@@ -8,7 +8,7 @@
     <body>
     <c:import url="/view/navigate.jsp"/>
     <p>Project Management System</p>
-    <p>COMPANIES</p>
+    <p>CUSTOMERS</p>
     <table border="1" cellpadding="2%" width="100%" >
         <thead>
             <tr align="center">
@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody align="center">
-             <c:forEach var="var" items="${companies}">
+             <c:forEach var="var" items="${customers}">
                  <tr>
                  <td>${var.id}</td>
                      <td>${var.name}</td>
@@ -35,7 +35,7 @@
                             <button type = "update-button" style="background-color:#1E90FF">
                              update
                      </button></a></p>
-                     <p><a href="/companies/delete?id=${var.id}">
+                     <p><a href="/customers/delete?id=${var.id}">
                      <button type = "delete-button" style="background-color:#DC143C">
                                                   delete
                                           </button></p>
@@ -44,9 +44,9 @@
              </c:forEach>
         </tbody>
      </table>
-    <div align="center"> <a href="/companies/new">
+    <div align="center"> <a href="/customers/new">
     <button type = "button" style="background-color:#50ff50">
-        Create new company
+        Create new customer
     </button></a></div>
     </body>
 </html>

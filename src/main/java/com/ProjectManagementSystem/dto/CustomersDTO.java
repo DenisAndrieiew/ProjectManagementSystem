@@ -1,8 +1,11 @@
 package com.ProjectManagementSystem.dto;
 
-public class CustomersDTO implements DataTransferObject{
+import java.util.Map;
+
+public class CustomersDTO implements DataTransferObject {
     private long id;
     private String name;
+    private Map<Long, String> projects;
 
     public CustomersDTO(String name) {
         this.name = name;
@@ -11,6 +14,18 @@ public class CustomersDTO implements DataTransferObject{
     public CustomersDTO(long id, String name) {
         this.id = id;
         this.name = name;
+
+    }
+
+    public CustomersDTO() {
+    }
+
+    public Map<Long, String> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Map<Long, String> projects) {
+        this.projects = projects;
     }
 
     public long getId() {

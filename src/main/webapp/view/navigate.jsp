@@ -23,8 +23,8 @@
                 <i></i>
             </button>
             <div class="dropdown-content">
-                <a href="#">Show Companies</a>
-                <a href="#">Add Companies</a>
+                <a href="/companies">Show Companies</a>
+                <a href="/companies/new">Add Companies</a>
             </div>
         </div>
         <div class="dropdown">
@@ -32,8 +32,8 @@
                 <i></i>
             </button>
             <div class="dropdown-content">
-                <a href="#">Show Customers</a>
-                <a href="#">Add Customers</a>
+                <a href="/customers">Show Customers</a>
+                <a href="/customers/new">Add Customers</a>
             </div>
         </div>
 </div>
