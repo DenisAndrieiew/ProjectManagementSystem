@@ -17,8 +17,8 @@
               value="<c:out value='${project.name}'/>" required/> <br/>
               <legend>Companies</legend>
                 <c:forEach var="company" items="${companies}">
-                  <input type="radio" name="company" value='${company.id}' required>
-                  ${company.name}<br>
+                   <input type="radio" name="company" value='${company.name}' required>
+                   ${company.name}<br>
                 </c:forEach>
               Description: <input type="text" name="description" value="<c:out value='${project.description}'/>"/> <br/>
               <legend>Customers</legend>
@@ -28,7 +28,7 @@
                  </c:forEach>
               Start Date: <input type="datetime" name="beginDate" required value="<c:out value='${project.beginDate}'/>">
                <br/>
-                <input type="submit" value="${button_text} project" value="<c:out value='${project.beginDate}'/>"/>
+                <input type="submit" value="update project" />
                 <p>You can add developers to project by updating or creating developers</p>
             </form>
         </body>
