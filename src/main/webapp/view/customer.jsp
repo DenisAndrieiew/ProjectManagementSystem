@@ -8,7 +8,7 @@
 
 <body>
 <c:import url="/view/navigate.jsp"/>
-     <form name="developerForm" method="post" action="/customers">
+     <form name="customerForm" method="post" action="/customers">
           <fieldset>
               <legend>Customers data</legend>
               Name: <input type="text" name="name">

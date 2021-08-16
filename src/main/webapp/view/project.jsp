@@ -25,7 +25,7 @@
                    <input type="radio" name="customer" value='${customer.name}' required>
                    ${customer.name}<br>
                  </c:forEach>
-              Start Date: <input type="datetime" name="beginDate" required placeholder=/> <br/>
+              Start Date: <input type="datetime" name="beginDate" required placeholder="0000-00-00T00:00:000"> <br/>
                 <input type="submit" value="${button_text} project" />
                 <p>You can add developers to project by updating or creating developers</p>
             </form>

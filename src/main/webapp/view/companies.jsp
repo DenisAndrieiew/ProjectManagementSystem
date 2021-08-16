@@ -31,7 +31,7 @@
                            </ol>
                      </td>
                      <td border="0" cellpadding="0">
-                     <p><a href="#">
+                     <p><a href="/companies/update?id=${var.id}">
                             <button type = "update-button" style="background-color:#1E90FF">
                              update
                      </button></a></p>
