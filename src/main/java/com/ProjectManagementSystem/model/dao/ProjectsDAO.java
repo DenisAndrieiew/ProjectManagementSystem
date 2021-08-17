@@ -1,46 +1,33 @@
 package com.ProjectManagementSystem.model.dao;
 
+import javax.persistence.*;
 import java.time.Instant;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
+@Table(name = "projects")
 public class ProjectsDAO implements DataAccessObject {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "customer_id")
     private long customerId;
+    @Column(name = "company_id")
     private long companyId;
+    @Column(name = "description")
     private String description;
-    private int cost;
+    //    @Column(name = "id")
+//    private int cost;
+    @Column(name = "begin_date")
     private Instant begin_date;
-    private List<Long> developers;
+    @ManyToMany(mappedBy = "projects")
+    private Set<DeveloperDAO> developers = new HashSet<>();
 
     public ProjectsDAO() {
-    }
-
-    public ProjectsDAO(String name, long customerId, long companyId, String description, int cost, Instant begin_date) {
-        this.name = name;
-        this.customerId = customerId;
-        this.companyId = companyId;
-        this.description = description;
-        this.cost = cost;
-        this.begin_date = begin_date;
-    }
-
-    public ProjectsDAO(long id, String name, long customerId, long companyId, String description, int cost, Instant begin_date) {
-        this.id = id;
-        this.name = name;
-        this.customerId = customerId;
-        this.companyId = companyId;
-        this.description = description;
-        this.cost = cost;
-        this.begin_date = begin_date;
-    }
-
-    public List<Long> getDevelopers() {
-        return developers;
-    }
-
-    public void setDevelopers(List<Long> developers) {
-        this.developers = developers;
     }
 
     @Override
@@ -82,14 +69,6 @@ public class ProjectsDAO implements DataAccessObject {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
     }
 
     public Instant getBegin_date() {

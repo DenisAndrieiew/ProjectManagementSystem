@@ -11,13 +11,14 @@ import java.util.List;
 
 public class SkillLevelConverter implements Converter<SkillLevelDAO, SkillLevelDTO> {
     public SkillLevelDAO fromDTO(SkillLevelDTO dto) {
-        SkillLevelDAO dao = new SkillLevelDAO(dto.getLevel().toString());
+        SkillLevelDAO dao = new SkillLevelDAO();
+        dto.getLevel().toString();
         if (dto.getId() != 0) dao.setId(dto.getId());
         return dao;
     }
 
     public SkillLevelDTO toDTO(SkillLevelDAO dao) {
-        SkillLevelDTO dto = new SkillLevelDTO(dao.getId(), SkillLevel.toSkillLevel(dao.getName()).orElse(null));
+        SkillLevelDTO dto = new SkillLevelDTO(dao.getId(), SkillLevel.toSkillLevel(dao.getLevel().toString()).orElse(null));
         return dto;
     }
 
@@ -27,7 +28,7 @@ public class SkillLevelConverter implements Converter<SkillLevelDAO, SkillLevelD
         while (resultSet.next()) {
             SkillLevelDAO dao = new SkillLevelDAO();
             dao.setId(resultSet.getLong("id"));
-            dao.setName(resultSet.getString("name"));
+            dao.setLevel(resultSet.getString("name"));
             skillLevels.add(dao);
         }
         return skillLevels;

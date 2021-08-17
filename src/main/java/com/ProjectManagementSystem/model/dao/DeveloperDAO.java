@@ -2,19 +2,39 @@ package com.ProjectManagementSystem.model.dao;
 
 import com.ProjectManagementSystem.dto.enums.Sex;
 
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
+@Entity
+@Table(name = "developers")
+//@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "Developer")
 public class DeveloperDAO implements DataAccessObject {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "age")
     private int age;
+    @Column(name = "sex")
+    @Enumerated(EnumType.STRING)
     private Sex sex;
+    @Column(name = "comments")
     private String comments;
+    @Column(name = "salary")
     private int salary;
+    @ManyToMany()
+    @JoinTable(name = "devs_in_project", joinColumns = {@JoinColumn(name = "dev_id")}
+            , inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private List<ProjectsDAO> projects;
-    private Map<Long, Long> skillLevels;
+    @Column
+    private Set<Object> skillLevels = new HashSet<>();
 
     public DeveloperDAO() {
     }
@@ -38,11 +58,25 @@ public class DeveloperDAO implements DataAccessObject {
         this.salary = salary;
     }
 
-    public Map<Long, Long> getSkillLevels() {
+
+    public Set<Object> getSkillLevels() {
         return skillLevels;
     }
 
-    public void setSkillLevels(Map<Long, Long> skillLevels) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DeveloperDAO)) return false;
+        DeveloperDAO that = (DeveloperDAO) o;
+        return id == that.id && age == that.age && salary == that.salary && firstName.equals(that.firstName) && lastName.equals(that.lastName) && sex == that.sex;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, age, sex, salary);
+    }
+
+    public void setSkillLevels(Set<Object> skillLevels) {
         this.skillLevels = skillLevels;
     }
 

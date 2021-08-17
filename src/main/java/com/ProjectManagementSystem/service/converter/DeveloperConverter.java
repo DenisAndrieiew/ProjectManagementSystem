@@ -37,7 +37,7 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
                                 .equalsIgnoreCase(Brunch.valueOf(skill).toString()))
                         .findFirst().get().getId();
                 long level_id = skillLevels.stream()
-                        .filter(skillLevel -> skillLevel.getName()
+                        .filter(skillLevel -> skillLevel.getLevel()
                                 .equalsIgnoreCase(SkillLevel.valueOf(level.toUpperCase(Locale.ROOT))
                                         .toString())).findFirst().get().getId();
                 skillLevelsMap.put(skill_id, level_id);
@@ -61,7 +61,7 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
         Repository<SkillLevelDAO> skills = new SkillLevelRepository();
         Map<String, String> skillLevels = new HashMap<>();
         dao.getSkillLevels().forEach((skill, level) ->
-                skillLevels.put(brunches.findById(skill).getBrunch(), skills.findById(level).getName()));
+                skillLevels.put(brunches.findById(skill).getBrunch(), skills.findById(level).getLevel()));
         dto.setSkillLevels(skillLevels);
         return dto;
     }

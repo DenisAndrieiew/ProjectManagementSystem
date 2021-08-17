@@ -1,56 +1,45 @@
 package com.ProjectManagementSystem.model.dao;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "dev_skills")
 public class DevSkillsDAO implements DataAccessObject {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
-    private long devId;
-    private long skillId;
-    private long skillLevel;
+    @OneToMany(mappedBy = "devSkills")
+    @JoinColumn(name = "skill_id", nullable = false)
+    private BrunchDAO brunch;
+    @OneToMany(mappedBy = "devSkills")
+    private SkillLevelDAO skillLevel;
 
     public DevSkillsDAO() {
     }
-
-    public DevSkillsDAO(long id, long devId, long skillId, long skillLevel) {
-        this.id = id;
-        this.devId = devId;
-        this.skillId = skillId;
-        this.skillLevel = skillLevel;
-    }
-
-    public DevSkillsDAO(long devId, long skillId, long skillLevel) {
-        this.devId = devId;
-        this.skillId = skillId;
-        this.skillLevel = skillLevel;
-    }
-
 
     @Override
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {this.id = id;}
-
-    public long getDevId() {
-        return devId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setDevId(long devId) {
-        this.devId = devId;
+    public BrunchDAO getBrunch() {
+        return brunch;
     }
 
-    public long getSkillId() {
-        return skillId;
+    public void setBrunch(BrunchDAO brunch) {
+        this.brunch = brunch;
     }
 
-    public void setSkillId(long skillId) {
-        this.skillId = skillId;
-    }
-
-    public long getSkillLevel() {
+    public SkillLevelDAO getSkillLevel() {
         return skillLevel;
     }
 
-    public void setSkillLevel(long skillLevel) {
+    public void setSkillLevel(SkillLevelDAO skillLevel) {
         this.skillLevel = skillLevel;
     }
 }

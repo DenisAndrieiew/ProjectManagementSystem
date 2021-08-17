@@ -5,11 +5,6 @@ public class DevelopersInProjectsDAO implements DataAccessObject{
     private long developerId;
     private long projectId;
 
-    public DevelopersInProjectsDAO(long id, long developerId, long projectId) {
-        this.id = id;
-        this.developerId = developerId;
-        this.projectId = projectId;
-    }
 
     public DevelopersInProjectsDAO(long developerId, long projectId) {
         this.developerId = developerId;

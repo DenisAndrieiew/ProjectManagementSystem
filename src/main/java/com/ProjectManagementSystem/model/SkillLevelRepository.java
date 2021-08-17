@@ -51,7 +51,7 @@ public class SkillLevelRepository implements EntityRepository<SkillLevelDAO> {
              PreparedStatement statement = connection.prepareStatement(INSERT)) {
             entity.setId(getNextId());
             statement.setLong(1, entity.getId());
-            statement.setString(2, entity.getName());
+            statement.setString(2, entity.getLevel());
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -63,7 +63,7 @@ public class SkillLevelRepository implements EntityRepository<SkillLevelDAO> {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE)) {
             statement.setLong(4, entity.getId());
-            statement.setString(1, entity.getName());
+            statement.setString(1, entity.getLevel());
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();

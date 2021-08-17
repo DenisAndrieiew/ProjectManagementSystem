@@ -1,19 +1,34 @@
 package com.ProjectManagementSystem.model.dao;
 
-public class SkillLevelDAO implements DataAccessObject{
-    private long id;
-    private String name;
+import com.ProjectManagementSystem.dto.enums.SkillLevel;
 
-    public SkillLevelDAO(String name) {
-        this.name = name;
-    }
+import javax.persistence.*;
+import java.util.Objects;
+import java.util.Set;
+
+@Entity
+@Table(name = "skill_level")
+public class SkillLevelDAO implements DataAccessObject{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
+    @Column(name = "name")
+    @Enumerated(EnumType.STRING)
+    private SkillLevel level;
+    @OneToMany
+    @JoinTable(name = "dev_skills", joinColumns = {@JoinColumn(name = "level_id")})
+    private Set<DevSkillsDAO> devSkills;
 
     public SkillLevelDAO() {
     }
 
-    public SkillLevelDAO(long id, String name) {
-        this.id = id;
-        this.name = name;
+    public Set<DevSkillsDAO> getDevSkills() {
+        return devSkills;
+    }
+
+    public void setDevSkills(Set<DevSkillsDAO> devSkills) {
+        this.devSkills = devSkills;
     }
 
     @Override
@@ -25,11 +40,24 @@ public class SkillLevelDAO implements DataAccessObject{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public SkillLevel getLevel() {
+        return level;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLevel(SkillLevel level) {
+        this.level = level;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SkillLevelDAO)) return false;
+        SkillLevelDAO that = (SkillLevelDAO) o;
+        return id == that.id && level == that.level;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, level);
     }
 }
