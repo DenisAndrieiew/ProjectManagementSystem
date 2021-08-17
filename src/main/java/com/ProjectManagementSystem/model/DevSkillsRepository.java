@@ -1,8 +1,8 @@
-package com.ProjectManagementSystem.repository;
+package com.ProjectManagementSystem.model;
 
-import com.ProjectManagementSystem.repository.model.DevSkillsDAO;
+import com.ProjectManagementSystem.model.dao.DevSkillsDAO;
 import com.ProjectManagementSystem.dto.DevSkillsDTO;
-import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
+import com.ProjectManagementSystem.config.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.service.converter.Converter;
 import com.ProjectManagementSystem.service.converter.DevSkillsConverter;
 

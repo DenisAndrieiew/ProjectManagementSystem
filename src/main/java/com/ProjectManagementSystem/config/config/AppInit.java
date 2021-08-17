@@ -1,4 +1,4 @@
-package com.ProjectManagementSystem.jdbc.config;
+package com.ProjectManagementSystem.config.config;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -10,6 +10,7 @@ public class AppInit implements ServletContextListener {
         System.out.println("Init database connection manager");
         DatabaseConnectionManager.init();
         System.out.println("Database init finished");
+        HibernateDatabaseConnector.init();
     }
 
     @Override

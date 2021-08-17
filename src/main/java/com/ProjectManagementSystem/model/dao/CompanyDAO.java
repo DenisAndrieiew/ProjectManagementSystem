@@ -1,20 +1,20 @@
-package com.ProjectManagementSystem.repository.model;
+package com.ProjectManagementSystem.model.dao;
 
 import java.util.Map;
 
-public class CustomersDAO implements DataAccessObject {
+public class CompanyDAO implements DataAccessObject {
     private long id;
     private String name;
     private Map<Long, String> projects;
 
-    public CustomersDAO() {
+    public CompanyDAO() {
     }
 
-    public CustomersDAO(String name) {
+    public CompanyDAO(String name) {
         this.name = name;
     }
 
-    public CustomersDAO(long id, String name) {
+    public CompanyDAO(long id, String name) {
         this.id = id;
         this.name = name;
     }

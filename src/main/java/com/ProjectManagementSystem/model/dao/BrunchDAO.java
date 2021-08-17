@@ -1,4 +1,4 @@
-package com.ProjectManagementSystem.repository.model;
+package com.ProjectManagementSystem.model.dao;
 
 public class BrunchDAO implements DataAccessObject{
     private long id;

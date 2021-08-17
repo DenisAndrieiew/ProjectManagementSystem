@@ -4,11 +4,11 @@ import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.enums.Brunch;
 import com.ProjectManagementSystem.dto.enums.Sex;
 import com.ProjectManagementSystem.dto.enums.SkillLevel;
-import com.ProjectManagementSystem.repository.*;
-import com.ProjectManagementSystem.repository.model.BrunchDAO;
-import com.ProjectManagementSystem.repository.model.DeveloperDAO;
-import com.ProjectManagementSystem.repository.model.ProjectsDAO;
-import com.ProjectManagementSystem.repository.model.SkillLevelDAO;
+import com.ProjectManagementSystem.model.*;
+import com.ProjectManagementSystem.model.dao.BrunchDAO;
+import com.ProjectManagementSystem.model.dao.DeveloperDAO;
+import com.ProjectManagementSystem.model.dao.ProjectsDAO;
+import com.ProjectManagementSystem.model.dao.SkillLevelDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

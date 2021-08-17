@@ -1,4 +1,4 @@
-package com.ProjectManagementSystem.repository.model;
+package com.ProjectManagementSystem.model.dao;
 
 import com.ProjectManagementSystem.dto.enums.Sex;
 

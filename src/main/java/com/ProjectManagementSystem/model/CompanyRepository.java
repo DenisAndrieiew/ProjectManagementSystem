@@ -1,9 +1,9 @@
-package com.ProjectManagementSystem.repository;
+package com.ProjectManagementSystem.model;
 
-import com.ProjectManagementSystem.repository.model.CompanyDAO;
+import com.ProjectManagementSystem.model.dao.CompanyDAO;
 import com.ProjectManagementSystem.dto.CompanyDTO;
-import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
-import com.ProjectManagementSystem.repository.model.ProjectsDAO;
+import com.ProjectManagementSystem.config.config.DatabaseConnectionManager;
+import com.ProjectManagementSystem.model.dao.ProjectsDAO;
 import com.ProjectManagementSystem.service.converter.CompanyConverter;
 import com.ProjectManagementSystem.service.converter.Converter;
 

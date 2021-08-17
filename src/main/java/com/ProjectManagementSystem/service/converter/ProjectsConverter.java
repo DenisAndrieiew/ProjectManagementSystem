@@ -1,9 +1,9 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.repository.*;
-import com.ProjectManagementSystem.repository.model.DeveloperDAO;
-import com.ProjectManagementSystem.repository.model.DevelopersInProjectsDAO;
-import com.ProjectManagementSystem.repository.model.ProjectsDAO;
+import com.ProjectManagementSystem.model.*;
+import com.ProjectManagementSystem.model.dao.DeveloperDAO;
+import com.ProjectManagementSystem.model.dao.DevelopersInProjectsDAO;
+import com.ProjectManagementSystem.model.dao.ProjectsDAO;
 import com.ProjectManagementSystem.dto.ProjectsDTO;
 
 import java.sql.ResultSet;

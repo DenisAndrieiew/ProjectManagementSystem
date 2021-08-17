@@ -1,6 +1,6 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.repository.model.BrunchDAO;
+import com.ProjectManagementSystem.model.dao.BrunchDAO;
 import com.ProjectManagementSystem.dto.BrunchDTO;
 import com.ProjectManagementSystem.dto.enums.Brunch;
 

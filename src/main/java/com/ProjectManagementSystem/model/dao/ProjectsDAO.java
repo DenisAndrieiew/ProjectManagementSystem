@@ -1,4 +1,4 @@
-package com.ProjectManagementSystem.repository.model;
+package com.ProjectManagementSystem.model.dao;
 
 import java.time.Instant;
 import java.util.List;

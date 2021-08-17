@@ -1,6 +1,6 @@
-package com.ProjectManagementSystem.repository;
+package com.ProjectManagementSystem.model;
 
-import com.ProjectManagementSystem.repository.model.DataAccessObject;
+import com.ProjectManagementSystem.model.dao.DataAccessObject;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 import javax.sql.DataSource;

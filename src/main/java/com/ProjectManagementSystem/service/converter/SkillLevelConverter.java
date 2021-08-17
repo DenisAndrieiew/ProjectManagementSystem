@@ -1,6 +1,6 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.repository.model.SkillLevelDAO;
+import com.ProjectManagementSystem.model.dao.SkillLevelDAO;
 import com.ProjectManagementSystem.dto.SkillLevelDTO;
 import com.ProjectManagementSystem.dto.enums.SkillLevel;
 

@@ -1,4 +1,4 @@
-package com.ProjectManagementSystem.jdbc.config;
+package com.ProjectManagementSystem.config.config;
 
 import com.ProjectManagementSystem.service.PropertiesConfig;
 import com.zaxxer.hikari.HikariConfig;

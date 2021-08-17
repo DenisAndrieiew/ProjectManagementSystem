@@ -1,8 +1,8 @@
 package com.ProjectManagementSystem.controller;
 
-import com.ProjectManagementSystem.repository.DeveloperRepository;
-import com.ProjectManagementSystem.repository.EntityRepository;
-import com.ProjectManagementSystem.repository.model.DeveloperDAO;
+import com.ProjectManagementSystem.model.DeveloperRepository;
+import com.ProjectManagementSystem.model.EntityRepository;
+import com.ProjectManagementSystem.model.dao.DeveloperDAO;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 

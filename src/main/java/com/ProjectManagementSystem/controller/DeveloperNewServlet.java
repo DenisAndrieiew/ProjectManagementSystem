@@ -1,10 +1,10 @@
 package com.ProjectManagementSystem.controller;
 
-import com.ProjectManagementSystem.repository.BrunchRepository;
-import com.ProjectManagementSystem.repository.EntityRepository;
-import com.ProjectManagementSystem.repository.ProjectsRepository;
-import com.ProjectManagementSystem.repository.model.BrunchDAO;
-import com.ProjectManagementSystem.repository.model.ProjectsDAO;
+import com.ProjectManagementSystem.model.BrunchRepository;
+import com.ProjectManagementSystem.model.EntityRepository;
+import com.ProjectManagementSystem.model.ProjectsRepository;
+import com.ProjectManagementSystem.model.dao.BrunchDAO;
+import com.ProjectManagementSystem.model.dao.ProjectsDAO;
 import com.ProjectManagementSystem.dto.BrunchDTO;
 import com.ProjectManagementSystem.dto.ProjectsDTO;
 import com.ProjectManagementSystem.service.converter.Converter;

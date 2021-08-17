@@ -3,11 +3,11 @@ package com.ProjectManagementSystem.controller;
 import com.ProjectManagementSystem.dto.BrunchDTO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.enums.Sex;
-import com.ProjectManagementSystem.repository.BrunchRepository;
-import com.ProjectManagementSystem.repository.DeveloperRepository;
-import com.ProjectManagementSystem.repository.EntityRepository;
-import com.ProjectManagementSystem.repository.model.BrunchDAO;
-import com.ProjectManagementSystem.repository.model.DeveloperDAO;
+import com.ProjectManagementSystem.model.BrunchRepository;
+import com.ProjectManagementSystem.model.DeveloperRepository;
+import com.ProjectManagementSystem.model.EntityRepository;
+import com.ProjectManagementSystem.model.dao.BrunchDAO;
+import com.ProjectManagementSystem.model.dao.DeveloperDAO;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 

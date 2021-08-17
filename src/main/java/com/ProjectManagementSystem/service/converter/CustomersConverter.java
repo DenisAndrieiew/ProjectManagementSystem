@@ -1,8 +1,8 @@
 package com.ProjectManagementSystem.service.converter;
 
 import com.ProjectManagementSystem.dto.CustomersDTO;
-import com.ProjectManagementSystem.repository.ProjectsRepository;
-import com.ProjectManagementSystem.repository.model.CustomersDAO;
+import com.ProjectManagementSystem.model.ProjectsRepository;
+import com.ProjectManagementSystem.model.dao.CustomersDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

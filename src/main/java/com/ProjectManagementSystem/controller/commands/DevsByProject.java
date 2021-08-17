@@ -1,9 +1,9 @@
 package com.ProjectManagementSystem.controller.commands;
 
-import com.ProjectManagementSystem.repository.DeveloperRepository;
-import com.ProjectManagementSystem.repository.DevelopersInProjectsRepository;
-import com.ProjectManagementSystem.repository.ProjectsRepository;
-import com.ProjectManagementSystem.repository.model.ProjectsDAO;
+import com.ProjectManagementSystem.model.DeveloperRepository;
+import com.ProjectManagementSystem.model.DevelopersInProjectsRepository;
+import com.ProjectManagementSystem.model.ProjectsRepository;
+import com.ProjectManagementSystem.model.dao.ProjectsDAO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.DevelopersInProjectsDTO;
 import com.ProjectManagementSystem.dto.ProjectsDTO;

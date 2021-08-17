@@ -1,9 +1,9 @@
 package com.ProjectManagementSystem.controller.commands;
 
-import com.ProjectManagementSystem.repository.DevSkillsRepository;
-import com.ProjectManagementSystem.repository.DeveloperRepository;
-import com.ProjectManagementSystem.repository.SkillLevelRepository;
-import com.ProjectManagementSystem.repository.model.SkillLevelDAO;
+import com.ProjectManagementSystem.model.DevSkillsRepository;
+import com.ProjectManagementSystem.model.DeveloperRepository;
+import com.ProjectManagementSystem.model.SkillLevelRepository;
+import com.ProjectManagementSystem.model.dao.SkillLevelDAO;
 import com.ProjectManagementSystem.dto.DevSkillsDTO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.SkillLevelDTO;

@@ -1,9 +1,8 @@
-package com.ProjectManagementSystem.repository;
+package com.ProjectManagementSystem.model;
 
-import com.ProjectManagementSystem.repository.model.BrunchDAO;
-import com.ProjectManagementSystem.repository.model.SkillLevelDAO;
+import com.ProjectManagementSystem.model.dao.SkillLevelDAO;
 import com.ProjectManagementSystem.dto.SkillLevelDTO;
-import com.ProjectManagementSystem.jdbc.config.DatabaseConnectionManager;
+import com.ProjectManagementSystem.config.config.DatabaseConnectionManager;
 import com.ProjectManagementSystem.service.converter.Converter;
 import com.ProjectManagementSystem.service.converter.SkillLevelConverter;
 
