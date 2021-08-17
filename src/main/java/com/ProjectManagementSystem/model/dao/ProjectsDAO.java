@@ -1,5 +1,9 @@
 package com.ProjectManagementSystem.model.dao;
 
+import com.ProjectManagementSystem.config.config.HibernateDatabaseConnector;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.HashSet;
@@ -10,14 +14,14 @@ import java.util.Set;
 public class ProjectsDAO implements DataAccessObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "customer_id")
-    private long customerId;
-    @Column(name = "company_id")
-    private long companyId;
+//    @Column(name = "customer_id")
+    private CustomersDAO customer;
+//    @Column(name = "company_id")
+    private CompanyDAO company;
     @Column(name = "description")
     private String description;
     //    @Column(name = "id")
@@ -26,8 +30,15 @@ public class ProjectsDAO implements DataAccessObject {
     private Instant begin_date;
     @ManyToMany(mappedBy = "projects")
     private Set<DeveloperDAO> developers = new HashSet<>();
+    private int cost;
 
     public ProjectsDAO() {
+        String hqlQuery = "SELECT SUM(developerDAO.salary) FROM DeveloperDAO developerDAO" +
+                "join ProjectsDAO.developers;";
+        SessionFactory sessionFactory = HibernateDatabaseConnector.getSessionFactory();
+        Session session= sessionFactory.openSession();
+        Query query = session.createQuery(hqlQuery);
+        this.cost= query.getFirstResult();
     }
 
     @Override
@@ -47,22 +58,6 @@ public class ProjectsDAO implements DataAccessObject {
         this.name = name;
     }
 
-    public long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
-    }
-
-    public long getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(long companyId) {
-        this.companyId = companyId;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -77,5 +72,29 @@ public class ProjectsDAO implements DataAccessObject {
 
     public void setBegin_date(Instant begin_date) {
         this.begin_date = begin_date;
+    }
+
+    public CustomersDAO getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomersDAO customer) {
+        this.customer = customer;
+    }
+
+    public CompanyDAO getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyDAO company) {
+        this.company = company;
+    }
+
+    public Set<DeveloperDAO> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(Set<DeveloperDAO> developers) {
+        this.developers = developers;
     }
 }

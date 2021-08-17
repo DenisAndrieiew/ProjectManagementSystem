@@ -1,29 +1,22 @@
 package com.ProjectManagementSystem.dto;
 
 import java.util.Map;
+import java.util.Set;
 
 public class CompanyDTO implements DataTransferObject {
     private long id;
     private String name;
-    private Map<Long, String> projects;
+    private Set<ProjectsDTO> projects;
 
-    public CompanyDTO(String name) {
-        this.name = name;
-    }
 
     public CompanyDTO() {
     }
 
-    public CompanyDTO(long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Map<Long, String> getProjects() {
+    public Set<ProjectsDTO> getProjects() {
         return projects;
     }
 
-    public void setProjects(Map<Long, String> projects) {
+    public void setProjects(Set<ProjectsDTO> projects) {
         this.projects = projects;
     }
 

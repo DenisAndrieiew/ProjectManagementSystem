@@ -1,97 +1,41 @@
 package com.ProjectManagementSystem.service.converter;
 
 import com.ProjectManagementSystem.dto.DeveloperDTO;
-import com.ProjectManagementSystem.dto.enums.Brunch;
-import com.ProjectManagementSystem.dto.enums.Sex;
-import com.ProjectManagementSystem.dto.enums.SkillLevel;
-import com.ProjectManagementSystem.model.*;
-import com.ProjectManagementSystem.model.dao.BrunchDAO;
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
-import com.ProjectManagementSystem.model.dao.ProjectsDAO;
-import com.ProjectManagementSystem.model.dao.SkillLevelDAO;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO> {
+    private static ProjectsConverter projectsConverter = new ProjectsConverter();
+    private static DevSkillsConverter devSkillsConverter = new DevSkillsConverter();
 
     public DeveloperDAO fromDTO(DeveloperDTO dto) {
-        ProjectsRepository projectsRepository = new ProjectsRepository();
-        DeveloperDAO dao = new DeveloperDAO(dto.getFirstName(), dto.getLastName(),
-                dto.getAge(), dto.getSex(), dto.getComments(), dto.getSalary());
-        if (dto.getId() != 0) dao.setId(dto.getId());
-        List<ProjectsDAO> projectsDAO = new LinkedList<>();
-        for (Long project : dto.getProjectsIds()) {
-            projectsDAO.add(projectsRepository.findById(project));
-        }
-        if (!dto.getSkillLevels().isEmpty()) {
-            Map<Long, Long> skillLevelsMap = new HashMap<>();
-            List<BrunchDAO> brunches = new BrunchRepository().findAll();
-            List<SkillLevelDAO> skillLevels = new SkillLevelRepository().findAll();
-            dto.getSkillLevels().forEach((skill, level) -> {
-                Iterator<BrunchDAO> brIterator = brunches.iterator();
-                long skill_id = brunches.stream()
-                        .filter(brunch -> brunch.getBrunch()
-                                .equalsIgnoreCase(Brunch.valueOf(skill).toString()))
-                        .findFirst().get().getId();
-                long level_id = skillLevels.stream()
-                        .filter(skillLevel -> skillLevel.getLevel()
-                                .equalsIgnoreCase(SkillLevel.valueOf(level.toUpperCase(Locale.ROOT))
-                                        .toString())).findFirst().get().getId();
-                skillLevelsMap.put(skill_id, level_id);
-            });
-            dao.setSkillLevels(skillLevelsMap);
-        }
-
-        dao.setProjects(projectsDAO);
+        DeveloperDAO dao = new DeveloperDAO();
+        dao.setId(dto.getId());
+        dao.setFirstName(dto.getFirstName());
+        dao.setLastName(dto.getLastName());
+        dao.setComments(dto.getComments());
+        dao.setAge(dto.getAge());
+        dao.setSalary(dto.getSalary());
+        dao.setProjects(projectsConverter.fromDTOSet(dto.getProjects()));
+        dao.setDevSkills(devSkillsConverter.fromDTOSet(dto.getDevSkills()));
+        dao.setSex(dto.getSex());
         return dao;
     }
 
     public DeveloperDTO toDTO(DeveloperDAO dao) {
-        DeveloperDTO dto = new DeveloperDTO(dao.getId(), dao.getFirstName(), dao.getLastName(),
-                dao.getAge(), dao.getSex(), dao.getComments(), dao.getSalary());
-        List<String> projects = new LinkedList<>();
-        List<Long> projectsIds = new LinkedList<>();
-        dao.getProjects().forEach(p -> projects.add(p.getName()));
-        dto.setProjects(projects);
-        dao.getProjects().forEach(p -> projectsIds.add(p.getId()));
-        Repository<BrunchDAO> brunches = new BrunchRepository();
-        Repository<SkillLevelDAO> skills = new SkillLevelRepository();
-        Map<String, String> skillLevels = new HashMap<>();
-        dao.getSkillLevels().forEach((skill, level) ->
-                skillLevels.put(brunches.findById(skill).getBrunch(), skills.findById(level).getLevel()));
-        dto.setSkillLevels(skillLevels);
+        DeveloperDTO dto = new DeveloperDTO();
+        dto.setId(dao.getId());
+        dto.setFirstName(dao.getFirstName());
+        dto.setLastName(dao.getLastName());
+        dto.setComments(dao.getComments());
+        dto.setSex(dao.getSex());
+        dto.setAge(dao.getAge());
+        dto.setSalary(dao.getSalary());
+        dto.setProjects(projectsConverter.toDTOSet(dao.getProjects()));
+        dto.setDevSkills(devSkillsConverter.toDTOSet(dao.getDevSkills()));
+        dto.setSex(dao.getSex());
         return dto;
     }
-
-
-    public List<DeveloperDAO> fromResultSet(ResultSet resultSet) throws SQLException {
-        List<DeveloperDAO> developers = new LinkedList<>();
-        while (resultSet.next()) {
-            DeveloperDAO dao = new DeveloperDAO();
-            dao.setId(resultSet.getLong("id"));
-            dao.setFirstName(resultSet.getString("first_name"));
-            dao.setLastName(resultSet.getString("last_name"));
-            dao.setAge(resultSet.getInt("age"));
-            dao.setSex(Sex.valueOf(resultSet.getString("dev_sex").toUpperCase()));
-            dao.setComments(resultSet.getString("comments"));
-            dao.setSalary(resultSet.getInt("salary"));
-
-            ProjectsRepository projectsRepository = new ProjectsRepository();
-            DevelopersInProjectsRepository dipRepository = new DevelopersInProjectsRepository();
-            List<ProjectsDAO> projectsDAOS = dipRepository.findByNumber("dev_id", dao.getId()).stream()
-                    .map(dip -> projectsRepository.findById(dip.getProjectId())).collect(Collectors.toList());
-            dao.setProjects(projectsDAOS);
-            DevSkillsRepository skillLevelRepository = new DevSkillsRepository();
-            Map<Long, Long> skillLevels = new HashMap<>();
-            skillLevelRepository.findByNumber("dev_id", dao.getId())
-                    .stream().forEach(entity -> skillLevels.put(entity.getSkillId(), entity.getSkillLevel()));
-            dao.setSkillLevels(skillLevels);
-            developers.add(dao);
-        }
-        return developers;
-    }
-
 }

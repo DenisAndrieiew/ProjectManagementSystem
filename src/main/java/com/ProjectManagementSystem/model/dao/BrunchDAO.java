@@ -11,7 +11,7 @@ import java.util.Set;
 public class BrunchDAO implements DataAccessObject{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private long id;
     @Column(name = "name")
     @Enumerated(EnumType.STRING)

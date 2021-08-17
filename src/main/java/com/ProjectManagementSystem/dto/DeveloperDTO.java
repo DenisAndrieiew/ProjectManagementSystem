@@ -2,10 +2,8 @@ package com.ProjectManagementSystem.dto;
 
 import com.ProjectManagementSystem.dto.enums.Sex;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DeveloperDTO implements DataTransferObject {
     private long id;
@@ -15,17 +13,9 @@ public class DeveloperDTO implements DataTransferObject {
     private Sex sex;
     private String comments;
     private int salary;
-    private Map<String, String> skillLevels = new HashMap<String, String>();
-    private List<String> projects = new LinkedList<>();
-    private List<Long> projectsIds = new LinkedList<>();
+    private Set<DevSkillsDTO> devSkills = new HashSet<>();
+    private Set<ProjectsDTO> projects = new HashSet<>();
 
-    public List<Long> getProjectsIds() {
-        return projectsIds;
-    }
-
-    public void setProjectsIds(List<Long> projectsIds) {
-        this.projectsIds = projectsIds;
-    }
 
     public DeveloperDTO() {
     }
@@ -49,20 +39,12 @@ public class DeveloperDTO implements DataTransferObject {
         this.salary = salary;
     }
 
-    public Map<String, String> getSkillLevels() {
-        return skillLevels;
+    public Set<DevSkillsDTO> getDevSkills() {
+        return devSkills;
     }
 
-    public void setSkillLevels(Map<String, String> skillLevels) {
-        this.skillLevels = skillLevels;
-    }
-
-    public List<String> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(List<String> projects) {
-        this.projects = projects;
+    public void setDevSkills(Set<DevSkillsDTO> devSkills) {
+        this.devSkills = devSkills;
     }
 
     public long getId() {
@@ -119,6 +101,14 @@ public class DeveloperDTO implements DataTransferObject {
 
     public void setSalary(int salary) {
         this.salary = salary;
+    }
+
+    public Set<ProjectsDTO> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<ProjectsDTO> projects) {
+        this.projects = projects;
     }
 
     @Override

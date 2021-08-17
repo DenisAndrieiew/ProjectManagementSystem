@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class DevSkillsDAO implements DataAccessObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private long id;
     @OneToMany(mappedBy = "devSkills")
     @JoinColumn(name = "skill_id", nullable = false)

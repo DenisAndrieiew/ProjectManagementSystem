@@ -6,8 +6,8 @@ import java.util.List;
 public class ProjectsDTO implements DataTransferObject {
     private long id;
     private String name;
-    private String customer;
-    private String company;
+    private CustomersDTO customer;
+    private CompanyDTO company;
     private String description;
     private int cost;
     private Instant beginDate;
@@ -16,26 +16,6 @@ public class ProjectsDTO implements DataTransferObject {
     public ProjectsDTO() {
     }
 
-    public ProjectsDTO(String name, String customer, String company,
-                       String description, int cost, Instant beginDate) {
-        this.name = name;
-        this.customer = customer;
-        this.company = company;
-        this.description = description;
-        this.cost = cost;
-        this.beginDate = beginDate;
-    }
-
-    public ProjectsDTO(long id, String name, String customer, String company,
-                       String description, int cost, Instant beginDate) {
-        this.id = id;
-        this.name = name;
-        this.customer = customer;
-        this.company = company;
-        this.description = description;
-        this.cost = cost;
-        this.beginDate = beginDate;
-    }
 
     public List<String> getDevelopers() {
         return developers;
@@ -61,22 +41,6 @@ public class ProjectsDTO implements DataTransferObject {
         this.name = name;
     }
 
-    public String getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(String customerId) {
-        this.customer = customerId;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -99,5 +63,21 @@ public class ProjectsDTO implements DataTransferObject {
 
     public void setBeginDate(Instant beginDate) {
         this.beginDate = beginDate;
+    }
+
+    public CustomersDTO getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomersDTO customer) {
+        this.customer = customer;
+    }
+
+    public CompanyDTO getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyDTO company) {
+        this.company = company;
     }
 }

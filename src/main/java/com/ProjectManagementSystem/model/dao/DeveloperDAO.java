@@ -14,7 +14,7 @@ import java.util.Set;
 public class DeveloperDAO implements DataAccessObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private long id;
     @Column(name = "first_name")
     private String firstName;
@@ -32,35 +32,19 @@ public class DeveloperDAO implements DataAccessObject {
     @ManyToMany()
     @JoinTable(name = "devs_in_project", joinColumns = {@JoinColumn(name = "dev_id")}
             , inverseJoinColumns = {@JoinColumn(name = "project_id")})
-    private List<ProjectsDAO> projects;
+    private Set<ProjectsDAO> projects;
     @Column
-    private Set<Object> skillLevels = new HashSet<>();
+    private Set<DevSkillsDAO> devSkills = new HashSet<>();
 
     public DeveloperDAO() {
     }
 
-    public DeveloperDAO(String firstName, String lastName, int age, Sex sex, String comments, int salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.sex = sex;
-        this.comments = comments;
-        this.salary = salary;
+    public Set<DevSkillsDAO> getDevSkills() {
+        return devSkills;
     }
 
-    public DeveloperDAO(long id, String firstName, String lastName, int age, Sex sex, String comments, int salary) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.sex = sex;
-        this.comments = comments;
-        this.salary = salary;
-    }
-
-
-    public Set<Object> getSkillLevels() {
-        return skillLevels;
+    public void setDevSkills(Set<DevSkillsDAO> devSkills) {
+        this.devSkills = devSkills;
     }
 
     @Override
@@ -74,10 +58,6 @@ public class DeveloperDAO implements DataAccessObject {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, age, sex, salary);
-    }
-
-    public void setSkillLevels(Set<Object> skillLevels) {
-        this.skillLevels = skillLevels;
     }
 
     @Override
@@ -149,11 +129,11 @@ public class DeveloperDAO implements DataAccessObject {
         this.salary = salary;
     }
 
-    public List<ProjectsDAO> getProjects() {
+    public Set<ProjectsDAO> getProjects() {
         return projects;
     }
 
-    public void setProjects(List<ProjectsDAO> projects) {
+    public void setProjects(Set<ProjectsDAO> projects) {
         this.projects = projects;
     }
 }
