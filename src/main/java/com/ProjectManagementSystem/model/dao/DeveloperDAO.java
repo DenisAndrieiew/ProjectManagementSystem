@@ -4,7 +4,6 @@ import com.ProjectManagementSystem.dto.enums.Sex;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -32,8 +31,8 @@ public class DeveloperDAO implements DataAccessObject {
     @ManyToMany()
     @JoinTable(name = "devs_in_project", joinColumns = {@JoinColumn(name = "dev_id")}
             , inverseJoinColumns = {@JoinColumn(name = "project_id")})
-    private Set<ProjectsDAO> projects;
-    @Column
+    private Set<ProjectDAO> projects;
+    @OneToMany
     private Set<DevSkillsDAO> devSkills = new HashSet<>();
 
     public DeveloperDAO() {
@@ -129,11 +128,11 @@ public class DeveloperDAO implements DataAccessObject {
         this.salary = salary;
     }
 
-    public Set<ProjectsDAO> getProjects() {
+    public Set<ProjectDAO> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<ProjectsDAO> projects) {
+    public void setProjects(Set<ProjectDAO> projects) {
         this.projects = projects;
     }
 }

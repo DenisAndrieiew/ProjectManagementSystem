@@ -1,8 +1,8 @@
 package com.ProjectManagementSystem.service;
 
-import com.ProjectManagementSystem.model.Repository;
-import com.ProjectManagementSystem.model.dao.DataAccessObject;
 import com.ProjectManagementSystem.dto.DataTransferObject;
+import com.ProjectManagementSystem.model.dao.DataAccessObject;
+import com.ProjectManagementSystem.model.repositories.Repository;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 public class Service {
@@ -14,18 +14,16 @@ public class Service {
         this.converter = repository.getConverter();
     }
 
-    public DataTransferObject create(DataTransferObject dto) {
+    public void create(DataTransferObject dto) {
         DataAccessObject dao = converter.fromDTO(dto);
         repository.create(dao);
-        DataAccessObject savedDAO = repository.findById(dao.getId());
-        return converter.toDTO(savedDAO);
+        repository.findById(dao.getId());
     }
 
-    public DataTransferObject update(DataTransferObject dto) {
+    public void update(DataTransferObject dto) {
         DataAccessObject dao = converter.fromDTO(dto);
         repository.update(dao);
-        DataAccessObject updatedDAO = repository.findById(dao.getId());
-        return converter.toDTO(updatedDAO);
+        repository.findById(dao.getId());
     }
 
     public void delete(long id) {

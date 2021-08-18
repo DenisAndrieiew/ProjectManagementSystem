@@ -14,30 +14,12 @@ public class DeveloperDTO implements DataTransferObject {
     private String comments;
     private int salary;
     private Set<DevSkillsDTO> devSkills = new HashSet<>();
-    private Set<ProjectsDTO> projects = new HashSet<>();
+    private Set<ProjectDTO> projects = new HashSet<>();
 
 
     public DeveloperDTO() {
     }
 
-    public DeveloperDTO(long id, String firstName, String lastName, int age, Sex sex, String comments, int salary) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.sex = sex;
-        this.comments = comments;
-        this.salary = salary;
-    }
-
-    public DeveloperDTO(String firstName, String lastName, int age, Sex sex, String comments, int salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.sex = sex;
-        this.comments = comments;
-        this.salary = salary;
-    }
 
     public Set<DevSkillsDTO> getDevSkills() {
         return devSkills;
@@ -103,11 +85,11 @@ public class DeveloperDTO implements DataTransferObject {
         this.salary = salary;
     }
 
-    public Set<ProjectsDTO> getProjects() {
+    public Set<ProjectDTO> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<ProjectsDTO> projects) {
+    public void setProjects(Set<ProjectDTO> projects) {
         this.projects = projects;
     }
 

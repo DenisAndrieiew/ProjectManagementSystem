@@ -2,8 +2,8 @@ package com.ProjectManagementSystem.controller;
 
 import com.ProjectManagementSystem.model.EntityRepository;
 import com.ProjectManagementSystem.model.ProjectsRepository;
-import com.ProjectManagementSystem.model.dao.ProjectsDAO;
-import com.ProjectManagementSystem.dto.ProjectsDTO;
+import com.ProjectManagementSystem.model.dao.ProjectDAO;
+import com.ProjectManagementSystem.dto.ProjectDTO;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @WebServlet("/projects")
 public class ProjectsServlet extends HttpServlet {
-    private EntityRepository<ProjectsDAO> repository;
+    private EntityRepository<ProjectDAO> repository;
     private Converter converter;
     private Service projectService;
 
@@ -33,9 +33,9 @@ public class ProjectsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<ProjectsDTO> projects = repository.findAll().stream()
-                .map(projectsDAO -> (ProjectsDTO) converter.toDTO(projectsDAO))
-                .sorted(Comparator.comparing(ProjectsDTO::getId))
+        List<ProjectDTO> projects = repository.findAll().stream()
+                .map(projectsDAO -> (ProjectDTO) converter.toDTO(projectsDAO))
+                .sorted(Comparator.comparing(ProjectDTO::getId))
                 .collect(Collectors.toList());
         req.setAttribute("pj", projects);
         req.getRequestDispatcher("/view/projects.jsp").forward(req, resp);
@@ -43,7 +43,7 @@ public class ProjectsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProjectsDTO project = new ProjectsDTO();
+        ProjectDTO project = new ProjectDTO();
         project.setName(req.getParameter("name"));
         project.setDescription(req.getParameter("description"));
         project.setBeginDate(Instant.parse(req.getParameter("beginDate")));

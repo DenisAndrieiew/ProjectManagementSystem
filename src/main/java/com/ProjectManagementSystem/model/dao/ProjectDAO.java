@@ -11,34 +11,38 @@ import java.util.Set;
 
 @Entity
 @Table(name = "projects")
-public class ProjectsDAO implements DataAccessObject {
+public class ProjectDAO implements DataAccessObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private long id;
     @Column(name = "name")
     private String name;
-//    @Column(name = "customer_id")
-    private CustomersDAO customer;
-//    @Column(name = "company_id")
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private CustomerDAO customer;
+    @ManyToOne
+    @JoinColumn(name = "company_id", nullable = false)
     private CompanyDAO company;
     @Column(name = "description")
     private String description;
-    //    @Column(name = "id")
-//    private int cost;
     @Column(name = "begin_date")
     private Instant begin_date;
     @ManyToMany(mappedBy = "projects")
     private Set<DeveloperDAO> developers = new HashSet<>();
     private int cost;
 
-    public ProjectsDAO() {
+    public ProjectDAO() {
         String hqlQuery = "SELECT SUM(developerDAO.salary) FROM DeveloperDAO developerDAO" +
                 "join ProjectsDAO.developers;";
         SessionFactory sessionFactory = HibernateDatabaseConnector.getSessionFactory();
-        Session session= sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         Query query = session.createQuery(hqlQuery);
-        this.cost= query.getFirstResult();
+        this.cost = query.getFirstResult();
+    }
+
+    public int getCost() {
+        return cost;
     }
 
     @Override
@@ -74,11 +78,11 @@ public class ProjectsDAO implements DataAccessObject {
         this.begin_date = begin_date;
     }
 
-    public CustomersDAO getCustomer() {
+    public CustomerDAO getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomersDAO customer) {
+    public void setCustomer(CustomerDAO customer) {
         this.customer = customer;
     }
 

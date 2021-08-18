@@ -1,23 +1,23 @@
 package com.ProjectManagementSystem.dto;
 
+import com.ProjectManagementSystem.dto.enums.Brunch;
+import com.ProjectManagementSystem.dto.enums.SkillLevel;
+
 public class DevSkillsDTO implements DataTransferObject {
     private long id;
-    private long devId;
-    private long skillId;
-    private long skillLevel;
+    private Brunch brunch;
+    private SkillLevel level;
+    private long developerId;
 
-    public DevSkillsDTO(long devId, long skillId, long skillLevel) {
-        this.devId = devId;
-        this.skillId = skillId;
-        this.skillLevel = skillLevel;
-
+    public DevSkillsDTO() {
     }
 
-    public DevSkillsDTO(long id, long devId, long skillId, long skillLevel) {
-        this.id = id;
-        this.devId = devId;
-        this.skillId = skillId;
-        this.skillLevel = skillLevel;
+    public long getDeveloperId() {
+        return developerId;
+    }
+
+    public void setDeveloperId(long developerId) {
+        this.developerId = developerId;
     }
 
     public long getId() {
@@ -28,28 +28,19 @@ public class DevSkillsDTO implements DataTransferObject {
         this.id = id;
     }
 
-
-    public long getDevId() {
-        return devId;
+    public Brunch getBrunch() {
+        return brunch;
     }
 
-    public void setDevId(int devId) {
-        this.devId = devId;
+    public void setBrunch(Brunch brunch) {
+        this.brunch = brunch;
     }
 
-    public long getSkillId() {
-        return skillId;
+    public SkillLevel getLevel() {
+        return level;
     }
 
-    public void setSkillId(int skillId) {
-        this.skillId = skillId;
-    }
-
-    public long getSkillLevel() {
-        return skillLevel;
-    }
-
-    public void setSkillLevel(int skillLevel) {
-        this.skillLevel = skillLevel;
+    public void setLevel(SkillLevel level) {
+        this.level = level;
     }
 }

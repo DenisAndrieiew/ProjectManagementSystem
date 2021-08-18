@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "company")
-public class CompanyDAO implements DataAccessObject {
+@Table(name = "customers")
+public class CustomerDAO implements DataAccessObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -15,7 +15,7 @@ public class CompanyDAO implements DataAccessObject {
     @OneToMany(mappedBy = "projects")
     private Set<ProjectDAO> projects;
 
-    public CompanyDAO() {
+    public CustomerDAO() {
     }
 
 

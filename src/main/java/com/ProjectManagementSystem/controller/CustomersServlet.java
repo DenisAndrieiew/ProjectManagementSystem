@@ -1,9 +1,9 @@
 package com.ProjectManagementSystem.controller;
 
-import com.ProjectManagementSystem.dto.CustomersDTO;
+import com.ProjectManagementSystem.dto.CustomerDTO;
 import com.ProjectManagementSystem.model.CustomersRepository;
 import com.ProjectManagementSystem.model.EntityRepository;
-import com.ProjectManagementSystem.model.dao.CustomersDAO;
+import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @WebServlet("/customers")
 public class CustomersServlet extends HttpServlet {
-    private EntityRepository<CustomersDAO> repository;
+    private EntityRepository<CustomerDAO> repository;
     private Converter converter;
     private Service service;
 
@@ -32,16 +32,16 @@ public class CustomersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<CustomersDTO> customers = repository.findAll().stream()
-                .map(dao -> (CustomersDTO) converter.toDTO(dao))
-                .sorted(Comparator.comparing(CustomersDTO::getId))
+        List<CustomerDTO> customers = repository.findAll().stream()
+                .map(dao -> (CustomerDTO) converter.toDTO(dao))
+                .sorted(Comparator.comparing(CustomerDTO::getId))
                 .collect(Collectors.toList());
         req.setAttribute("customers", customers);
         req.getRequestDispatcher("/view/customers.jsp").forward(req, resp);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CustomersDTO dto = new CustomersDTO();
+        CustomerDTO dto = new CustomerDTO();
         dto.setName(req.getParameter("name"));
         service.create(dto);
         resp.sendRedirect(req.getContextPath() + "/customers");

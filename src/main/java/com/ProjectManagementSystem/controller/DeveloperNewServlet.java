@@ -4,9 +4,9 @@ import com.ProjectManagementSystem.model.BrunchRepository;
 import com.ProjectManagementSystem.model.EntityRepository;
 import com.ProjectManagementSystem.model.ProjectsRepository;
 import com.ProjectManagementSystem.model.dao.BrunchDAO;
-import com.ProjectManagementSystem.model.dao.ProjectsDAO;
+import com.ProjectManagementSystem.model.dao.ProjectDAO;
 import com.ProjectManagementSystem.dto.BrunchDTO;
-import com.ProjectManagementSystem.dto.ProjectsDTO;
+import com.ProjectManagementSystem.dto.ProjectDTO;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 import javax.servlet.ServletException;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @WebServlet("/developers/new")
 public class DeveloperNewServlet extends HttpServlet {
-    private EntityRepository<ProjectsDAO> projectRepository;
+    private EntityRepository<ProjectDAO> projectRepository;
     private Converter projectConverter;
     private EntityRepository<BrunchDAO> brunchRepository;
     private Converter brunchConverter;
@@ -35,8 +35,8 @@ public class DeveloperNewServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<ProjectsDTO> projects = projectRepository.findAll().stream()
-                .map(dao -> (ProjectsDTO) projectConverter.toDTO(dao))
+        List<ProjectDTO> projects = projectRepository.findAll().stream()
+                .map(dao -> (ProjectDTO) projectConverter.toDTO(dao))
                 .collect(Collectors.toList());
         List<BrunchDTO> brunches = brunchRepository.findAll().stream()
                 .map(dao -> (BrunchDTO) brunchConverter.toDTO(dao))

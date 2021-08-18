@@ -14,6 +14,9 @@ public class DevSkillsDAO implements DataAccessObject {
     private BrunchDAO brunch;
     @OneToMany(mappedBy = "devSkills")
     private SkillLevelDAO skillLevel;
+    @ManyToOne
+    private DeveloperDAO developer;
+
 
     public DevSkillsDAO() {
     }
@@ -21,6 +24,14 @@ public class DevSkillsDAO implements DataAccessObject {
     @Override
     public long getId() {
         return id;
+    }
+
+    public DeveloperDAO getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(DeveloperDAO developer) {
+        this.developer = developer;
     }
 
     public void setId(long id) {

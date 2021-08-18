@@ -4,9 +4,9 @@ import com.ProjectManagementSystem.model.CompanyRepository;
 import com.ProjectManagementSystem.model.CustomersRepository;
 import com.ProjectManagementSystem.model.EntityRepository;
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
-import com.ProjectManagementSystem.model.dao.CustomersDAO;
+import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.dto.CompanyDTO;
-import com.ProjectManagementSystem.dto.CustomersDTO;
+import com.ProjectManagementSystem.dto.CustomerDTO;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 import javax.servlet.ServletException;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class ProjectNewServlet extends HttpServlet {
     private EntityRepository<CompanyDAO> companyRepository;
     private Converter companyConverter;
-    private EntityRepository<CustomersDAO> customersRepository;
+    private EntityRepository<CustomerDAO> customersRepository;
     private Converter customersConverter;
 
     @Override
@@ -35,14 +35,14 @@ public class ProjectNewServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<CustomersDAO> customers = customersRepository.findAll();
-        List<CustomersDTO>customersDTO = customers.stream()
-                .map((dao->(CustomersDTO) customersConverter.toDTO(dao)))
+        List<CustomerDAO> customers = customersRepository.findAll();
+        List<CustomerDTO> customerDTO = customers.stream()
+                .map((dao->(CustomerDTO) customersConverter.toDTO(dao)))
                 .collect(Collectors.toList());
         List<CompanyDTO> companies = companyRepository.findAll().stream()
                 .map((dao->(CompanyDTO) companyConverter.toDTO(dao)))
                 .collect(Collectors.toList());
-        req.setAttribute("customers", customersDTO);
+        req.setAttribute("customers", customerDTO);
         req.setAttribute("companies", companies);
         req.setAttribute("method", "post");
         req.getRequestDispatcher("/view/project.jsp").forward(req, resp);

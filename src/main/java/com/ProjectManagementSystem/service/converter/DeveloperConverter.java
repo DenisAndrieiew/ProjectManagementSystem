@@ -3,11 +3,8 @@ package com.ProjectManagementSystem.service.converter;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO> {
-    private static ProjectsConverter projectsConverter = new ProjectsConverter();
+    private static ProjectConverter projectConverter = new ProjectConverter();
     private static DevSkillsConverter devSkillsConverter = new DevSkillsConverter();
 
     public DeveloperDAO fromDTO(DeveloperDTO dto) {
@@ -18,7 +15,7 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
         dao.setComments(dto.getComments());
         dao.setAge(dto.getAge());
         dao.setSalary(dto.getSalary());
-        dao.setProjects(projectsConverter.fromDTOSet(dto.getProjects()));
+        dao.setProjects(projectConverter.fromDTOSet(dto.getProjects()));
         dao.setDevSkills(devSkillsConverter.fromDTOSet(dto.getDevSkills()));
         dao.setSex(dto.getSex());
         return dao;
@@ -33,7 +30,7 @@ public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO>
         dto.setSex(dao.getSex());
         dto.setAge(dao.getAge());
         dto.setSalary(dao.getSalary());
-        dto.setProjects(projectsConverter.toDTOSet(dao.getProjects()));
+        dto.setProjects(projectConverter.toDTOSet(dao.getProjects()));
         dto.setDevSkills(devSkillsConverter.toDTOSet(dao.getDevSkills()));
         dto.setSex(dao.getSex());
         return dto;

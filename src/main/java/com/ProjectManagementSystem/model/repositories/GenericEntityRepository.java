@@ -2,6 +2,9 @@ package com.ProjectManagementSystem.model.repositories;
 
 import com.ProjectManagementSystem.config.config.HibernateDatabaseConnector;
 import com.ProjectManagementSystem.model.dao.DataAccessObject;
+import com.ProjectManagementSystem.model.dao.DeveloperDAO;
+import com.ProjectManagementSystem.service.converter.Converter;
+import com.ProjectManagementSystem.service.converter.DeveloperConverter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,33 +12,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
-public class GenericEntityRepository<T extends DataAccessObject> implements NewEntityRepository<T> {
+public class GenericEntityRepository<T extends DataAccessObject> implements EntityRepository<T> {
     private static final Logger LOG = LoggerFactory.getLogger(HibernateDatabaseConnector.class);
     private final SessionFactory sessionFactory;
     private Class<T> entityClass;
 
-    public GenericEntityRepository(SessionFactory sessionFactory, Class<T> entityClass) {
-        this.sessionFactory = sessionFactory;
+    public GenericEntityRepository(Class<T> entityClass) {
+        this.sessionFactory = HibernateDatabaseConnector.getSessionFactory();
         this.entityClass = entityClass;
     }
 
     @Override
-    public Set FindAll() {
+    public Set findAll() {
         return null;
     }
 
     @Override
-    public Optional<T> findById(long id) {
+    public T findById(long id) {
         T dao = null;
         try (Session session = sessionFactory.openSession()) {
-            return Optional.of(session.get(entityClass, id));
+            dao = session.get(entityClass, id);
         } catch (Exception ex) {
             LOG.error(String.format("findById. Class -%s. Id=%d", entityClass.toString(), id), ex);
         }
-        return Optional.empty();
+        return dao;
     }
 
 
@@ -54,7 +56,7 @@ public class GenericEntityRepository<T extends DataAccessObject> implements NewE
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.delete(findById(id).orElseThrow());
+            session.delete(findById(id));
             transaction.commit();
         } catch (Exception ex) {
             LOG.error(String.format("save or update Class -%s. Id=%d", entityClass.toString(), id), ex);
@@ -79,5 +81,15 @@ public class GenericEntityRepository<T extends DataAccessObject> implements NewE
         }
     }
 
-
+    @Override
+    public Converter getConverter() {
+        if (entityClass.equals(DeveloperDAO.class)) {
+            return new DeveloperConverter();
+        } /*else if (entityClass.equals(ProjectsDAO.class)) {
+            return new ProjectsConverter();
+        } */ else {
+            LOG.error("wrong class to convert");
+            return null;
+        }
+    }
 }

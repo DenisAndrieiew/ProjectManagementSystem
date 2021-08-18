@@ -1,20 +1,20 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.dto.CompanyDTO;
+import com.ProjectManagementSystem.dto.CustomerDTO;
 import com.ProjectManagementSystem.dto.ProjectDTO;
-import com.ProjectManagementSystem.model.dao.CompanyDAO;
+import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
 
-public class CompanyConverter implements Converter<CompanyDAO, CompanyDTO> {
+public class CustomerConverter implements Converter<CustomerDAO, CustomerDTO> {
     private static Converter<ProjectDAO, ProjectDTO> projectsConverter;
 
-    public CompanyConverter() {
+    public CustomerConverter() {
         projectsConverter = new ProjectConverter();
     }
 
     @Override
-    public CompanyDAO fromDTO(CompanyDTO dto) {
-        CompanyDAO dao = new CompanyDAO();
+    public CustomerDAO fromDTO(CustomerDTO dto) {
+        CustomerDAO dao = new CustomerDAO();
         dao.setId(dto.getId());
         dao.setName(dto.getName());
         dao.setProjects(projectsConverter.fromDTOSet(dto.getProjects()));
@@ -22,11 +22,11 @@ public class CompanyConverter implements Converter<CompanyDAO, CompanyDTO> {
     }
 
     @Override
-    public CompanyDTO toDTO(CompanyDAO dao) {
-        CompanyDTO dto = new CompanyDTO();
+    public CustomerDTO toDTO(CustomerDAO dao) {
+        CustomerDTO dto = new CustomerDTO();
         dto.setId(dao.getId());
         dto.setName(dao.getName());
         dto.setProjects(projectsConverter.toDTOSet(dao.getProjects()));
-        return null;
+        return dto;
     }
 }

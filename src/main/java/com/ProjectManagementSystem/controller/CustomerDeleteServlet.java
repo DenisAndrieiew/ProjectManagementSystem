@@ -2,7 +2,7 @@ package com.ProjectManagementSystem.controller;
 
 import com.ProjectManagementSystem.model.CustomersRepository;
 import com.ProjectManagementSystem.model.EntityRepository;
-import com.ProjectManagementSystem.model.dao.CustomersDAO;
+import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet("/customers/delete")
 public class CustomerDeleteServlet extends HttpServlet {
-    private EntityRepository<CustomersDAO> repository;
+    private EntityRepository<CustomerDAO> repository;
     private Converter converter;
     private Service service;
 

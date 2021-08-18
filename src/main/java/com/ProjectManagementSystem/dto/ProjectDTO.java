@@ -1,27 +1,27 @@
 package com.ProjectManagementSystem.dto;
 
 import java.time.Instant;
-import java.util.List;
+import java.util.Set;
 
-public class ProjectsDTO implements DataTransferObject {
+public class ProjectDTO implements DataTransferObject {
     private long id;
     private String name;
-    private CustomersDTO customer;
-    private CompanyDTO company;
+    private String customer;
+    private String company;
     private String description;
     private int cost;
     private Instant beginDate;
-    private List<String> developers;
+    private Set<DeveloperDTO> developers;
 
-    public ProjectsDTO() {
+    public ProjectDTO() {
     }
 
 
-    public List<String> getDevelopers() {
+    public Set<DeveloperDTO> getDevelopers() {
         return developers;
     }
 
-    public void setDevelopers(List<String> developers) {
+    public void setDevelopers(Set<DeveloperDTO> developers) {
         this.developers = developers;
     }
 
@@ -65,19 +65,19 @@ public class ProjectsDTO implements DataTransferObject {
         this.beginDate = beginDate;
     }
 
-    public CustomersDTO getCustomer() {
+    public String getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomersDTO customer) {
+    public void setCustomer(String customer) {
         this.customer = customer;
     }
 
-    public CompanyDTO getCompany() {
+    public String getCompany() {
         return company;
     }
 
-    public void setCompany(CompanyDTO company) {
+    public void setCompany(String company) {
         this.company = company;
     }
 }
