@@ -15,42 +15,42 @@ public class ProjectDAO implements DataAccessObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private long id;
+    private int id;
     @Column(name = "name")
     private String name;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", nullable = false)
     private CustomerDAO customer;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id", nullable = false)
     private CompanyDAO company;
     @Column(name = "description")
     private String description;
     @Column(name = "begin_date")
     private Instant begin_date;
-    @ManyToMany(mappedBy = "projects")
+    @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
     private Set<DeveloperDAO> developers = new HashSet<>();
-    private int cost;
+//    private int cost;
 
     public ProjectDAO() {
-        String hqlQuery = "SELECT SUM(developerDAO.salary) FROM DeveloperDAO developerDAO" +
-                "join ProjectsDAO.developers;";
-        SessionFactory sessionFactory = HibernateDatabaseConnector.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Query query = session.createQuery(hqlQuery);
-        this.cost = query.getFirstResult();
+//        String hqlQuery = "SELECT SUM(developerDAO.salary) FROM DeveloperDAO developerDAO" +
+//                "join ProjectsDAO.developers;";
+//        SessionFactory sessionFactory = HibernateDatabaseConnector.getSessionFactory();
+//        Session session = sessionFactory.openSession();
+//        Query query = session.createQuery(hqlQuery);
+//        this.cost = 100; // query.getFirstResult();
     }
 
-    public int getCost() {
-        return cost;
-    }
+//    public int getCost() {
+//        return cost;
+//    }
 
     @Override
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

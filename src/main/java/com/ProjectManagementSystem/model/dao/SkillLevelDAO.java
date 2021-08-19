@@ -12,12 +12,11 @@ public class SkillLevelDAO implements DataAccessObject{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private long id;
+    private int id;
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
     private SkillLevel level;
-    @OneToMany
-    @JoinTable(name = "dev_skills", joinColumns = {@JoinColumn(name = "level_id")})
+    @OneToMany(mappedBy = "brunch", fetch = FetchType.EAGER)
     private Set<DevSkillsDAO> devSkills;
 
     public SkillLevelDAO() {
@@ -32,11 +31,11 @@ public class SkillLevelDAO implements DataAccessObject{
     }
 
     @Override
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

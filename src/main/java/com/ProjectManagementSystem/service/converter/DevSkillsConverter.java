@@ -1,6 +1,8 @@
 package com.ProjectManagementSystem.service.converter;
 
 import com.ProjectManagementSystem.dto.DevSkillsDTO;
+import com.ProjectManagementSystem.dto.enums.Brunch;
+import com.ProjectManagementSystem.dto.enums.SkillLevel;
 import com.ProjectManagementSystem.model.dao.BrunchDAO;
 import com.ProjectManagementSystem.model.dao.DevSkillsDAO;
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
@@ -23,8 +25,8 @@ public class DevSkillsConverter implements Converter<DevSkillsDAO, DevSkillsDTO>
     public DevSkillsDAO fromDTO(DevSkillsDTO dto) {
         DevSkillsDAO dao = new DevSkillsDAO();
         dao.setId(dto.getId());
-        dao.setBrunch(brunchRepository.findByUniqueName("name", dto.getBrunch().name()));
-        dao.setSkillLevel(levelRepository.findByUniqueName("name", dto.getLevel().name()));
+        dao.setBrunch(brunchRepository.findByUniqueName("name", Brunch.toBrunch(dto.getBrunch()).get().name()));
+        dao.setSkillLevel(levelRepository.findByUniqueName("name", SkillLevel.toSkillLevel(dto.getLevel()).get().name()));
         dao.setDeveloper(developerRepository.findById(dto.getDeveloperId()));
         return dao;
     }
@@ -34,8 +36,8 @@ public class DevSkillsConverter implements Converter<DevSkillsDAO, DevSkillsDTO>
         DevSkillsDTO dto = new DevSkillsDTO();
         dto.setId(dao.getId());
         dto.setDeveloperId(dao.getDeveloper().getId());
-        dto.setLevel(dao.getSkillLevel().getLevel());
-        dto.setBrunch(dao.getBrunch().getBrunch());
+        dto.setLevel(dao.getSkillLevel().getLevel().toString());
+        dto.setBrunch(dao.getBrunch().getBrunch().toString());
         return dto;
     }
 }

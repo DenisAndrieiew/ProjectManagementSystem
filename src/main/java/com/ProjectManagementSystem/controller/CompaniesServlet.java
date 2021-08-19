@@ -1,9 +1,9 @@
 package com.ProjectManagementSystem.controller;
 
 import com.ProjectManagementSystem.dto.CompanyDTO;
-import com.ProjectManagementSystem.model.CompanyRepository;
-import com.ProjectManagementSystem.model.EntityRepository;
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
+import com.ProjectManagementSystem.model.repositories.EntityRepository;
+import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
@@ -25,7 +25,7 @@ public class CompaniesServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        this.repository = new CompanyRepository();
+        this.repository = new GenericEntityRepository<>(CompanyDAO.class);
         this.converter = repository.getConverter();
         this.service = new Service(repository);
     }

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DeveloperDTO implements DataTransferObject {
-    private long id;
+    private int id;
     private String firstName;
     private String lastName;
     private int age;
@@ -29,11 +29,11 @@ public class DeveloperDTO implements DataTransferObject {
         this.devSkills = devSkills;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

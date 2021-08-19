@@ -17,13 +17,20 @@
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
         <property name="hbm2ddl.auto">validate</property>
-        <!--EHCACHE -->
+        <!--EHCACHE --><!--
         <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</property>
         <property name="hibernate.javax.cache.provider">org.ehcache.jsr107.EhcacheCachingProvider</property>
         <property name="hibernate.cache.use_second_level_cache">true</property>
         <property name="hibernate.cache.use_query_cache">true</property>
-        <property name="format_sql">true</property>
-        <mapping class="com.library.model.entity.BookDAO"/>
-        <mapping class="com.library.model.entity.AuthorDAO"/>
+        <property name="format_sql">true</property>-->
+
+        <!--Mapping classes-->
+        <mapping class="com.ProjectManagementSystem.model.dao.DeveloperDAO"/>
+        <mapping class="com.ProjectManagementSystem.model.dao.ProjectDAO"/>
+        <mapping class="com.ProjectManagementSystem.model.dao.DevSkillsDAO"/>
+        <mapping class="com.ProjectManagementSystem.model.dao.CustomerDAO"/>
+        <mapping class="com.ProjectManagementSystem.model.dao.CompanyDAO"/>
+        <mapping class="com.ProjectManagementSystem.model.dao.BrunchDAO"/>
+        <mapping class="com.ProjectManagementSystem.model.dao.SkillLevelDAO"/>
     </session-factory>
 </hibernate-configuration>

@@ -4,32 +4,32 @@ import java.time.Instant;
 import java.util.Set;
 
 public class ProjectDTO implements DataTransferObject {
-    private long id;
+    private int id;
     private String name;
     private String customer;
     private String company;
     private String description;
     private int cost;
     private Instant beginDate;
-    private Set<DeveloperDTO> developers;
+    private Set<Integer> developerIds;
 
     public ProjectDTO() {
     }
 
 
-    public Set<DeveloperDTO> getDevelopers() {
-        return developers;
+    public Set<Integer> getDeveloperIds() {
+        return developerIds;
     }
 
-    public void setDevelopers(Set<DeveloperDTO> developers) {
-        this.developers = developers;
+    public void setDeveloperIds(Set<Integer> developerIds) {
+        this.developerIds = developerIds;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

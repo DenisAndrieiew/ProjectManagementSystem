@@ -4,9 +4,9 @@ import com.ProjectManagementSystem.dto.enums.Brunch;
 import com.ProjectManagementSystem.dto.enums.SkillLevel;
 
 public class DevSkillsDTO implements DataTransferObject {
-    private long id;
-    private Brunch brunch;
-    private SkillLevel level;
+    private int id;
+    private String brunch;
+    private String level;
     private long developerId;
 
     public DevSkillsDTO() {
@@ -20,27 +20,27 @@ public class DevSkillsDTO implements DataTransferObject {
         this.developerId = developerId;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Brunch getBrunch() {
+    public String getBrunch() {
         return brunch;
     }
 
-    public void setBrunch(Brunch brunch) {
+    public void setBrunch(String brunch) {
         this.brunch = brunch;
     }
 
-    public SkillLevel getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(SkillLevel level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 }

@@ -8,14 +8,15 @@ import com.ProjectManagementSystem.service.converter.DeveloperConverter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GenericEntityRepository<T extends DataAccessObject> implements EntityRepository<T> {
-    private static final Logger LOG = LoggerFactory.getLogger(HibernateDatabaseConnector.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GenericEntityRepository.class);
     private final SessionFactory sessionFactory;
     private Class<T> entityClass;
 
@@ -26,7 +27,45 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
 
     @Override
     public Set findAll() {
-        return null;
+        Set<T> entities = new HashSet<>();
+        String queryStatement = "FROM " + entityClass.getName() + " entity";
+        Transaction transaction;
+        LOG.debug("open session");
+        try (Session session = sessionFactory.openSession()) {
+            LOG.debug("session opened");
+            LOG.debug("begin transaction");
+//            transaction = session.beginTransaction();
+            Query<T> query = session.createQuery(queryStatement,
+                    entityClass);
+            LOG.debug("Execute query: " + query.getQueryString());
+            entities = query.getResultStream().collect(Collectors.toSet());
+//            transaction.commit();
+        } catch (Exception ex) {
+            LOG.error("impossible to execute query: \"" + queryStatement +"\"" + ex.getMessage() +
+                    "\n cause: " + ex.getCause());
+            ex.printStackTrace();
+        }
+        return entities;
+
+    }
+
+    @Override
+    public T findByUniqueName(String param, String value) {
+        List<T> entities = new LinkedList();
+        String queryString = createQueryByUniqueName(param);
+        Transaction transaction;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            Query<T> query = session.createQuery(queryString, entityClass);
+            query.setParameter(param, value);
+            LOG.debug("Executing query: " + query.getQueryString());
+            entities = query.list();
+            transaction.commit();
+        } catch (Exception ex) {
+            LOG.error(String.format("Cannot find by %s = %s", param, value) + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return entities.size()!=0? entities.get(0):null;
     }
 
     @Override
@@ -91,5 +130,8 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
             LOG.error("wrong class to convert");
             return null;
         }
+    }
+    private String createQueryByUniqueName(String param) {
+        return "FROM " + entityClass.getName() + " entity WHERE entity." + param + " = :" + param;
     }
 }
