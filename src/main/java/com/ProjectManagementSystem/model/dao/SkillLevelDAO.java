@@ -16,7 +16,7 @@ public class SkillLevelDAO implements DataAccessObject{
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
     private SkillLevel level;
-    @OneToMany(mappedBy = "brunch", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "brunch")
     private Set<DevSkillsDAO> devSkills;
 
     public SkillLevelDAO() {

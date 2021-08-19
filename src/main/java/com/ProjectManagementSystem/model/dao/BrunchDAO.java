@@ -16,7 +16,7 @@ public class BrunchDAO implements DataAccessObject{
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
     private Brunch brunch;
-    @OneToMany(mappedBy = "brunch", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "brunch")
     private Set<DevSkillsDAO> devSkills;
 
 

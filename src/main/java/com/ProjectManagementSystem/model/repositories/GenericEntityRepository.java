@@ -143,9 +143,9 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
 
     private String getJoin() {
         if (entityClass.equals(DeveloperDAO.class)) {
-            return " JOIN FETCH entity.projects";
+            return " JOIN FETCH entity.projects JOIN FETCH entity.devSkills";
         } else if (entityClass.equals(ProjectDAO.class)) {
-            return "";
+            return " JOIN FETCH entity.developers";
         } else if (entityClass.equals(CompanyDAO.class)) {
             return " JOIN FETCH entity.projects";
         } else if (entityClass.equals(CustomerDAO.class)) {

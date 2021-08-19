@@ -12,7 +12,7 @@ public class CompanyDAO implements DataAccessObject {
     private int id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "company")
     private Set<ProjectDAO> projects;
 
     public CompanyDAO() {
