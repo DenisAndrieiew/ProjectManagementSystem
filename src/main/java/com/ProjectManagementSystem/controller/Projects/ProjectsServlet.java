@@ -1,4 +1,4 @@
-package com.ProjectManagementSystem.controller;
+package com.ProjectManagementSystem.controller.Projects;
 
 import com.ProjectManagementSystem.dto.ProjectDTO;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

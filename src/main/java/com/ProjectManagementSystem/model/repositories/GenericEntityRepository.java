@@ -18,6 +18,7 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
     private final SessionFactory sessionFactory;
     private Class<T> entityClass;
 
+
     public GenericEntityRepository(Class<T> entityClass) {
         this.sessionFactory = HibernateDatabaseConnector.getSessionFactory();
         this.entityClass = entityClass;
@@ -26,20 +27,20 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
     @Override
     public Set findAll() {
         Set<T> entities = new HashSet<>();
-        String queryStatement = "FROM " + entityClass.getName() + " entity";
+        String queryStatement = "FROM " + entityClass.getName() + " entity" + getJoin();
         Transaction transaction;
         LOG.debug("open session");
         try (Session session = sessionFactory.openSession()) {
             LOG.debug("session opened");
             LOG.debug("begin transaction");
-//            transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             Query<T> query = session.createQuery(queryStatement,
                     entityClass);
             LOG.debug("Execute query: " + query.getQueryString());
             entities = query.getResultStream().collect(Collectors.toSet());
-//            transaction.commit();
+            transaction.commit();
         } catch (Exception ex) {
-            LOG.error("impossible to execute query: \"" + queryStatement +"\"" + ex.getMessage() +
+            LOG.error("impossible to execute query: \"" + queryStatement + "\"" + ex.getMessage() +
                     "\n cause: " + ex.getCause());
             ex.printStackTrace();
         }
@@ -63,7 +64,7 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
             LOG.error(String.format("Cannot find by %s = %s", param, value) + ex.getMessage());
             ex.printStackTrace();
         }
-        return entities.size()!=0? entities.get(0):null;
+        return entities.size() != 0 ? entities.get(0) : null;
     }
 
     @Override
@@ -124,18 +125,37 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
             return new DeveloperConverter();
         } else if (entityClass.equals(ProjectDAO.class)) {
             return new ProjectConverter();
-        } else if(entityClass.equals(CompanyDAO.class)) {
+        } else if (entityClass.equals(CompanyDAO.class)) {
             return new CompanyConverter();
-        } else if(entityClass.equals(CustomerDAO.class)) {
+        } else if (entityClass.equals(CustomerDAO.class)) {
             return new CustomerConverter();
-        }else if(entityClass.equals(DevSkillsDAO.class)){
+        } else if (entityClass.equals(DevSkillsDAO.class)) {
             return new DevSkillsConverter();
-        }  else {
+        } else {
             LOG.error("wrong class to convert");
             return null;
         }
     }
+
     private String createQueryByUniqueName(String param) {
         return "FROM " + entityClass.getName() + " entity WHERE entity." + param + " = :" + param;
+    }
+
+    private String getJoin() {
+        if (entityClass.equals(DeveloperDAO.class)) {
+            return " JOIN FETCH entity.projects";
+        } else if (entityClass.equals(ProjectDAO.class)) {
+            return "";
+        } else if (entityClass.equals(CompanyDAO.class)) {
+            return " JOIN FETCH entity.projects";
+        } else if (entityClass.equals(CustomerDAO.class)) {
+            return " JOIN FETCH entity.projects";
+        } else if (entityClass.equals(DevSkillsDAO.class)) {
+            return "";
+        } else {
+            LOG.error("wrong class");
+            return null;
+        }
+
     }
 }

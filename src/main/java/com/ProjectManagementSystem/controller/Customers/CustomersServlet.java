@@ -1,7 +1,7 @@
-package com.ProjectManagementSystem.controller;
+package com.ProjectManagementSystem.controller.Customers;
 
-import com.ProjectManagementSystem.dto.CompanyDTO;
-import com.ProjectManagementSystem.model.dao.CompanyDAO;
+import com.ProjectManagementSystem.dto.CustomerDTO;
+import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
 import com.ProjectManagementSystem.service.Service;
@@ -15,38 +15,36 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@WebServlet("/companies")
-public class CompaniesServlet extends HttpServlet {
-    private EntityRepository<CompanyDAO> repository;
+@WebServlet("/customers")
+public class CustomersServlet extends HttpServlet {
+    private EntityRepository<CustomerDAO> repository;
     private Converter converter;
     private Service service;
 
     @Override
     public void init() throws ServletException {
-        this.repository = new GenericEntityRepository<>(CompanyDAO.class);
+        this.repository = new GenericEntityRepository<>(CustomerDAO.class);
         this.converter = repository.getConverter();
         this.service = new Service(repository);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Set<CompanyDTO> companies = repository.findAll().stream()
-                .map(dao -> (CompanyDTO) converter.toDTO(dao))
-                .sorted(Comparator.comparing(CompanyDTO::getId))
+        Set<CustomerDTO> customers = repository.findAll().stream()
+                .map(dao -> (CustomerDTO) converter.toDTO(dao))
+                .sorted(Comparator.comparing(CustomerDTO::getId))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
-        req.setAttribute("companies", companies);
-        req.getRequestDispatcher("/view/companies.jsp").forward(req, resp);
+        req.setAttribute("customers", customers);
+        req.getRequestDispatcher("/view/customers.jsp").forward(req, resp);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CompanyDTO dto = new CompanyDTO();
-        dto.setName(req.getParameter("name"));
-        service.create(dto);
-        resp.sendRedirect(req.getContextPath() + "/companies");
-    }
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        CustomerDTO dto = new CustomerDTO();
+//        dto.setName(req.getParameter("name"));
+//        service.create(dto);
+//        resp.sendRedirect(req.getContextPath() + "/customers");
+//    }
 }

@@ -26,7 +26,7 @@
                      <td>
                         <ol>
                            <c:forEach var="project" items="${var.projects}">
-                           <li>${project.value}</li>
+                           <li>${project.name}</li>
                            </c:forEach>
                            </ol>
                      </td>

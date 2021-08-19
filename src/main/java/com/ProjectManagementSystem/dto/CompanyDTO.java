@@ -5,17 +5,25 @@ import java.util.Set;
 public class CompanyDTO implements DataTransferObject {
     private int id;
     private String name;
-    private Set<ProjectDTO> projects;
-
+    private Set<Integer> projectIds;
+    private Set<String> projects;
 
     public CompanyDTO() {
     }
 
-    public Set<ProjectDTO> getProjects() {
+    public Set<Integer> getProjectIds() {
+        return projectIds;
+    }
+
+    public void setProjectIds(Set<Integer> projectIds) {
+        this.projectIds = projectIds;
+    }
+
+    public Set<String> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<ProjectDTO> projects) {
+    public void setProjects(Set<String> projects) {
         this.projects = projects;
     }
 

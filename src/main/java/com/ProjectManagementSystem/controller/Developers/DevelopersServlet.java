@@ -1,4 +1,4 @@
-package com.ProjectManagementSystem.controller;
+package com.ProjectManagementSystem.controller.Developers;
 
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
