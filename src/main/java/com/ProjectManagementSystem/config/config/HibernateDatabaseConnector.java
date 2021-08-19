@@ -7,9 +7,11 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 public class HibernateDatabaseConnector {
-    private static SessionFactory sessionFactory;
     private final static Logger LOG = LoggerFactory.getLogger(HibernateDatabaseConnector.class);
+    private static SessionFactory sessionFactory;
 
     public static synchronized void init() {
         try {
@@ -22,6 +24,7 @@ public class HibernateDatabaseConnector {
             LOG.error("init. ", e);
         }
     }
+
     public static synchronized void destroy() {
         if (sessionFactory != null) {
             sessionFactory.close();
@@ -30,6 +33,9 @@ public class HibernateDatabaseConnector {
     }
 
     public static SessionFactory getSessionFactory() {
+        if (Objects.isNull(sessionFactory)) {
+            init();
+        }
         return sessionFactory;
     }
 }

@@ -1,35 +1,44 @@
 package com.ProjectManagementSystem.dto;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 public class ProjectDTO implements DataTransferObject {
-    private long id;
+    private int id;
     private String name;
     private String customer;
     private String company;
     private String description;
     private int cost;
     private Instant beginDate;
-    private Set<DeveloperDTO> developers;
+    private Set<Integer> developerIds;
+    private List<String> developers;
 
     public ProjectDTO() {
     }
 
-
-    public Set<DeveloperDTO> getDevelopers() {
+    public List<String> getDevelopers() {
         return developers;
     }
 
-    public void setDevelopers(Set<DeveloperDTO> developers) {
+    public void setDevelopers(List<String> developers) {
         this.developers = developers;
     }
 
-    public long getId() {
+    public Set<Integer> getDeveloperIds() {
+        return developerIds;
+    }
+
+    public void setDeveloperIds(Set<Integer> developerIds) {
+        this.developerIds = developerIds;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

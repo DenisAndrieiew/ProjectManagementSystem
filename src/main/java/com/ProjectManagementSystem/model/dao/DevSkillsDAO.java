@@ -8,13 +8,15 @@ public class DevSkillsDAO implements DataAccessObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private long id;
-    @OneToMany(mappedBy = "devSkills")
+    private int id;
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "skill_id", nullable = false)
     private BrunchDAO brunch;
-    @OneToMany(mappedBy = "devSkills")
+    @ManyToOne( fetch = FetchType.EAGER)
+    @JoinColumn(name = "skill_level", nullable = false)
     private SkillLevelDAO skillLevel;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "dev_id", nullable = false)
     private DeveloperDAO developer;
 
 
@@ -22,7 +24,7 @@ public class DevSkillsDAO implements DataAccessObject {
     }
 
     @Override
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -34,7 +36,7 @@ public class DevSkillsDAO implements DataAccessObject {
         this.developer = developer;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

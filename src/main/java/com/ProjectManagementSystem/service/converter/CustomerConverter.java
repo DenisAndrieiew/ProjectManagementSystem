@@ -15,8 +15,8 @@ public class CustomerConverter implements Converter<CustomerDAO, CustomerDTO> {
     @Override
     public CustomerDAO fromDTO(CustomerDTO dto) {
         CustomerDAO dao = new CustomerDAO();
-        dao.setId(dto.getId());
         dao.setName(dto.getName());
+        dao.setId(dto.getId());
         dao.setProjects(projectsConverter.fromDTOSet(dto.getProjects()));
         return dao;
     }

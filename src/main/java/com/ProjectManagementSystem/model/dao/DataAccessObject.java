@@ -1,5 +1,5 @@
 package com.ProjectManagementSystem.model.dao;
 
 public abstract interface DataAccessObject {
-    public abstract long getId();
+    public abstract int getId();
 }

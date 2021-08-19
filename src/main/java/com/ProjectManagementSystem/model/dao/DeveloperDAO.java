@@ -14,25 +14,26 @@ public class DeveloperDAO implements DataAccessObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private long id;
+    private int id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "age")
     private int age;
-    @Column(name = "sex")
+    @Column(name = "dev_sex")
     @Enumerated(EnumType.STRING)
     private Sex sex;
     @Column(name = "comments")
     private String comments;
     @Column(name = "salary")
     private int salary;
-    @ManyToMany()
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "devs_in_project", joinColumns = {@JoinColumn(name = "dev_id")}
             , inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Set<ProjectDAO> projects;
-    @OneToMany
+    @OneToMany(mappedBy = "developer", fetch = FetchType.EAGER)
     private Set<DevSkillsDAO> devSkills = new HashSet<>();
 
     public DeveloperDAO() {
@@ -72,11 +73,11 @@ public class DeveloperDAO implements DataAccessObject {
                 '}';
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

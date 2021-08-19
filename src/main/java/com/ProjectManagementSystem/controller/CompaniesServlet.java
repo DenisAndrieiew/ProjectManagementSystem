@@ -1,9 +1,9 @@
 package com.ProjectManagementSystem.controller;
 
 import com.ProjectManagementSystem.dto.CompanyDTO;
-import com.ProjectManagementSystem.model.CompanyRepository;
-import com.ProjectManagementSystem.model.EntityRepository;
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
+import com.ProjectManagementSystem.model.repositories.EntityRepository;
+import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @WebServlet("/companies")
@@ -25,17 +27,17 @@ public class CompaniesServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        this.repository = new CompanyRepository();
+        this.repository = new GenericEntityRepository<>(CompanyDAO.class);
         this.converter = repository.getConverter();
         this.service = new Service(repository);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<CompanyDTO> companies = repository.findAll().stream()
+        Set<CompanyDTO> companies = repository.findAll().stream()
                 .map(dao -> (CompanyDTO) converter.toDTO(dao))
                 .sorted(Comparator.comparing(CompanyDTO::getId))
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(LinkedHashSet::new));
         req.setAttribute("companies", companies);
         req.getRequestDispatcher("/view/companies.jsp").forward(req, resp);
     }

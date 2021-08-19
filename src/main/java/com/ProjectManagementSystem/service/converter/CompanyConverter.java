@@ -27,6 +27,6 @@ public class CompanyConverter implements Converter<CompanyDAO, CompanyDTO> {
         dto.setId(dao.getId());
         dto.setName(dao.getName());
         dto.setProjects(projectsConverter.toDTOSet(dao.getProjects()));
-        return null;
+        return dto;
     }
 }

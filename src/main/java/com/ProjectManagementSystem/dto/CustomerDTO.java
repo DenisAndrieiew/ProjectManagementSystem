@@ -3,7 +3,7 @@ package com.ProjectManagementSystem.dto;
 import java.util.Set;
 
 public class CustomerDTO implements DataTransferObject {
-    private long id;
+    private int id;
     private String name;
     private Set<ProjectDTO> projects;
 
@@ -19,11 +19,11 @@ public class CustomerDTO implements DataTransferObject {
         this.projects = projects;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
