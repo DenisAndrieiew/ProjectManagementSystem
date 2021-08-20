@@ -155,7 +155,7 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
     }
 
     private String createQueryByUniqueName(String param) {
-        return "FROM " + entityClass.getName() + " entity WHERE entity." + param + " = :" + param;
+        return "FROM " + entityClass.getName() + " entity " + getJoin() + " WHERE entity." + param + " = :" + param;
     }
 
     private String getJoin() {

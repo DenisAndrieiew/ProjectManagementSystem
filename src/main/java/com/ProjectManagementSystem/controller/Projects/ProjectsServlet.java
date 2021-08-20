@@ -21,15 +21,15 @@ import java.util.stream.Collectors;
 
 @WebServlet("/projects")
 public class ProjectsServlet extends HttpServlet {
-    private EntityRepository<ProjectDAO> repository;
-    private Converter converter;
-    private Service projectService;
+    private static EntityRepository<ProjectDAO> repository;
+    private static Converter converter;
+    private static Service projectService;
 
     @Override
     public void init() throws ServletException {
-        this.repository = new GenericEntityRepository<>(ProjectDAO.class);
-        this.converter = repository.getConverter();
-        this.projectService = new Service(repository);
+        repository = new GenericEntityRepository<>(ProjectDAO.class);
+        converter = repository.getConverter();
+        projectService = new Service(repository);
     }
 
     @Override
@@ -52,7 +52,6 @@ public class ProjectsServlet extends HttpServlet {
         project.setCompany(req.getParameter("company"));
         projectService.create(project);
         resp.sendRedirect(req.getContextPath() + "/projects");
-
     }
 }
 

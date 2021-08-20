@@ -9,7 +9,7 @@
 
 <body>
 <c:import url="/view/navigate.jsp"/>
-     <form name="developerForm" method=${method} action="/projects">
+     <form name="developerForm" method=${method} action="/projects/new">
 <c:set var="button_text" value="${method eq 'post' ? 'add': 'update'}"/>
           <fieldset>
               <legend>Project data</legend>

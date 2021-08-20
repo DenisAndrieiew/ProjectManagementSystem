@@ -11,10 +11,7 @@ import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ProjectConverter implements Converter<ProjectDAO, ProjectDTO> {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectConverter.class);
@@ -41,7 +38,9 @@ public class ProjectConverter implements Converter<ProjectDAO, ProjectDTO> {
         dao.setCompany(companyRepository.findByUniqueName("name", dto.getCompany()));
         dao.setCustomer(customersRepository.findByUniqueName("name", dto.getCustomer()));
         Set<DeveloperDAO> developers = new HashSet<>();
-        dto.getDeveloperIds().forEach(devId -> developers.add(developerRepository.findById(devId)));
+        if (Objects.nonNull(dto.getDeveloperIds())) {
+            dto.getDeveloperIds().forEach(devId -> developers.add(developerRepository.findById(devId)));
+        }
         dao.setDevelopers(developers);
         return dao;
     }
