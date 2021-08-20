@@ -26,7 +26,7 @@ public class Service {
         repository.findById(dao.getId());
     }
 
-    public void delete(long id) {
+    public void delete(int id) {
         repository.delete(id);
     }
 

@@ -33,7 +33,7 @@ public class DeveloperDAO implements DataAccessObject {
     @JoinTable(name = "devs_in_project", joinColumns = {@JoinColumn(name = "dev_id")}
             , inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Set<ProjectDAO> projects;
-    @OneToMany(mappedBy = "developer")
+    @OneToMany(mappedBy = "developer", fetch=FetchType.EAGER)
     private Set<DevSkillsDAO> devSkills = new HashSet<>();
 
     public DeveloperDAO() {
@@ -51,13 +51,13 @@ public class DeveloperDAO implements DataAccessObject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof DeveloperDAO)) return false;
-        DeveloperDAO that = (DeveloperDAO) o;
-        return id == that.id && age == that.age && salary == that.salary && firstName.equals(that.firstName) && lastName.equals(that.lastName) && sex == that.sex;
+        DeveloperDAO dao = (DeveloperDAO) o;
+        return getAge() == dao.getAge() && getFirstName().equals(dao.getFirstName()) && getLastName().equals(dao.getLastName()) && getSex() == dao.getSex();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, age, sex, salary);
+        return Objects.hash(getFirstName(), getLastName(), getAge(), getSex());
     }
 
     @Override
@@ -136,4 +136,5 @@ public class DeveloperDAO implements DataAccessObject {
     public void setProjects(Set<ProjectDAO> projects) {
         this.projects = projects;
     }
+
 }

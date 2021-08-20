@@ -68,7 +68,7 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
     }
 
     @Override
-    public T findById(long id) {
+    public T findById(int id) {
         T dao = null;
         try (Session session = sessionFactory.openSession()) {
             dao = session.get(entityClass, id);
@@ -90,7 +90,7 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(int id) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -106,7 +106,7 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
 
     private void save(T entity) {
         Transaction transaction = null;
-        long id = entity.getId();
+        int id = entity.getId();
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.saveOrUpdate(entity);
@@ -143,7 +143,7 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
 
     private String getJoin() {
         if (entityClass.equals(DeveloperDAO.class)) {
-            return " JOIN FETCH entity.projects JOIN FETCH entity.devSkills";
+            return " JOIN FETCH entity.projects" /*JOIN FETCH entity.devSkills"*/;
         } else if (entityClass.equals(ProjectDAO.class)) {
             return " JOIN FETCH entity.developers";
         } else if (entityClass.equals(CompanyDAO.class)) {

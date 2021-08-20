@@ -7,16 +7,16 @@ public class DevSkillsDTO implements DataTransferObject {
     private int id;
     private String brunch;
     private String level;
-    private long developerId;
+    private int developerId;
 
     public DevSkillsDTO() {
     }
 
-    public long getDeveloperId() {
+    public int getDeveloperId() {
         return developerId;
     }
 
-    public void setDeveloperId(long developerId) {
+    public void setDeveloperId(int developerId) {
         this.developerId = developerId;
     }
 

@@ -8,7 +8,7 @@
 
 <body>
 <c:import url="/view/navigate.jsp"/>
-     <form name="developerForm" method="post" action="/developers">
+     <form name="developerForm" method="post" action="/developers/new">
           <fieldset>
               <legend>Personal data</legend>
               FirstName: <input type="text" name="firstName">
@@ -31,13 +31,13 @@
                  <fieldset>
                     <legend>Skills</legend>
                     <c:forEach var="brunch"  items="${brunches}">
-                    <div value=${brunch.brunch}>${brunch.brunch}
+                    <div value=${brunch}>${brunch}
                     <select id="skill_level" name="skill_level">
-                                 <option value="None">None</option>
-                                 <option value="Junior">Junior</option>
-                                 <option value="Middle">Middle</option>
-                                 <option value="Senior">Senior</option>
-                               </select></div>
+                                <option value="None">None</option>
+                                <c:forEach var="level" items="${skillLevels}">
+                                <option value=${level}> ${level}</option>
+                                </c:forEach>
+                                </select></div>
                     </c:forEach>
                  </fieldset>
                 <input type="submit" value="add developer" />

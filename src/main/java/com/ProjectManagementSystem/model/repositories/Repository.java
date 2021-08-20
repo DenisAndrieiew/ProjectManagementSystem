@@ -4,13 +4,13 @@ import com.ProjectManagementSystem.service.converter.Converter;
 
 
 public interface Repository<T> {
-    T findById(long id);
+    T findById(int id);
 
     void create(T entity);
 
     void update(T entity);
 
-    void delete(long id);
+    void delete(int id);
 
     Converter getConverter();
 

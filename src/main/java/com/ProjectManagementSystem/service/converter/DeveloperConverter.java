@@ -3,9 +3,12 @@ package com.ProjectManagementSystem.service.converter;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO> {
-    private static ProjectConverter projectConverter = new ProjectConverter();
-    private static DevSkillsConverter devSkillsConverter = new DevSkillsConverter();
+    private static final ProjectConverter projectConverter = new ProjectConverter();
+    private static final DevSkillsConverter devSkillsConverter = new DevSkillsConverter();
 
     public DeveloperDAO fromDTO(DeveloperDTO dto) {
         DeveloperDAO dao = new DeveloperDAO();
