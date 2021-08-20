@@ -2,40 +2,38 @@ package com.ProjectManagementSystem.dto;
 
 import com.ProjectManagementSystem.dto.enums.Sex;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class DeveloperDTO implements DataTransferObject {
-    private long id;
+    private int id;
     private String firstName;
     private String lastName;
     private int age;
     private Sex sex;
     private String comments;
     private int salary;
+    private Set<DevSkillsDTO> devSkills = new HashSet<>();
+    private Set<ProjectDTO> projects = new HashSet<>();
 
 
-    public DeveloperDTO(long id, String firstName, String lastName, int age, Sex sex, String comments, int salary) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.sex = sex;
-        this.comments = comments;
-        this.salary = salary;
+    public DeveloperDTO() {
     }
 
-    public DeveloperDTO(String firstName, String lastName, int age, Sex sex, String comments, int salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.sex = sex;
-        this.comments = comments;
-        this.salary = salary;
+
+    public Set<DevSkillsDTO> getDevSkills() {
+        return devSkills;
     }
 
-    public long getId() {
+    public void setDevSkills(Set<DevSkillsDTO> devSkills) {
+        this.devSkills = devSkills;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -85,6 +83,14 @@ public class DeveloperDTO implements DataTransferObject {
 
     public void setSalary(int salary) {
         this.salary = salary;
+    }
+
+    public Set<ProjectDTO> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<ProjectDTO> projects) {
+        this.projects = projects;
     }
 
     @Override

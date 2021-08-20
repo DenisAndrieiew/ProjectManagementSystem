@@ -1,34 +1,32 @@
 package com.ProjectManagementSystem.service;
 
-import com.ProjectManagementSystem.dao.Repository;
-import com.ProjectManagementSystem.dao.model.DataAccessObject;
 import com.ProjectManagementSystem.dto.DataTransferObject;
+import com.ProjectManagementSystem.model.dao.DataAccessObject;
+import com.ProjectManagementSystem.model.repositories.Repository;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 public class Service {
-    private final Repository<DataAccessObject> repository;
+    private final Repository repository;
     private final Converter<DataAccessObject, DataTransferObject> converter;
 
-    public Service(Repository<DataAccessObject> repository) {
+    public Service(Repository repository) {
         this.repository = repository;
         this.converter = repository.getConverter();
     }
 
-    public DataTransferObject create(DataTransferObject dto) {
+    public int create(DataTransferObject dto) {
         DataAccessObject dao = converter.fromDTO(dto);
         repository.create(dao);
-        DataAccessObject savedDAO = repository.findById(dao.getId());
-        return converter.toDTO(savedDAO);
+        return dao.getId();
     }
 
-    public DataTransferObject update(DataTransferObject dto) {
+    public void update(DataTransferObject dto) {
         DataAccessObject dao = converter.fromDTO(dto);
         repository.update(dao);
-        DataAccessObject updatedDAO = repository.findById(dao.getId());
-        return converter.toDTO(updatedDAO);
+        repository.findById(dao.getId());
     }
 
-    public void delete(long id) {
+    public void delete(int id) {
         repository.delete(id);
     }
 

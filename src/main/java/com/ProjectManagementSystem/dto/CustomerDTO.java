@@ -2,28 +2,20 @@ package com.ProjectManagementSystem.dto;
 
 import java.util.Set;
 
-public class CompanyDTO implements DataTransferObject {
+public class CustomerDTO implements DataTransferObject {
     private int id;
     private String name;
-    private Set<Integer> projectIds;
-    private Set<String> projects;
+    private Set<ProjectDTO> projects;
 
-    public CompanyDTO() {
+
+    public CustomerDTO() {
     }
 
-    public Set<Integer> getProjectIds() {
-        return projectIds;
-    }
-
-    public void setProjectIds(Set<Integer> projectIds) {
-        this.projectIds = projectIds;
-    }
-
-    public Set<String> getProjects() {
+    public Set<ProjectDTO> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<String> projects) {
+    public void setProjects(Set<ProjectDTO> projects) {
         this.projects = projects;
     }
 

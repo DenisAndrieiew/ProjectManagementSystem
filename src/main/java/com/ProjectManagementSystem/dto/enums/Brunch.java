@@ -9,7 +9,7 @@ public enum Brunch {
     public String toString() {
         return "Java";
     }
-    }, CSharp {
+    }, C_SHARP {
         @Override
         public String toString() {
             return "C#";

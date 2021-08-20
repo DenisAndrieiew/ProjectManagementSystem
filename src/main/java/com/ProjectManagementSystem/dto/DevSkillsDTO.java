@@ -1,55 +1,61 @@
 package com.ProjectManagementSystem.dto;
 
+import com.ProjectManagementSystem.dto.enums.Brunch;
+import com.ProjectManagementSystem.dto.enums.SkillLevel;
+
+import java.util.Objects;
+
 public class DevSkillsDTO implements DataTransferObject {
-    private long id;
-    private long devId;
-    private long skillId;
-    private long skillLevel;
+    private int id;
+    private String brunch;
+    private String level;
+    private int developerId;
 
-    public DevSkillsDTO(long devId, long skillId, long skillLevel) {
-        this.devId = devId;
-        this.skillId = skillId;
-        this.skillLevel = skillLevel;
-
+    public DevSkillsDTO() {
     }
 
-    public DevSkillsDTO(long id, long devId, long skillId, long skillLevel) {
-        this.id = id;
-        this.devId = devId;
-        this.skillId = skillId;
-        this.skillLevel = skillLevel;
+    public int getDeveloperId() {
+        return developerId;
     }
 
-    public long getId() {
+    public void setDeveloperId(int developerId) {
+        this.developerId = developerId;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-
-    public long getDevId() {
-        return devId;
+    public String getBrunch() {
+        return brunch;
     }
 
-    public void setDevId(int devId) {
-        this.devId = devId;
+    public void setBrunch(String brunch) {
+        this.brunch = brunch;
     }
 
-    public long getSkillId() {
-        return skillId;
+    public String getLevel() {
+        return level;
     }
 
-    public void setSkillId(int skillId) {
-        this.skillId = skillId;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
-    public long getSkillLevel() {
-        return skillLevel;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DevSkillsDTO)) return false;
+        DevSkillsDTO that = (DevSkillsDTO) o;
+        return getBrunch().equals(that.getBrunch());
     }
 
-    public void setSkillLevel(int skillLevel) {
-        this.skillLevel = skillLevel;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getBrunch());
     }
 }
