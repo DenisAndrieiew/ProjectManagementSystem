@@ -19,10 +19,10 @@ public class ProjectDAO implements DataAccessObject {
     @Column(name = "name")
     private String name;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id")
     private CustomerDAO customer;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id", nullable = false)
+    @JoinColumn(name = "company_id")
     private CompanyDAO company;
     @Column(name = "description")
     private String description;

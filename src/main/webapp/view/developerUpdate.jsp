@@ -13,6 +13,8 @@
           <fieldset>
               <legend>Personal data</legend>
               <input type="hidden" name="id" value='${developer.id}' />
+              <c:out value='${developer.firstName}'/>
+              <c:out value='${developer.lastName}'/>
               FirstName: <input type="text" name="firstName" value="<c:out value='${developer.firstName}'/>">
               LastName: <input type="text" name="lastName" value="<c:out value='${developer.lastName}'/>"/> <br/>
               Age: <input type="number" name="age" value="<c:out value='${developer.age}'/>"/>
@@ -34,13 +36,13 @@
                  <fieldset>
                     <legend>Skills</legend>
                     <c:forEach var="brunch"  items="${brunches}">
-                    <div value=${brunch.brunch}>${brunch.brunch}
-                    <select id="skill_level" name="skill_level">
-                                 <option value="None">None</option>
-                                 <option value="Junior">Junior</option>
-                                 <option value="Middle">Middle</option>
-                                 <option value="Senior">Senior</option>
-                               </select></div>
+                         <div value=${brunch}>${brunch}
+                         <select id="skill_level" name="skill_level">
+                                     <option value="None">None</option>
+                                     <c:forEach var="level" items="${skillLevels}">
+                                     <option value=${level}> ${level}</option>
+                                     </c:forEach>
+                                     </select></div>
                     </c:forEach>
                  </fieldset>
                 <input type="submit" value="update developer" />

@@ -1,5 +1,6 @@
 package com.ProjectManagementSystem.controller.Developers;
 
+import com.ProjectManagementSystem.dto.DevSkillsDTO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.ProjectDTO;
 import com.ProjectManagementSystem.dto.enums.Brunch;
@@ -19,10 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @WebServlet("/developers/new")
@@ -75,20 +73,24 @@ public class DeveloperNewServlet extends HttpServlet {
                     .collect(Collectors.toSet());
             developerDTO.setProjects(projects);
         }
-//        List<BrunchDTO> brunches = brunchRepository.findAll().stream()
-//                .map(dao -> (BrunchDTO) brunchConverter.toDTO(dao))
-//                .collect(Collectors.toList());
-//        List<String> levels = Arrays.asList(req.getParameterValues("skill_level").clone());
-//        Iterator<BrunchDTO> brIterator = brunches.iterator();
-//        Iterator<String> lvlIterator = levels.iterator();
-//        Map<String, String> skillLevels = new HashMap<>();
-//        while (brIterator.hasNext() && lvlIterator.hasNext()) {
-//            skillLevels.put(brIterator.next().getBrunch().name(), lvlIterator.next());
-//        }
-//        skillLevels.values().removeIf(value -> value.equalsIgnoreCase("none"));
-//        developerDTO.setSkillLevels(skillLevels);
-//
-        developerService.create(developerDTO);
+        List<String> brunches = Arrays.stream(Brunch.values()).map(Brunch::toString).collect(Collectors.toList());
+        List<String> levels = Arrays.asList(req.getParameterValues("skill_level").clone());
+        Iterator<String> brIterator = brunches.iterator();
+        Iterator<String> lvlIterator = levels.iterator();
+        Set<DevSkillsDTO> devSkills = new HashSet<>();
+        while (brIterator.hasNext() && lvlIterator.hasNext()) {
+            DevSkillsDTO ds = new DevSkillsDTO();
+            ds.setBrunch(brIterator.next());
+            ds.setLevel(lvlIterator.next());
+            ds.setDeveloperId(developerDTO.getId());
+            devSkills.add(ds);
+        }
+        devSkills.removeIf(devSkill->devSkill.getLevel().equalsIgnoreCase("none"));
+        int id = developerService.create(developerDTO);
+        developerDTO.setId(id);
+        devSkills.forEach(devSkill->devSkill.setDeveloperId(id));
+        developerDTO.setDevSkills(devSkills);
+        developerService.update(developerDTO);
         resp.sendRedirect(req.getContextPath() + "/developers");
     }
 

@@ -11,9 +11,9 @@
      <form name="developerForm" method="post" action="/developers/new">
           <fieldset>
               <legend>Personal data</legend>
-              FirstName: <input type="text" name="firstName">
-              LastName: <input type="text" name="lastName"/> <br/>
-              Age: <input type="number" name="age"/>
+              FirstName: <input type="text" name="firstName" required/>
+              LastName: <input type="text" name="lastName" required/> <br/>
+              Age: <input type="number" name="age" required/>
               Salary:   <input type="number" name="salary"/>
               Sex: <select id="sex" name="sex">
                          <option value="MALE">Male</option>

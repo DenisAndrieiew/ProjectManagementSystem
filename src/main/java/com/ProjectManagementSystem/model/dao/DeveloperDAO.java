@@ -29,7 +29,7 @@ public class DeveloperDAO implements DataAccessObject {
     @Column(name = "salary")
     private int salary;
 
-    @ManyToMany()
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name = "devs_in_project", joinColumns = {@JoinColumn(name = "dev_id")}
             , inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Set<ProjectDAO> projects;

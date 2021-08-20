@@ -25,8 +25,8 @@ public class DevSkillsConverter implements Converter<DevSkillsDAO, DevSkillsDTO>
     public DevSkillsDAO fromDTO(DevSkillsDTO dto) {
         DevSkillsDAO dao = new DevSkillsDAO();
         dao.setId(dto.getId());
-        dao.setBrunch(brunchRepository.findByUniqueName("name", Brunch.toBrunch(dto.getBrunch()).get().name()));
-        dao.setSkillLevel(levelRepository.findByUniqueName("name", SkillLevel.toSkillLevel(dto.getLevel()).get().name()));
+        dao.setBrunch(brunchRepository.findEnum("brunch", Brunch.toBrunch(dto.getBrunch()).get()));
+        dao.setSkillLevel(levelRepository.findEnum("level", SkillLevel.toSkillLevel(dto.getLevel()).get()));
         dao.setDeveloper(developerRepository.findById(dto.getDeveloperId()));
         return dao;
     }

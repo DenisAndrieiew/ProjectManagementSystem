@@ -10,13 +10,13 @@ public class DevSkillsDAO implements DataAccessObject {
     @Column(name = "id", nullable = false)
     private int id;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "skill_id", nullable = false)
+    @JoinColumn(name = "skill_id")
     private BrunchDAO brunch;
     @ManyToOne( fetch = FetchType.EAGER)
-    @JoinColumn(name = "skill_level", nullable = false)
+    @JoinColumn(name = "skill_level")
     private SkillLevelDAO skillLevel;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "dev_id", nullable = false)
+    @JoinColumn(name = "dev_id")
     private DeveloperDAO developer;
 
 

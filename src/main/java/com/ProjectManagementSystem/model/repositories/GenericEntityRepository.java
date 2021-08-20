@@ -66,6 +66,23 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
         }
         return entities.size() != 0 ? entities.get(0) : null;
     }
+    public T findEnum(String param, Object value){
+        List<T> entities = new LinkedList();
+        String queryString = createQueryByUniqueName(param);
+        Transaction transaction;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            Query<T> query = session.createQuery(queryString, entityClass);
+            query.setParameter(param, value);
+            LOG.debug("Executing query: " + query.getQueryString());
+            entities = query.list();
+            transaction.commit();
+        } catch (Exception ex) {
+            LOG.error(String.format("Cannot find by %s = %s", param, value) + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return entities.size() != 0 ? entities.get(0) : null;
+    }
 
     @Override
     public T findById(int id) {
@@ -86,7 +103,7 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
 
     @Override
     public void update(T entity) {
-        save(entity);
+       save(entity);
     }
 
     @Override
@@ -143,7 +160,7 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
 
     private String getJoin() {
         if (entityClass.equals(DeveloperDAO.class)) {
-            return " JOIN FETCH entity.projects" /*JOIN FETCH entity.devSkills"*/;
+            return " LEFT JOIN FETCH entity.projects LEFT JOIN FETCH entity.devSkills";
         } else if (entityClass.equals(ProjectDAO.class)) {
             return " JOIN FETCH entity.developers";
         } else if (entityClass.equals(CompanyDAO.class)) {
@@ -151,7 +168,7 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
         } else if (entityClass.equals(CustomerDAO.class)) {
             return " JOIN FETCH entity.projects";
         } else if (entityClass.equals(DevSkillsDAO.class)) {
-            return "";
+            return " JOIN FETCH entity.developer";
         } else {
             LOG.error("wrong class");
             return null;

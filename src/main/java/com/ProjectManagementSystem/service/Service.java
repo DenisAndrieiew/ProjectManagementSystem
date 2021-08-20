@@ -14,10 +14,10 @@ public class Service {
         this.converter = repository.getConverter();
     }
 
-    public void create(DataTransferObject dto) {
+    public int create(DataTransferObject dto) {
         DataAccessObject dao = converter.fromDTO(dto);
         repository.create(dao);
-        repository.findById(dao.getId());
+        return dao.getId();
     }
 
     public void update(DataTransferObject dto) {

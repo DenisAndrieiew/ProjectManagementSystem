@@ -26,15 +26,15 @@
     </logger>
 
     <Logger name="org.ehcache" level="error" additivity="false">
-        <AppenderRef ref="Console" />
+        <appenderRef ref="Console" />
     </Logger>
 
     <Logger name="org.hibernate.SQL" level="error" additivity="false">
-        <AppenderRef ref="Console" />
+        <appenderRef ref="Console" />
     </Logger>
     <!-- Log cache -->
     <Logger name="org.hibernate.cache" level="error" additivity="false">
-        <AppenderRef ref="Console" />
+        <appenderRef ref="Console" />
     </Logger>
 
     <root level="error">
