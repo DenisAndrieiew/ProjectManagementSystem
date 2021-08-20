@@ -162,13 +162,13 @@ public class GenericEntityRepository<T extends DataAccessObject> implements Enti
         if (entityClass.equals(DeveloperDAO.class)) {
             return " LEFT JOIN FETCH entity.projects LEFT JOIN FETCH entity.devSkills";
         } else if (entityClass.equals(ProjectDAO.class)) {
-            return " JOIN FETCH entity.developers";
+            return " LEFT JOIN FETCH entity.developers";
         } else if (entityClass.equals(CompanyDAO.class)) {
-            return " JOIN FETCH entity.projects";
+            return " LEFT JOIN FETCH entity.projects";
         } else if (entityClass.equals(CustomerDAO.class)) {
-            return " JOIN FETCH entity.projects";
+            return " LEFT JOIN FETCH entity.projects";
         } else if (entityClass.equals(DevSkillsDAO.class)) {
-            return " JOIN FETCH entity.developer";
+            return " LEFT JOIN FETCH entity.developer";
         } else {
             LOG.error("wrong class");
             return null;
