@@ -8,14 +8,16 @@ import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class CompanyConverter implements Converter<CompanyDAO, CompanyDTO> {
     private static Converter<ProjectDAO, ProjectDTO> projectsConverter;
     private static EntityRepository<ProjectDAO> projectRepository;
+
     public CompanyConverter() {
         projectsConverter = new ProjectConverter();
-        projectRepository=new GenericEntityRepository<>(ProjectDAO.class);
+        projectRepository = new GenericEntityRepository<>(ProjectDAO.class);
     }
 
     @Override
@@ -24,7 +26,9 @@ public class CompanyConverter implements Converter<CompanyDAO, CompanyDTO> {
         dao.setId(dto.getId());
         dao.setName(dto.getName());
         Set<ProjectDAO> projects = new HashSet<>();
-        dto.getProjectIds().forEach(id->projects.add(projectRepository.findById(id)));
+        if (Objects.nonNull(dto.getProjects())) {
+            dto.getProjectIds().forEach(id -> projects.add(projectRepository.findById(id)));
+        }
         dao.setProjects(projects);
         return dao;
     }
@@ -36,7 +40,7 @@ public class CompanyConverter implements Converter<CompanyDAO, CompanyDTO> {
         dto.setName(dao.getName());
         Set<Integer> projectIds = new HashSet<>();
         Set<String> projects = new HashSet<>();
-        dao.getProjects().forEach(project->{
+        dao.getProjects().forEach(project -> {
             projectIds.add(project.getId());
             projects.add(project.getName());
         });

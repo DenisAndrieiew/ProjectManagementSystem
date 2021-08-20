@@ -12,7 +12,7 @@ public class CustomerDAO implements DataAccessObject {
     private int id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ProjectDAO> projects;
 
     public CustomerDAO() {

@@ -4,7 +4,6 @@ import com.ProjectManagementSystem.dto.CustomerDTO;
 import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
-import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 import javax.servlet.ServletException;
@@ -22,13 +21,11 @@ import java.util.stream.Collectors;
 public class CustomersServlet extends HttpServlet {
     private EntityRepository<CustomerDAO> repository;
     private Converter converter;
-    private Service service;
 
     @Override
     public void init() throws ServletException {
         this.repository = new GenericEntityRepository<>(CustomerDAO.class);
         this.converter = repository.getConverter();
-        this.service = new Service(repository);
     }
 
     @Override
@@ -40,11 +37,5 @@ public class CustomersServlet extends HttpServlet {
         req.setAttribute("customers", customers);
         req.getRequestDispatcher("/view/customers.jsp").forward(req, resp);
     }
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        CustomerDTO dto = new CustomerDTO();
-//        dto.setName(req.getParameter("name"));
-//        service.create(dto);
-//        resp.sendRedirect(req.getContextPath() + "/customers");
-//    }
+
 }

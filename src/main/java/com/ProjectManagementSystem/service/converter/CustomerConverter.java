@@ -5,6 +5,10 @@ import com.ProjectManagementSystem.dto.ProjectDTO;
 import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 public class CustomerConverter implements Converter<CustomerDAO, CustomerDTO> {
     private static Converter<ProjectDAO, ProjectDTO> projectsConverter;
 
@@ -17,7 +21,11 @@ public class CustomerConverter implements Converter<CustomerDAO, CustomerDTO> {
         CustomerDAO dao = new CustomerDAO();
         dao.setName(dto.getName());
         dao.setId(dto.getId());
-        dao.setProjects(projectsConverter.fromDTOSet(dto.getProjects()));
+        Set<ProjectDAO> projects = new HashSet<>();
+        if (Objects.nonNull(dto.getProjects())) {
+            projects=projectsConverter.fromDTOSet(dto.getProjects());
+        }
+        dao.setProjects(projects);
         return dao;
     }
 
