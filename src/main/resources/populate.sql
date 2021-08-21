@@ -82,3 +82,15 @@ update projects set cost = 0 where id = 3;
 update projects set cost = 1200 where id = 4;
 update projects set cost = 3000 where id = 5;
 update projects set cost = 2700 where id = 6;
+
+UPDATE developers SET dev_sex ='MALE' WHERE dev_sex = 'male';
+UPDATE developers SET dev_sex ='FEMALE' WHERE dev_sex = 'female';
+
+UPDATE brunch SET name = 'JAVA' WHERE name = 'Java';
+UPDATE brunch SET name = 'C_SHARP' WHERE name = 'C#';
+UPDATE brunch SET name = 'JAVA_SCRIPT' WHERE name = 'JS';
+UPDATE brunch SET name = 'CPP' WHERE name = 'C++';
+
+UPDATE skill_level SET name = 'JUNIOR' WHERE name ='Junior';
+UPDATE skill_level SET name = 'MIDDLE' WHERE name ='Middle';
+UPDATE skill_level SET name = 'SENIOR' WHERE name ='Senior';
