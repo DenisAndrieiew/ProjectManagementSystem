@@ -89,10 +89,7 @@ public class DevSkillsRepository implements SkillsRepository {
         return entities.size() != 0 ? entities.get(0) : null;
     }
 
-    public DevSkillsDAO findEnum(String param, Object value) {
 
-        return null;
-    }
 
     @Override
     public DevSkillsDAO findById(int id) {

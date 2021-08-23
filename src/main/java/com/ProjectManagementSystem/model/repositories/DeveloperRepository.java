@@ -66,9 +66,7 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
         return entities.size() != 0 ? entities.get(0) : null;
     }
 
-    public DeveloperDAO findEnum(String param, Object value) {
-        return null;
-    }
+
 
     @Override
     public DeveloperDAO findById(int id) {

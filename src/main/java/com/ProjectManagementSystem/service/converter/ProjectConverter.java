@@ -1,6 +1,5 @@
 package com.ProjectManagementSystem.service.converter;
 
-import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.ProjectDTO;
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
 import com.ProjectManagementSystem.model.dao.CustomerDAO;
@@ -17,13 +16,11 @@ public class ProjectConverter implements Converter<ProjectDAO, ProjectDTO> {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectConverter.class);
     private static EntityRepository<CompanyDAO> companyRepository;
     private static EntityRepository<CustomerDAO> customersRepository;
-    private static Converter<DeveloperDAO, DeveloperDTO> developerConverter;
     private static EntityRepository<DeveloperDAO> developerRepository;
 
     public ProjectConverter() {
         companyRepository = new GenericEntityRepository<>(CompanyDAO.class);
         customersRepository = new GenericEntityRepository<>(CustomerDAO.class);
-        developerConverter = new DeveloperConverter();
         developerRepository = new GenericEntityRepository<>(DeveloperDAO.class);
 
     }

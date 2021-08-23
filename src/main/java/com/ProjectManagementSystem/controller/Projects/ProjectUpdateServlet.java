@@ -8,6 +8,7 @@ import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
+import com.ProjectManagementSystem.model.repositories.ProjectRepository;
 import com.ProjectManagementSystem.service.ProjectService;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
@@ -35,7 +36,7 @@ public class ProjectUpdateServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        projectRepository = new GenericEntityRepository<>(ProjectDAO.class);
+        projectRepository = new ProjectRepository();
         projectConverter = projectRepository.getConverter();
         companyRepository = new GenericEntityRepository<>(CompanyDAO.class);
         companyConverter = companyRepository.getConverter();

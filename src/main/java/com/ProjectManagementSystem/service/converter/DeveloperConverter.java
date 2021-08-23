@@ -1,17 +1,11 @@
 package com.ProjectManagementSystem.service.converter;
 
 import com.ProjectManagementSystem.dto.DeveloperDTO;
-import com.ProjectManagementSystem.model.dao.DevSkillsDAO;
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
-import com.ProjectManagementSystem.model.repositories.DeveloperRepository;
-import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
 
 public class DeveloperConverter implements Converter<DeveloperDAO, DeveloperDTO> {
     private static final ProjectConverter projectConverter = new ProjectConverter();
     private static final DevSkillsConverter devSkillsConverter = new DevSkillsConverter();
-    private static final EntityRepository developerRepository = new DeveloperRepository();
-    private static final EntityRepository devSkillRepository = new GenericEntityRepository(DevSkillsDAO.class);
 
     public DeveloperDAO fromDTO(DeveloperDTO dto) {
         DeveloperDAO dao = new DeveloperDAO();

@@ -10,6 +10,7 @@ import com.ProjectManagementSystem.model.dao.DeveloperDAO;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
+import com.ProjectManagementSystem.model.repositories.ProjectRepository;
 import com.ProjectManagementSystem.service.DeveloperService;
 import com.ProjectManagementSystem.service.ProjectService;
 import com.ProjectManagementSystem.service.Service;
@@ -32,7 +33,7 @@ public class DeveloperNewServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        this.projectRepository = new GenericEntityRepository<>(ProjectDAO.class);
+        this.projectRepository = new ProjectRepository();
         this.developerService = new DeveloperService(new GenericEntityRepository(DeveloperDAO.class));
         this.projectService = new ProjectService(projectRepository);
 

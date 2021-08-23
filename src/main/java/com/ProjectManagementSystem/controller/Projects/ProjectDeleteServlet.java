@@ -3,6 +3,7 @@ package com.ProjectManagementSystem.controller.Projects;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
+import com.ProjectManagementSystem.model.repositories.ProjectRepository;
 import com.ProjectManagementSystem.service.ProjectService;
 import com.ProjectManagementSystem.service.Service;
 
@@ -19,7 +20,7 @@ public class ProjectDeleteServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        EntityRepository<ProjectDAO> repository = new GenericEntityRepository<>(ProjectDAO.class);
+        EntityRepository<ProjectDAO> repository = new ProjectRepository();
         projectService = new ProjectService(repository);
     }
 
