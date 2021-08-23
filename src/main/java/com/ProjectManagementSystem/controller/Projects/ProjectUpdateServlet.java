@@ -6,8 +6,8 @@ import com.ProjectManagementSystem.dto.ProjectDTO;
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
 import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
-import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
+import com.ProjectManagementSystem.model.repositories.*;
+import com.ProjectManagementSystem.service.ProjectService;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class ProjectUpdateServlet extends HttpServlet {
     private static EntityRepository<ProjectDAO> projectRepository;
     private static Converter<ProjectDAO, ProjectDTO> projectConverter;
-    private static Service projectService;
+    private static Service<ProjectDTO> projectService;
     private static EntityRepository<CompanyDAO> companyRepository;
     private static Converter<CompanyDAO, CompanyDTO> companyConverter;
     private static EntityRepository<CustomerDAO> customersRepository;
@@ -34,25 +34,25 @@ public class ProjectUpdateServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        projectRepository = new GenericEntityRepository<>(ProjectDAO.class);
+        projectRepository = new ProjectRepository();
         projectConverter = projectRepository.getConverter();
-        companyRepository = new GenericEntityRepository<>(CompanyDAO.class);
+        companyRepository = new CompanyRepository();
         companyConverter = companyRepository.getConverter();
-        customersRepository = new GenericEntityRepository<>(CustomerDAO.class);
+        customersRepository = new CustomerRepository();
         customersConverter = customersRepository.getConverter();
-        projectService = new Service(projectRepository);
+        projectService = new ProjectService(projectRepository);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<CompanyDTO> companies = companyRepository.findAll().stream()
-                .map((dao -> (CompanyDTO) companyConverter.toDTO(dao)))
+                .map((dao -> companyConverter.toDTO(dao)))
                 .collect(Collectors.toList());
         List<CustomerDTO> customers = customersRepository.findAll().stream()
-                .map((dao -> (CustomerDTO) customersConverter.toDTO(dao)))
+                .map((dao -> customersConverter.toDTO(dao)))
                 .collect(Collectors.toList());
         int id = Integer.parseInt(req.getParameter("id"));
-        ProjectDTO project = (ProjectDTO) projectConverter.toDTO(projectRepository.findById(id));
+        ProjectDTO project = projectConverter.toDTO(projectRepository.findById(id));
         req.setAttribute("project", project);
         req.setAttribute("companies", companies);
         req.setAttribute("customers", customers);

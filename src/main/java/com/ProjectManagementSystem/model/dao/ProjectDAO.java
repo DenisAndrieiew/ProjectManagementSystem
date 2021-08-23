@@ -1,9 +1,5 @@
 package com.ProjectManagementSystem.model.dao;
 
-import com.ProjectManagementSystem.config.config.HibernateDatabaseConnector;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.HashSet;
@@ -30,20 +26,11 @@ public class ProjectDAO implements DataAccessObject {
     private Instant begin_date;
     @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
     private Set<DeveloperDAO> developers = new HashSet<>();
-//    private int cost;
 
     public ProjectDAO() {
-//        String hqlQuery = "SELECT SUM(developerDAO.salary) FROM DeveloperDAO developerDAO" +
-//                "join ProjectsDAO.developers;";
-//        SessionFactory sessionFactory = HibernateDatabaseConnector.getSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        Query query = session.createQuery(hqlQuery);
-//        this.cost = 100; // query.getFirstResult();
+
     }
 
-//    public int getCost() {
-//        return cost;
-//    }
 
     @Override
     public int getId() {

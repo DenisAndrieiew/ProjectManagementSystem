@@ -94,3 +94,20 @@ UPDATE brunch SET name = 'CPP' WHERE name = 'C++';
 UPDATE skill_level SET name = 'JUNIOR' WHERE name ='Junior';
 UPDATE skill_level SET name = 'MIDDLE' WHERE name ='Middle';
 UPDATE skill_level SET name = 'SENIOR' WHERE name ='Senior';
+
+INSERT INTO skills (id, brunch, stage)
+    VALUES (1, 'JAVA', 'JUNIOR'),
+    	   (2, 'JAVA', 'MIDDLE'),
+    	   (3, 'JAVA', 'SENIOR'),
+    	   (4, 'C_SHARP', 'JUNIOR'),
+    	   (5, 'C_SHARP', 'MIDDLE'),
+    	   (6, 'C_SHARP', 'SENIOR'),
+    	   (7, 'JAVA_SCRIPT', 'JUNIOR'),
+    	   (8, 'JAVA_SCRIPT', 'MIDDLE'),
+    	   (9, 'JAVA_SCRIPT', 'SENIOR'),
+    	   (10, 'CPP', 'JUNIOR'),
+    	   (11, 'CPP', 'MIDDLE'),
+    	   (12, 'CPP', 'SENIOR'),
+    	   (13, 'PHP', 'JUNIOR'),
+    	   (14, 'PHP', 'MIDDLE'),
+    	   (15, 'PHP', 'SENIOR');

@@ -1,24 +1,27 @@
 package com.ProjectManagementSystem.model.dao;
 
+import com.ProjectManagementSystem.dto.enums.Brunch;
+import com.ProjectManagementSystem.dto.enums.SkillLevel;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "dev_skills")
+@Table(name = "skills")
 public class DevSkillsDAO implements DataAccessObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "skill_id")
-    private BrunchDAO brunch;
-    @ManyToOne( fetch = FetchType.EAGER)
-    @JoinColumn(name = "skill_level")
-    private SkillLevelDAO skillLevel;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "dev_id")
-    private DeveloperDAO developer;
+    @Column(name = "brunch")
+    @Enumerated(EnumType.STRING)
+    private Brunch brunch;
+    @Column(name = "stage")
+    @Enumerated(EnumType.STRING)
+    private SkillLevel level;
 
+    @ManyToMany(mappedBy = "devSkills", fetch = FetchType.EAGER)
+    private Set<DeveloperDAO> developers;
 
     public DevSkillsDAO() {
     }
@@ -28,31 +31,32 @@ public class DevSkillsDAO implements DataAccessObject {
         return id;
     }
 
-    public DeveloperDAO getDeveloper() {
-        return developer;
-    }
-
-    public void setDeveloper(DeveloperDAO developer) {
-        this.developer = developer;
-    }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public BrunchDAO getBrunch() {
+    public Brunch getBrunch() {
         return brunch;
     }
 
-    public void setBrunch(BrunchDAO brunch) {
+    public void setBrunch(Brunch brunch) {
         this.brunch = brunch;
     }
 
-    public SkillLevelDAO getSkillLevel() {
-        return skillLevel;
+    public SkillLevel getLevel() {
+        return level;
     }
 
-    public void setSkillLevel(SkillLevelDAO skillLevel) {
-        this.skillLevel = skillLevel;
+    public void setLevel(SkillLevel level) {
+        this.level = level;
+    }
+
+    public Set<DeveloperDAO> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(Set<DeveloperDAO> developers) {
+        this.developers = developers;
     }
 }

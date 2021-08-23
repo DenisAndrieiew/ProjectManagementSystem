@@ -58,3 +58,22 @@ alter table developers add column salary int;
 
 alter table projects add column cost int;
 ALTER TABLE projects DROP COLUMN cost;
+
+CREATE TABLE skills (
+id integer primary key,
+brunch varchar(50) not null,
+stage varchar(50) not null);
+
+CREATE TABLE developer_skills(
+developer_id integer not null,
+skill_id integer not null,
+constraint fk_deelopers
+	FOREIGN KEY (developer_id)
+		REFERENCES developers(id),
+CONSTRAINT fk_skills
+	FOREIGN KEY (skill_id)
+		REFERENCES skills(id));
+
+DROP TABLE dev_skills;
+DROP TABLE brunch;
+DROP TABLE 	skill_level;

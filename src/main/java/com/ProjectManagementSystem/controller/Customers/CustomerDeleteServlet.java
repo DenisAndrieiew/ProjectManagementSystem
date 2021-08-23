@@ -1,8 +1,9 @@
 package com.ProjectManagementSystem.controller.Customers;
 
 import com.ProjectManagementSystem.model.dao.CustomerDAO;
+import com.ProjectManagementSystem.model.repositories.CustomerRepository;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
+import com.ProjectManagementSystem.service.CustomerService;
 import com.ProjectManagementSystem.service.Service;
 
 import javax.servlet.ServletException;
@@ -14,13 +15,12 @@ import java.io.IOException;
 
 @WebServlet("/customers/delete")
 public class CustomerDeleteServlet extends HttpServlet {
-    private static EntityRepository<CustomerDAO> repository;
     private static Service service;
 
     @Override
     public void init() throws ServletException {
-        repository = new GenericEntityRepository<>(CustomerDAO.class);
-        service = new Service(repository);
+        EntityRepository<CustomerDAO> repository = new CustomerRepository();
+        service = new CustomerService(repository);
     }
 
     @Override
