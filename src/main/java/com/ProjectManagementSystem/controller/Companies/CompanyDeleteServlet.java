@@ -1,8 +1,8 @@
 package com.ProjectManagementSystem.controller.Companies;
 
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
+import com.ProjectManagementSystem.model.repositories.CompanyRepository;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
 import com.ProjectManagementSystem.service.CompanyService;
 import com.ProjectManagementSystem.service.Service;
 
@@ -15,12 +15,11 @@ import java.io.IOException;
 
 @WebServlet("/companies/delete")
 public class CompanyDeleteServlet extends HttpServlet {
-    private static EntityRepository<CompanyDAO> repository;
     private static Service service;
 
     @Override
     public void init() throws ServletException {
-        repository = new GenericEntityRepository<>(CompanyDAO.class);
+        EntityRepository<CompanyDAO> repository = new CompanyRepository();
         service = new CompanyService(repository);
     }
 

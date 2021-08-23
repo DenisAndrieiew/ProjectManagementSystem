@@ -2,8 +2,8 @@ package com.ProjectManagementSystem.controller.Customers;
 
 import com.ProjectManagementSystem.dto.CustomerDTO;
 import com.ProjectManagementSystem.model.dao.CustomerDAO;
+import com.ProjectManagementSystem.model.repositories.CustomerRepository;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
 import com.ProjectManagementSystem.service.CustomerService;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
@@ -23,7 +23,7 @@ public class CustomerUpdateServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        repository = new GenericEntityRepository<>(CustomerDAO.class);
+        repository = new CustomerRepository();
         converter = repository.getConverter();
         service = new CustomerService(repository);
     }

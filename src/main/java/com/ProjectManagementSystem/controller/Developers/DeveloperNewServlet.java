@@ -9,12 +9,10 @@ import com.ProjectManagementSystem.dto.enums.SkillLevel;
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
 import com.ProjectManagementSystem.model.repositories.ProjectRepository;
 import com.ProjectManagementSystem.service.DeveloperService;
 import com.ProjectManagementSystem.service.ProjectService;
 import com.ProjectManagementSystem.service.Service;
-import com.ProjectManagementSystem.service.converter.Converter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

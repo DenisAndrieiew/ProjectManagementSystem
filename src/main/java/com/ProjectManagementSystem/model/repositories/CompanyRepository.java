@@ -1,9 +1,9 @@
 package com.ProjectManagementSystem.model.repositories;
 
 import com.ProjectManagementSystem.config.config.HibernateDatabaseConnector;
-import com.ProjectManagementSystem.model.dao.DeveloperDAO;
+import com.ProjectManagementSystem.model.dao.CompanyDAO;
+import com.ProjectManagementSystem.service.converter.CompanyConverter;
 import com.ProjectManagementSystem.service.converter.Converter;
-import com.ProjectManagementSystem.service.converter.DeveloperConverter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -14,27 +14,27 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
-    private static final Logger LOG = LoggerFactory.getLogger(DeveloperRepository.class);
+public class CompanyRepository implements EntityRepository<CompanyDAO> {
+    private static final Logger LOG = LoggerFactory.getLogger(CompanyRepository.class);
     private final SessionFactory sessionFactory;
 
 
-    public DeveloperRepository() {
+    public CompanyRepository() {
         this.sessionFactory = HibernateDatabaseConnector.getSessionFactory();
     }
 
     @Override
-    public Set<DeveloperDAO> findAll() {
-        Set<DeveloperDAO> entities = new HashSet<>();
-        String queryStatement = "FROM DeveloperDAO entity LEFT JOIN FETCH entity.projects LEFT JOIN FETCH entity.devSkills";
+    public Set<CompanyDAO> findAll() {
+        Set<CompanyDAO> entities = new HashSet<>();
+        String queryStatement = "FROM CompanyDAO entity LEFT JOIN FETCH entity.projects";
         Transaction transaction;
         LOG.debug("open session");
         try (Session session = sessionFactory.openSession()) {
             LOG.debug("session opened");
             LOG.debug("begin transaction");
             transaction = session.beginTransaction();
-            Query<DeveloperDAO> query = session.createQuery(queryStatement,
-                    DeveloperDAO.class);
+            Query<CompanyDAO> query = session.createQuery(queryStatement,
+                    CompanyDAO.class);
             LOG.debug("Execute query: " + query.getQueryString());
             entities = query.getResultStream().collect(Collectors.toSet());
             transaction.commit();
@@ -48,13 +48,13 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
     }
 
     @Override
-    public DeveloperDAO findByUniqueName(String param, String value) {
-        List<DeveloperDAO> entities = new LinkedList();
+    public CompanyDAO findByUniqueName(String param, String value) {
+        List<CompanyDAO> entities = new LinkedList();
         String queryString = createQueryByUniqueName(param);
         Transaction transaction;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            Query<DeveloperDAO> query = session.createQuery(queryString, DeveloperDAO.class);
+            Query<CompanyDAO> query = session.createQuery(queryString, CompanyDAO.class);
             query.setParameter(param, value);
             LOG.debug("Executing query: " + query.getQueryString());
             entities = query.list();
@@ -67,26 +67,25 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
     }
 
 
-
     @Override
-    public DeveloperDAO findById(int id) {
-        DeveloperDAO dao = null;
+    public CompanyDAO findById(int id) {
+        CompanyDAO dao = null;
         try (Session session = sessionFactory.openSession()) {
-            dao = session.get(DeveloperDAO.class, id);
+            dao = session.get(CompanyDAO.class, id);
         } catch (Exception ex) {
-            LOG.error(String.format("findById. Class -%s. Id=%d", DeveloperDAO.class.toString(), id), ex);
+            LOG.error(String.format("findById. Id=%d", id), ex);
         }
         return dao;
     }
 
 
     @Override
-    public void create(DeveloperDAO entity) {
+    public void create(CompanyDAO entity) {
         save(entity);
     }
 
     @Override
-    public void update(DeveloperDAO entity) {
+    public void update(CompanyDAO entity) {
         save(entity);
     }
 
@@ -98,14 +97,14 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
             session.delete(findById(id));
             transaction.commit();
         } catch (Exception ex) {
-            LOG.error(String.format("save or update Class -%s. Id=%d", DeveloperDAO.class.toString(), id), ex);
+            LOG.error(String.format("save or update. Id=%d", id), ex);
             if (Objects.nonNull(transaction)) {
                 transaction.rollback();
             }
         }
     }
 
-    private void save(DeveloperDAO entity) {
+    private void save(CompanyDAO entity) {
         Transaction transaction = null;
         int id = entity.getId();
         try (Session session = sessionFactory.openSession()) {
@@ -113,7 +112,7 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
             session.saveOrUpdate(entity);
             transaction.commit();
         } catch (Exception ex) {
-            LOG.error(String.format("save or update Class -%s. Id=%d", DeveloperDAO.class.toString(), id), ex);
+            LOG.error(String.format("save or update. Id=%d", id), ex);
             if (Objects.nonNull(transaction)) {
                 transaction.rollback();
             }
@@ -122,12 +121,11 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
 
     @Override
     public Converter getConverter() {
-        return new DeveloperConverter();
+        return new CompanyConverter();
     }
 
     private String createQueryByUniqueName(String param) {
-        return "FROM DeveloperDAO " + " entity " + " WHERE entity." + param + " = :" + param;
+        return "FROM CompanyDAO  entity  WHERE entity." + param + " = :" + param;
     }
-
 
 }

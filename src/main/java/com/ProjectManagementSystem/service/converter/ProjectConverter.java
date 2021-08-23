@@ -6,14 +6,10 @@ import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class ProjectConverter implements Converter<ProjectDAO, ProjectDTO> {
-    private static final Logger LOG = LoggerFactory.getLogger(ProjectConverter.class);
     private static EntityRepository<CompanyDAO> companyRepository;
     private static EntityRepository<CustomerDAO> customersRepository;
     private static EntityRepository<DeveloperDAO> developerRepository;

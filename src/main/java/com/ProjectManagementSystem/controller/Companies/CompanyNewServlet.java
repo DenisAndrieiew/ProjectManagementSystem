@@ -2,8 +2,8 @@ package com.ProjectManagementSystem.controller.Companies;
 
 import com.ProjectManagementSystem.dto.CompanyDTO;
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
+import com.ProjectManagementSystem.model.repositories.CompanyRepository;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
 import com.ProjectManagementSystem.service.CompanyService;
 import com.ProjectManagementSystem.service.Service;
 
@@ -16,11 +16,11 @@ import java.io.IOException;
 
 @WebServlet("/companies/new")
 public class CompanyNewServlet extends HttpServlet {
-    private Service service;
+    private Service<CompanyDTO> service;
 
     @Override
     public void init() throws ServletException {
-        EntityRepository<CompanyDAO> repository = new GenericEntityRepository<>(CompanyDAO.class);
+        EntityRepository<CompanyDAO> repository = new CompanyRepository();
         this.service = new CompanyService(repository);
     }
 

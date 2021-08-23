@@ -1,8 +1,8 @@
 package com.ProjectManagementSystem.controller.Developers;
 
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
+import com.ProjectManagementSystem.model.repositories.DeveloperRepository;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
 import com.ProjectManagementSystem.service.DeveloperService;
 import com.ProjectManagementSystem.service.Service;
 
@@ -20,7 +20,7 @@ public class DeveloperDeleteServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        this.repository = new GenericEntityRepository<>(DeveloperDAO.class);
+        this.repository = new DeveloperRepository();
         this.developerService = new DeveloperService(repository);
     }
 

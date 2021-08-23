@@ -1,23 +1,20 @@
 package com.ProjectManagementSystem.service.converter;
 
 import com.ProjectManagementSystem.dto.CompanyDTO;
-import com.ProjectManagementSystem.dto.ProjectDTO;
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
+import com.ProjectManagementSystem.model.repositories.ProjectRepository;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 public class CompanyConverter implements Converter<CompanyDAO, CompanyDTO> {
-    private static Converter<ProjectDAO, ProjectDTO> projectsConverter;
     private static EntityRepository<ProjectDAO> projectRepository;
 
     public CompanyConverter() {
-        projectsConverter = new ProjectConverter();
-        projectRepository = new GenericEntityRepository<>(ProjectDAO.class);
+        projectRepository = new ProjectRepository();
     }
 
     @Override
