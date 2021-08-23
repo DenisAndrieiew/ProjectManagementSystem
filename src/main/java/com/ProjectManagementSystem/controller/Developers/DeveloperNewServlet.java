@@ -6,11 +6,12 @@ import com.ProjectManagementSystem.dto.ProjectDTO;
 import com.ProjectManagementSystem.dto.enums.Brunch;
 import com.ProjectManagementSystem.dto.enums.Sex;
 import com.ProjectManagementSystem.dto.enums.SkillLevel;
-import com.ProjectManagementSystem.model.dao.BrunchDAO;
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
+import com.ProjectManagementSystem.service.DeveloperService;
+import com.ProjectManagementSystem.service.ProjectService;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
@@ -26,25 +27,20 @@ import java.util.stream.Collectors;
 @WebServlet("/developers/new")
 public class DeveloperNewServlet extends HttpServlet {
     private EntityRepository<ProjectDAO> projectRepository;
-    private Converter projectConverter;
-    private EntityRepository<BrunchDAO> brunchRepository;
-    private Converter brunchConverter;
-    private Service developerService;
+    private Service<DeveloperDTO> developerService;
+    private Service<ProjectDTO> projectService;
 
     @Override
     public void init() throws ServletException {
         this.projectRepository = new GenericEntityRepository<>(ProjectDAO.class);
-        this.projectConverter = projectRepository.getConverter();
-        this.brunchRepository = new GenericEntityRepository<>(BrunchDAO.class);
-        this.brunchConverter = brunchRepository.getConverter();
-        this.developerService=new Service(new GenericEntityRepository(DeveloperDAO.class));
+        this.developerService = new DeveloperService(new GenericEntityRepository(DeveloperDAO.class));
+        this.projectService = new ProjectService(projectRepository);
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<ProjectDTO> projects = projectRepository.findAll().stream()
-                .map(dao -> (ProjectDTO) projectConverter.toDTO(dao))
-                .collect(Collectors.toList());
+        Set<ProjectDTO> projects = projectService.findAll();
         List<String> brunches = Arrays.stream(Brunch.values()).map(Brunch::toString).collect(Collectors.toList());
         List<String> skillLevels = (Arrays.stream(SkillLevel.values()).map(SkillLevel::toString))
                 .collect(Collectors.toList());
@@ -68,8 +64,7 @@ public class DeveloperNewServlet extends HttpServlet {
         if (Objects.nonNull(projectsFromForm)) {
             Set<ProjectDTO> projects = Arrays.asList(projectsFromForm).stream()
                     .map(Integer::parseInt)
-                    .map(projectRepository::findById)
-                    .map(dao->(ProjectDTO) projectConverter.toDTO(dao))
+                    .map(projectService::findById)
                     .collect(Collectors.toSet());
             developerDTO.setProjects(projects);
         }
@@ -82,15 +77,11 @@ public class DeveloperNewServlet extends HttpServlet {
             DevSkillsDTO ds = new DevSkillsDTO();
             ds.setBrunch(brIterator.next());
             ds.setLevel(lvlIterator.next());
-            ds.setDeveloperId(developerDTO.getId());
             devSkills.add(ds);
         }
-        devSkills.removeIf(devSkill->devSkill.getLevel().equalsIgnoreCase("none"));
-        int id = developerService.create(developerDTO);
-        developerDTO.setId(id);
-        devSkills.forEach(devSkill->devSkill.setDeveloperId(id));
+        devSkills.removeIf(devSkill -> devSkill.getLevel().equalsIgnoreCase("none"));
         developerDTO.setDevSkills(devSkills);
-        developerService.update(developerDTO);
+        developerService.create(developerDTO);
         resp.sendRedirect(req.getContextPath() + "/developers");
     }
 

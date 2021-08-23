@@ -3,8 +3,8 @@ package com.ProjectManagementSystem.controller.Developers;
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
+import com.ProjectManagementSystem.service.DeveloperService;
 import com.ProjectManagementSystem.service.Service;
-import com.ProjectManagementSystem.service.converter.Converter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,15 +16,14 @@ import java.io.IOException;
 @WebServlet("/developers/delete")
 public class DeveloperDeleteServlet extends HttpServlet {
     private EntityRepository<DeveloperDAO> repository;
-    private Converter converter;
     private Service developerService;
 
     @Override
     public void init() throws ServletException {
         this.repository = new GenericEntityRepository<>(DeveloperDAO.class);
-        this.converter = repository.getConverter();
-        this.developerService=new Service(repository);
+        this.developerService = new DeveloperService(repository);
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         developerService.delete(Integer.parseInt(req.getParameter("id")));

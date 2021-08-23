@@ -3,6 +3,7 @@ package com.ProjectManagementSystem.controller.Customers;
 import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
+import com.ProjectManagementSystem.service.CompanyService;
 import com.ProjectManagementSystem.service.Service;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,7 @@ public class CustomerDeleteServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         repository = new GenericEntityRepository<>(CustomerDAO.class);
-        service = new Service(repository);
+        service = new CompanyService(repository);
     }
 
     @Override

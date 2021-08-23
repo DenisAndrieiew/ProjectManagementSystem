@@ -1,7 +1,6 @@
 package com.ProjectManagementSystem.dto.enums;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 public enum Brunch {
     JAVA{
@@ -29,7 +28,7 @@ public enum Brunch {
         public String toString() {
             return "PHP";
         }};
-    public static Optional<Brunch> toBrunch (String value){
-        return Arrays.stream(Brunch.values()).filter(brunch->brunch.toString().equals(value)).findAny();
+    public static Brunch toBrunch (String value){
+        return Arrays.stream(Brunch.values()).filter(brunch->brunch.toString().equals(value)).findAny().orElse(null);
     }
 }

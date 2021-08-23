@@ -33,7 +33,9 @@ public class DeveloperDAO implements DataAccessObject {
     @JoinTable(name = "devs_in_project", joinColumns = {@JoinColumn(name = "dev_id")}
             , inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Set<ProjectDAO> projects;
-    @OneToMany(mappedBy = "developer", fetch=FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "developer_skills", joinColumns = {@JoinColumn(name = "developer_id")}
+            , inverseJoinColumns = {@JoinColumn(name = "skill_id")})
     private Set<DevSkillsDAO> devSkills = new HashSet<>();
 
     public DeveloperDAO() {

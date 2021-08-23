@@ -4,6 +4,7 @@ import com.ProjectManagementSystem.dto.CompanyDTO;
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
+import com.ProjectManagementSystem.service.CompanyService;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
 
@@ -24,7 +25,7 @@ public class CompanyUpdateServlet extends HttpServlet {
     public void init() throws ServletException {
         repository = new GenericEntityRepository<>(CompanyDAO.class);
         converter = repository.getConverter();
-        service = new Service(repository);
+        service = new CompanyService(repository);
     }
 
     @Override

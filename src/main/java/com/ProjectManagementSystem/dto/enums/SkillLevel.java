@@ -1,7 +1,6 @@
 package com.ProjectManagementSystem.dto.enums;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 public enum SkillLevel {
     JUNIOR {
@@ -23,7 +22,7 @@ public enum SkillLevel {
         }
     };
 
-    public static Optional<SkillLevel> toSkillLevel(String value) {
-        return Arrays.stream(SkillLevel.values()).filter(level -> level.toString().equals(value)).findAny();
+    public static SkillLevel toSkillLevel(String value) {
+        return Arrays.stream(SkillLevel.values()).filter(level -> level.toString().equals(value)).findAny().orElse(null);
     }
 }

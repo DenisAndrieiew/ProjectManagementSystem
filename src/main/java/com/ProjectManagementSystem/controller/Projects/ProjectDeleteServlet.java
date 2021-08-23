@@ -3,8 +3,8 @@ package com.ProjectManagementSystem.controller.Projects;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.model.repositories.GenericEntityRepository;
+import com.ProjectManagementSystem.service.ProjectService;
 import com.ProjectManagementSystem.service.Service;
-import com.ProjectManagementSystem.service.converter.Converter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,14 +15,12 @@ import java.io.IOException;
 
 @WebServlet("/projects/delete")
 public class ProjectDeleteServlet extends HttpServlet {
-    private static Converter converter;
     private static Service projectService;
 
     @Override
     public void init() throws ServletException {
         EntityRepository<ProjectDAO> repository = new GenericEntityRepository<>(ProjectDAO.class);
-        converter = repository.getConverter();
-        projectService = new Service(repository);
+        projectService = new ProjectService(repository);
     }
 
     @Override

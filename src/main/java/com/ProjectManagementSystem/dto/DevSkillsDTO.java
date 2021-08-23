@@ -1,26 +1,16 @@
 package com.ProjectManagementSystem.dto;
 
-import com.ProjectManagementSystem.dto.enums.Brunch;
-import com.ProjectManagementSystem.dto.enums.SkillLevel;
-
 import java.util.Objects;
+import java.util.Set;
 
 public class DevSkillsDTO implements DataTransferObject {
     private int id;
     private String brunch;
     private String level;
-    private int developerId;
 
     public DevSkillsDTO() {
     }
 
-    public int getDeveloperId() {
-        return developerId;
-    }
-
-    public void setDeveloperId(int developerId) {
-        this.developerId = developerId;
-    }
 
     public int getId() {
         return id;
