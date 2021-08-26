@@ -5,11 +5,14 @@ import com.ProjectManagementSystem.dto.CustomerDTO;
 import com.ProjectManagementSystem.dto.ProjectDTO;
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
 import com.ProjectManagementSystem.model.dao.CustomerDAO;
-import com.ProjectManagementSystem.model.dao.ProjectDAO;
-import com.ProjectManagementSystem.model.repositories.*;
+import com.ProjectManagementSystem.model.repositories.CompanyRepository;
+import com.ProjectManagementSystem.model.repositories.CustomerRepository;
+import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.service.ProjectService;
 import com.ProjectManagementSystem.service.Service;
+import com.ProjectManagementSystem.service.converter.CompanyConverter;
 import com.ProjectManagementSystem.service.converter.Converter;
+import com.ProjectManagementSystem.service.converter.CustomerConverter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,11 +35,10 @@ public class ProjectNewServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         companyRepository = new CompanyRepository();
-        companyConverter = companyRepository.getConverter();
+        companyConverter = new CompanyConverter();
         customersRepository = new CustomerRepository();
-        customersConverter = customersRepository.getConverter();
-        EntityRepository<ProjectDAO> projectRepository = new ProjectRepository();
-        projectService = new ProjectService(projectRepository);
+        customersConverter = new CustomerConverter();
+        projectService = new ProjectService();
     }
 
     @Override

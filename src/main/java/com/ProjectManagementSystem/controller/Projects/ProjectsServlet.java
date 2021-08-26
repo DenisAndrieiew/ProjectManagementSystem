@@ -24,7 +24,7 @@ public class ProjectsServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         repository = new ProjectRepository();
-        service = new ProjectService(repository);
+        service = new ProjectService();
     }
 
     @Override

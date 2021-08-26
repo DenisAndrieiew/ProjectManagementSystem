@@ -1,4 +1,4 @@
-package com.ProjectManagementSystem.config.config;
+package com.ProjectManagementSystem.config;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

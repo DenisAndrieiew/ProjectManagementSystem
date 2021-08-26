@@ -2,7 +2,9 @@ package com.ProjectManagementSystem.service;
 
 import com.ProjectManagementSystem.dto.CompanyDTO;
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
+import com.ProjectManagementSystem.model.repositories.CompanyRepository;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
+import com.ProjectManagementSystem.service.converter.CompanyConverter;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 import java.util.Comparator;
@@ -14,9 +16,9 @@ public class CompanyService implements Service<CompanyDTO> {
     private final EntityRepository<CompanyDAO> repository;
     private final Converter<CompanyDAO, CompanyDTO> converter;
 
-    public CompanyService(EntityRepository repository) {
-        this.repository = repository;
-        this.converter = repository.getConverter();
+    public CompanyService() {
+        this.repository = new CompanyRepository();
+        this.converter = new CompanyConverter();
     }
 
     @Override
@@ -39,10 +41,9 @@ public class CompanyService implements Service<CompanyDTO> {
     @Override
     public Set<CompanyDTO> findAll() {
         Set<CompanyDAO> daoSet = repository.findAll();
-        Set<CompanyDTO> dtoSet = daoSet.stream().map(dao -> converter.toDTO(dao))
+        return daoSet.stream().map(converter::toDTO)
                 .sorted(Comparator.comparing(CompanyDTO::getId))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
-        return dtoSet;
     }
 
     @Override

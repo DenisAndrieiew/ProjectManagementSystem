@@ -6,6 +6,7 @@ import com.ProjectManagementSystem.model.repositories.CompanyRepository;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.service.CompanyService;
 import com.ProjectManagementSystem.service.Service;
+import com.ProjectManagementSystem.service.converter.CompanyConverter;
 import com.ProjectManagementSystem.service.converter.Converter;
 
 import javax.servlet.ServletException;
@@ -24,8 +25,8 @@ public class CompanyUpdateServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         repository = new CompanyRepository();
-        converter = repository.getConverter();
-        service = new CompanyService(repository);
+        converter = new CompanyConverter();
+        service = new CompanyService();
     }
 
     @Override

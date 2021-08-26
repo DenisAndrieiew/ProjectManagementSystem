@@ -20,7 +20,7 @@ public class CompanyDeleteServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         EntityRepository<CompanyDAO> repository = new CompanyRepository();
-        service = new CompanyService(repository);
+        service = new CompanyService();
     }
 
     @Override

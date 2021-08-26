@@ -21,7 +21,7 @@ public class CompanyNewServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         EntityRepository<CompanyDAO> repository = new CompanyRepository();
-        this.service = new CompanyService(repository);
+        this.service = new CompanyService();
     }
 
     @Override

@@ -1,11 +1,9 @@
 package com.ProjectManagementSystem.model.repositories;
 
-import com.ProjectManagementSystem.config.config.HibernateDatabaseConnector;
+import com.ProjectManagementSystem.config.HibernateDatabaseConnector;
 import com.ProjectManagementSystem.dto.enums.Brunch;
 import com.ProjectManagementSystem.dto.enums.SkillLevel;
 import com.ProjectManagementSystem.model.dao.SkillsDAO;
-import com.ProjectManagementSystem.service.converter.Converter;
-import com.ProjectManagementSystem.service.converter.SkillsConverter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -143,10 +141,6 @@ public class SkillsRepository implements SkillsRepositoryInterface {
         }
     }
 
-    @Override
-    public Converter getConverter() {
-        return new SkillsConverter();
-    }
 
     private String createQueryByUniqueName(String param) {
         return "FROM SkillsDAO entity WHERE entity." + param + " = :" + param;

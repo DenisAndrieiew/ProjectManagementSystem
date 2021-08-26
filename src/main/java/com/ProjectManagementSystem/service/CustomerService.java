@@ -2,9 +2,10 @@ package com.ProjectManagementSystem.service;
 
 import com.ProjectManagementSystem.dto.CustomerDTO;
 import com.ProjectManagementSystem.model.dao.CustomerDAO;
+import com.ProjectManagementSystem.model.repositories.CustomerRepository;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
+import com.ProjectManagementSystem.service.converter.CustomerConverter;
 
 import java.util.Comparator;
 import java.util.LinkedHashSet;
@@ -15,9 +16,9 @@ public class CustomerService implements Service<CustomerDTO> {
     private final EntityRepository<CustomerDAO> repository;
     private final Converter<CustomerDAO, CustomerDTO> converter;
 
-    public CustomerService(EntityRepository repository) {
-        this.repository = repository;
-        this.converter = repository.getConverter();
+    public CustomerService() {
+        this.repository = new CustomerRepository();
+        this.converter = new CustomerConverter();
     }
 
     @Override
@@ -40,10 +41,9 @@ public class CustomerService implements Service<CustomerDTO> {
     @Override
     public Set<CustomerDTO> findAll() {
         Set<CustomerDAO> daoSet = repository.findAll();
-        Set<CustomerDTO> dtoSet = daoSet.stream().map(dao -> converter.toDTO(dao))
+        return daoSet.stream().map(converter::toDTO)
                 .sorted(Comparator.comparing(CustomerDTO::getId))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
-        return dtoSet;
     }
 
     @Override

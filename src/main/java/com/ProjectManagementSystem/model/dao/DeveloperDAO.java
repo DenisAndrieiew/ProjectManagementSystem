@@ -9,7 +9,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "developers")
-//@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "Developer")
 public class DeveloperDAO implements DataAccessObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

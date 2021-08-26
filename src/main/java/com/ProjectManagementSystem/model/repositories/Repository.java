@@ -1,8 +1,5 @@
 package com.ProjectManagementSystem.model.repositories;
 
-import com.ProjectManagementSystem.service.converter.Converter;
-
-
 public interface Repository<T> {
     T findById(int id);
 
@@ -11,7 +8,5 @@ public interface Repository<T> {
     void update(T entity);
 
     void delete(int id);
-
-    Converter getConverter();
 
 }
