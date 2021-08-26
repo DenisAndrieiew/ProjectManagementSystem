@@ -13,7 +13,7 @@ public class DeveloperDTO implements DataTransferObject {
     private Sex sex;
     private String comments;
     private int salary;
-    private Set<DevSkillsDTO> devSkills = new HashSet<>();
+    private Set<SkillsDTO> skills = new HashSet<>();
     private Set<ProjectDTO> projects = new HashSet<>();
 
 
@@ -21,12 +21,12 @@ public class DeveloperDTO implements DataTransferObject {
     }
 
 
-    public Set<DevSkillsDTO> getDevSkills() {
-        return devSkills;
+    public Set<SkillsDTO> getSkills() {
+        return skills;
     }
 
-    public void setDevSkills(Set<DevSkillsDTO> devSkills) {
-        this.devSkills = devSkills;
+    public void setSkills(Set<SkillsDTO> skills) {
+        this.skills = skills;
     }
 
     public int getId() {

@@ -5,6 +5,9 @@ import com.ProjectManagementSystem.model.dao.CompanyDAO;
 import com.ProjectManagementSystem.model.dao.CustomerDAO;
 import com.ProjectManagementSystem.model.dao.DeveloperDAO;
 import com.ProjectManagementSystem.model.dao.ProjectDAO;
+import com.ProjectManagementSystem.model.repositories.CompanyRepository;
+import com.ProjectManagementSystem.model.repositories.CustomerRepository;
+import com.ProjectManagementSystem.model.repositories.DeveloperRepository;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
 
 import java.util.*;
@@ -15,9 +18,9 @@ public class ProjectConverter implements Converter<ProjectDAO, ProjectDTO> {
     private static EntityRepository<DeveloperDAO> developerRepository;
 
     public ProjectConverter() {
-        companyRepository = new GenericEntityRepository<>(CompanyDAO.class);
-        customersRepository = new GenericEntityRepository<>(CustomerDAO.class);
-        developerRepository = new GenericEntityRepository<>(DeveloperDAO.class);
+        companyRepository = new CompanyRepository();
+        customersRepository = new CustomerRepository();
+        developerRepository = new DeveloperRepository();
 
     }
 

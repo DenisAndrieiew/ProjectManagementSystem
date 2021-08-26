@@ -111,3 +111,11 @@ INSERT INTO skills (id, brunch, stage)
     	   (13, 'PHP', 'JUNIOR'),
     	   (14, 'PHP', 'MIDDLE'),
     	   (15, 'PHP', 'SENIOR');
+
+INSERT INTO developer_skills
+(developer_id, skill_id)
+VALUES
+(1, 1),
+(2, 5), (2,1),
+(3, 3), (3, 8), (3, 11),
+(4, 4), (4, 8);

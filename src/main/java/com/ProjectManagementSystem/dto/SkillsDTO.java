@@ -1,14 +1,13 @@
 package com.ProjectManagementSystem.dto;
 
 import java.util.Objects;
-import java.util.Set;
 
-public class DevSkillsDTO implements DataTransferObject {
+public class SkillsDTO implements DataTransferObject {
     private int id;
     private String brunch;
     private String level;
 
-    public DevSkillsDTO() {
+    public SkillsDTO() {
     }
 
 
@@ -39,8 +38,8 @@ public class DevSkillsDTO implements DataTransferObject {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DevSkillsDTO)) return false;
-        DevSkillsDTO that = (DevSkillsDTO) o;
+        if (!(o instanceof SkillsDTO)) return false;
+        SkillsDTO that = (SkillsDTO) o;
         return getBrunch().equals(that.getBrunch());
     }
 

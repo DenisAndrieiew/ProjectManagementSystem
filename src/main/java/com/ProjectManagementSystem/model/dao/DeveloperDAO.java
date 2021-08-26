@@ -36,17 +36,17 @@ public class DeveloperDAO implements DataAccessObject {
     @ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "developer_skills", joinColumns = {@JoinColumn(name = "developer_id")}
             , inverseJoinColumns = {@JoinColumn(name = "skill_id")})
-    private Set<DevSkillsDAO> devSkills = new HashSet<>();
+    private Set<SkillsDAO> skills = new HashSet<>();
 
     public DeveloperDAO() {
     }
 
-    public Set<DevSkillsDAO> getDevSkills() {
-        return devSkills;
+    public Set<SkillsDAO> getSkills() {
+        return skills;
     }
 
-    public void setDevSkills(Set<DevSkillsDAO> devSkills) {
-        this.devSkills = devSkills;
+    public void setSkills(Set<SkillsDAO> skills) {
+        this.skills = skills;
     }
 
     @Override

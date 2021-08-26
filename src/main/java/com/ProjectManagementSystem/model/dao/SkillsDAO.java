@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "skills")
-public class DevSkillsDAO implements DataAccessObject {
+public class SkillsDAO implements DataAccessObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -20,10 +20,10 @@ public class DevSkillsDAO implements DataAccessObject {
     @Enumerated(EnumType.STRING)
     private SkillLevel level;
 
-    @ManyToMany(mappedBy = "devSkills", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "skills", fetch = FetchType.EAGER)
     private Set<DeveloperDAO> developers;
 
-    public DevSkillsDAO() {
+    public SkillsDAO() {
     }
 
     @Override
