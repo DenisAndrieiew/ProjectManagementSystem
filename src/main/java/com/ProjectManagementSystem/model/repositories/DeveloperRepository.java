@@ -26,7 +26,7 @@ public class DeveloperRepository implements EntityRepository<DeveloperDAO> {
     @Override
     public Set<DeveloperDAO> findAll() {
         Set<DeveloperDAO> entities = new HashSet<>();
-        String queryStatement = "FROM DeveloperDAO entity LEFT JOIN FETCH entity.projects LEFT JOIN FETCH entity.devSkills";
+        String queryStatement = "FROM DeveloperDAO entity LEFT JOIN FETCH entity.projects LEFT JOIN FETCH entity.skills";
         Transaction transaction;
         LOG.debug("open session");
         try (Session session = sessionFactory.openSession()) {

@@ -33,7 +33,7 @@
                      <td>${developer.age}</td>
                      <td>
                          <ol>
-                              <c:forEach var="devSkill" items="${developer.devSkills}">
+                              <c:forEach var="devSkill" items="${developer.skills}">
                                     <li> ${devSkill.brunch}  ${devSkill.level}</li>
                               </c:forEach>
                          </ol>

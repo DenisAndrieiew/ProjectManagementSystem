@@ -1,6 +1,6 @@
 package com.ProjectManagementSystem.controller.Developers;
 
-import com.ProjectManagementSystem.dto.DevSkillsDTO;
+import com.ProjectManagementSystem.dto.SkillsDTO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.ProjectDTO;
 import com.ProjectManagementSystem.dto.enums.Brunch;
@@ -78,15 +78,15 @@ public class DeveloperUpdateServlet extends HttpServlet {
         List<String> levels = Arrays.asList(req.getParameterValues("skill_level").clone());
         Iterator<String> brIterator = brunches.iterator();
         Iterator<String> lvlIterator = levels.iterator();
-        Set<DevSkillsDTO> devSkills = new HashSet<>();
+        Set<SkillsDTO> devSkills = new HashSet<>();
         while (brIterator.hasNext() && lvlIterator.hasNext()) {
-            DevSkillsDTO ds = new DevSkillsDTO();
+            SkillsDTO ds = new SkillsDTO();
             ds.setBrunch(brIterator.next());
             ds.setLevel(lvlIterator.next());
             devSkills.add(ds);
         }
         devSkills.removeIf(devSkill -> devSkill.getLevel().equalsIgnoreCase("none"));
-        developerDTO.setDevSkills(devSkills);
+        developerDTO.setSkills(devSkills);
         developerService.update(developerDTO);
         resp.sendRedirect(req.getContextPath() + "/developers");
     }

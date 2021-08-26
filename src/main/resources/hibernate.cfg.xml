@@ -27,7 +27,7 @@
         <!--Mapping classes-->
         <mapping class="com.ProjectManagementSystem.model.dao.DeveloperDAO"/>
         <mapping class="com.ProjectManagementSystem.model.dao.ProjectDAO"/>
-        <mapping class="com.ProjectManagementSystem.model.dao.DevSkillsDAO"/>
+        <mapping class="com.ProjectManagementSystem.model.dao.SkillsDAO"/>
         <mapping class="com.ProjectManagementSystem.model.dao.CustomerDAO"/>
         <mapping class="com.ProjectManagementSystem.model.dao.CompanyDAO"/>
     </session-factory>
