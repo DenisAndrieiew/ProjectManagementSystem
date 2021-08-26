@@ -1,4 +1,4 @@
-package com.ProjectManagementSystem.config.config;
+package com.ProjectManagementSystem.config;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;

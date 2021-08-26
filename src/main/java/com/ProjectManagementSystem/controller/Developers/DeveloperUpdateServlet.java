@@ -1,16 +1,11 @@
 package com.ProjectManagementSystem.controller.Developers;
 
-import com.ProjectManagementSystem.dto.SkillsDTO;
 import com.ProjectManagementSystem.dto.DeveloperDTO;
 import com.ProjectManagementSystem.dto.ProjectDTO;
+import com.ProjectManagementSystem.dto.SkillsDTO;
 import com.ProjectManagementSystem.dto.enums.Brunch;
 import com.ProjectManagementSystem.dto.enums.Sex;
 import com.ProjectManagementSystem.dto.enums.SkillLevel;
-import com.ProjectManagementSystem.model.dao.DeveloperDAO;
-import com.ProjectManagementSystem.model.dao.ProjectDAO;
-import com.ProjectManagementSystem.model.repositories.DeveloperRepository;
-import com.ProjectManagementSystem.model.repositories.EntityRepository;
-import com.ProjectManagementSystem.model.repositories.ProjectRepository;
 import com.ProjectManagementSystem.service.DeveloperService;
 import com.ProjectManagementSystem.service.ProjectService;
 import com.ProjectManagementSystem.service.Service;
@@ -26,17 +21,13 @@ import java.util.stream.Collectors;
 
 @WebServlet("/developers/update")
 public class DeveloperUpdateServlet extends HttpServlet {
-    private EntityRepository<ProjectDAO> projectRepository;
     private Service<DeveloperDTO> developerService;
-    private EntityRepository<DeveloperDAO> developerRepository;
     private Service<ProjectDTO> projectService;
 
     @Override
     public void init() throws ServletException {
-        this.projectRepository = new ProjectRepository();
-        this.developerRepository = new DeveloperRepository();
-        this.developerService = new DeveloperService(developerRepository);
-        this.projectService = new ProjectService(projectRepository);
+        this.developerService = new DeveloperService();
+        this.projectService = new ProjectService();
     }
 
 

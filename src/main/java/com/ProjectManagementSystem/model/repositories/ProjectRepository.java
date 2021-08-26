@@ -1,8 +1,7 @@
 package com.ProjectManagementSystem.model.repositories;
 
-import com.ProjectManagementSystem.config.config.HibernateDatabaseConnector;
+import com.ProjectManagementSystem.config.HibernateDatabaseConnector;
 import com.ProjectManagementSystem.model.dao.*;
-import com.ProjectManagementSystem.service.converter.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -117,10 +116,6 @@ public class ProjectRepository implements EntityRepository<ProjectDAO> {
         }
     }
 
-    @Override
-    public Converter getConverter() {
-            return new ProjectConverter();
-    }
 
     private String createQueryByUniqueName(String param) {
         return "FROM ProjectDAO" + " entity " + " WHERE entity." + param + " = :" + param;

@@ -21,7 +21,7 @@ public class DeveloperDeleteServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         this.repository = new DeveloperRepository();
-        this.developerService = new DeveloperService(repository);
+        this.developerService = new DeveloperService();
     }
 
     @Override

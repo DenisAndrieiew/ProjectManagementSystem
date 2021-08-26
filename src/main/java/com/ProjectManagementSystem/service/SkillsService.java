@@ -3,7 +3,9 @@ package com.ProjectManagementSystem.service;
 import com.ProjectManagementSystem.dto.SkillsDTO;
 import com.ProjectManagementSystem.model.dao.SkillsDAO;
 import com.ProjectManagementSystem.model.repositories.EntityRepository;
+import com.ProjectManagementSystem.model.repositories.SkillsRepository;
 import com.ProjectManagementSystem.service.converter.Converter;
+import com.ProjectManagementSystem.service.converter.SkillsConverter;
 
 import java.util.Comparator;
 import java.util.LinkedHashSet;
@@ -14,9 +16,9 @@ public class SkillsService implements Service<SkillsDTO> {
     private final EntityRepository<SkillsDAO> repository;
     private final Converter<SkillsDAO, SkillsDTO> converter;
 
-    public SkillsService(EntityRepository repository) {
-        this.repository = repository;
-        this.converter = repository.getConverter();
+    public SkillsService() {
+        this.repository = new SkillsRepository();
+        this.converter = new SkillsConverter();
     }
 
     @Override
@@ -39,10 +41,9 @@ public class SkillsService implements Service<SkillsDTO> {
     @Override
     public Set<SkillsDTO> findAll() {
         Set<SkillsDAO> daoSet = repository.findAll();
-        Set<SkillsDTO> dtoSet = daoSet.stream().map(dao -> converter.toDTO(dao))
+        return daoSet.stream().map(converter::toDTO)
                 .sorted(Comparator.comparing(SkillsDTO::getId))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
-        return dtoSet;
     }
 
     @Override

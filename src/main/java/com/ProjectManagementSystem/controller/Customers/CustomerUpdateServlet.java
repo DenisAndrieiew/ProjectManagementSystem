@@ -7,6 +7,7 @@ import com.ProjectManagementSystem.model.repositories.EntityRepository;
 import com.ProjectManagementSystem.service.CustomerService;
 import com.ProjectManagementSystem.service.Service;
 import com.ProjectManagementSystem.service.converter.Converter;
+import com.ProjectManagementSystem.service.converter.CustomerConverter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +25,8 @@ public class CustomerUpdateServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         repository = new CustomerRepository();
-        converter = repository.getConverter();
-        service = new CustomerService(repository);
+        converter = new CustomerConverter();
+        service = new CustomerService();
     }
 
     @Override

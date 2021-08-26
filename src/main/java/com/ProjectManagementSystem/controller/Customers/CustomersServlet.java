@@ -23,7 +23,7 @@ public class CustomersServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         this.repository = new CustomerRepository();
-        this.service = new CustomerService(repository);
+        this.service = new CustomerService();
     }
 
     @Override

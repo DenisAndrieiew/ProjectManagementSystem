@@ -23,7 +23,7 @@ public class CustomerConverter implements Converter<CustomerDAO, CustomerDTO> {
         dao.setId(dto.getId());
         Set<ProjectDAO> projects = new HashSet<>();
         if (Objects.nonNull(dto.getProjects())) {
-            projects=projectsConverter.fromDTOSet(dto.getProjects());
+            projects = projectsConverter.fromDTOSet(dto.getProjects());
         }
         dao.setProjects(projects);
         return dao;

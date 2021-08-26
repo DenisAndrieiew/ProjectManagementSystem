@@ -1,9 +1,7 @@
 package com.ProjectManagementSystem.model.repositories;
 
-import com.ProjectManagementSystem.config.config.HibernateDatabaseConnector;
+import com.ProjectManagementSystem.config.HibernateDatabaseConnector;
 import com.ProjectManagementSystem.model.dao.CompanyDAO;
-import com.ProjectManagementSystem.service.converter.CompanyConverter;
-import com.ProjectManagementSystem.service.converter.Converter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -119,10 +117,6 @@ public class CompanyRepository implements EntityRepository<CompanyDAO> {
         }
     }
 
-    @Override
-    public Converter getConverter() {
-        return new CompanyConverter();
-    }
 
     private String createQueryByUniqueName(String param) {
         return "FROM CompanyDAO  entity  WHERE entity." + param + " = :" + param;

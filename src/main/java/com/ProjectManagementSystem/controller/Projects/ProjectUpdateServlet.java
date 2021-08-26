@@ -9,7 +9,10 @@ import com.ProjectManagementSystem.model.dao.ProjectDAO;
 import com.ProjectManagementSystem.model.repositories.*;
 import com.ProjectManagementSystem.service.ProjectService;
 import com.ProjectManagementSystem.service.Service;
+import com.ProjectManagementSystem.service.converter.CompanyConverter;
 import com.ProjectManagementSystem.service.converter.Converter;
+import com.ProjectManagementSystem.service.converter.CustomerConverter;
+import com.ProjectManagementSystem.service.converter.ProjectConverter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,12 +38,12 @@ public class ProjectUpdateServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         projectRepository = new ProjectRepository();
-        projectConverter = projectRepository.getConverter();
+        projectConverter = new ProjectConverter();
         companyRepository = new CompanyRepository();
-        companyConverter = companyRepository.getConverter();
+        companyConverter = new CompanyConverter();
         customersRepository = new CustomerRepository();
-        customersConverter = customersRepository.getConverter();
-        projectService = new ProjectService(projectRepository);
+        customersConverter = new CustomerConverter();
+        projectService = new ProjectService();
     }
 
     @Override
